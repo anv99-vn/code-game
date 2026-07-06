@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://dnjel6ww0h46h"]
+
+[ext_resource type="Script" uid="uid://cj0po26iwrxjq" path="res://Scripts/lang_dropdown.gd" id="1_ly7je"]
+
+[node name="LangDropdown" type="VBoxContainer" unique_id=586458441]
+script = ExtResource("1_ly7je")

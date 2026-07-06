@@ -1,0 +1,8 @@
+keys,en,vi
+LOGIN_TITLE,Login,Đăng nhập
+USERNAME,Username,Tên đăng nhập
+PASSWORD,Password,Mật khẩu
+LOGIN_BUTTON,Login,Đăng nhập
+ERROR_EMPTY,Please enter both username and password.,Vui lòng nhập tên đăng nhập và mật khẩu.
+ERROR_INVALID,Invalid username or password.,Tên đăng nhập hoặc mật khẩu không đúng.
+LANG,English,Tiếng Việt

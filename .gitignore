@@ -1,0 +1,21 @@
+# Godot 4
+.godot/
+
+# MCP cache
+addons/godot_mcp/cache/
+
+# Imported translations
+*.import
+
+# Mono
+.mono/
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editor
+.idea/
+*.sublime-project
+*.sublime-workspace
