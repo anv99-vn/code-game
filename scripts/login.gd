@@ -25,7 +25,7 @@ func _on_login_pressed() -> void:
 		return
 
 	if username == "admin" and password == "admin":
-		get_tree().change_scene_to_file("res://Scenes/main.tscn")
+		get_tree().change_scene_to_file("res://scenes/main.tscn")
 	else:
 		error_label.text = "ERROR_INVALID"
 

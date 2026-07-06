@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://fsva1jchsulb"]
 
-[ext_resource type="Script" uid="uid://rhel3jxp88bx" path="res://Scripts/login.gd" id="1_5cd0j"]
-[ext_resource type="PackedScene" uid="uid://dhbfm1eys5c3d" path="res://Scenes/lang_button.tscn" id="2_hbxdl"]
+[ext_resource type="Script" uid="uid://rhel3jxp88bx" path="res://scripts/login.gd" id="1_5cd0j"]
+[ext_resource type="PackedScene" uid="uid://dhbfm1eys5c3d" path="res://scenes/lang_button.tscn" id="2_hbxdl"]
 
 [sub_resource type="Gradient" id="0"]
 colors = PackedColorArray(0.85, 0.93, 1, 1, 0.78, 0.94, 0.91, 1)

@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://dhbfm1eys5c3d"]
 
-[ext_resource type="PackedScene" uid="uid://dnjel6ww0h46h" path="res://Scenes/lang_dropdown.tscn" id="1_0sjtm"]
+[ext_resource type="PackedScene" uid="uid://dnjel6ww0h46h" path="res://scenes/lang_dropdown.tscn" id="1_0sjtm"]
 
 [node name="LangButton" type="Button" unique_id=1238473430]
 
