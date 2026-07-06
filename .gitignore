@@ -6,6 +6,7 @@ addons/godot_mcp/cache/
 
 # Imported translations
 *.import
+*.translation
 
 # Mono
 .mono/
