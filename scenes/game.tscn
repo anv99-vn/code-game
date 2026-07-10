@@ -1,0 +1,37 @@
+[gd_scene format=3 uid="uid://4y218hwwfsqc"]
+
+[ext_resource type="Script" uid="uid://dn0eda358oebx" path="res://scripts/player.gd" id="1_2yhen"]
+[ext_resource type="Texture2D" uid="uid://b7jj2rex1ktj0" path="res://assets/player.png" id="2_ds2d6"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_2yhen"]
+radius = 32.0
+
+[node name="JoystickDemo" type="Node2D" unique_id=473169652]
+
+[node name="Player" type="CharacterBody2D" parent="." unique_id=777069773]
+position = Vector2(400, 300)
+script = ExtResource("1_2yhen")
+
+[node name="Sprite2D" type="Sprite2D" parent="Player" unique_id=340078518]
+texture = ExtResource("2_ds2d6")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player" unique_id=954044468]
+shape = SubResource("CircleShape2D_2yhen")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1001473901]
+
+[node name="VirtualJoystick" type="VirtualJoystick" parent="CanvasLayer" unique_id=1728891923]
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 40.0
+offset_top = -180.0
+offset_right = 180.0
+offset_bottom = -40.0
+grow_horizontal = 0
+grow_vertical = 0
+joystick_size = 120.0
+action_left = &"move_left"
+action_right = &"move_right"
+action_up = &"move_up"
+action_down = &"move_down"

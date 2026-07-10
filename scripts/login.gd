@@ -8,6 +8,7 @@ extends Control
 @onready var lang_dropdown = $LangButton/LangDropdown
 
 func _ready() -> void:
+	_load_credentials()
 	var langs: Array[Dictionary] = [
 		{"locale": "en", "label": "English"},
 		{"locale": "vi", "label": "Tiếng Việt"},
@@ -25,9 +26,23 @@ func _on_login_pressed() -> void:
 		return
 
 	if username == "admin" and password == "admin":
-		get_tree().change_scene_to_file("res://scenes/main.tscn")
+		_save_credentials(username, password)
+		get_tree().change_scene_to_file("res://scenes/game.tscn")
 	else:
 		error_label.text = "ERROR_INVALID"
+
+func _save_credentials(username: String, password: String) -> void:
+	var config := ConfigFile.new()
+	config.set_value("login", "username", username)
+	config.set_value("login", "password", password)
+	config.save("user://login.cfg")
+
+func _load_credentials() -> void:
+	var config := ConfigFile.new()
+	if config.load("user://login.cfg") != OK:
+		return
+	username_input.text = config.get_value("login", "username", "")
+	password_input.text = config.get_value("login", "password", "")
 
 func _on_lang_pressed() -> void:
 	if lang_dropdown.visible:
