@@ -27,8 +27,11 @@ jobs:
           archive_output: true
           presets_to_export: "Windows Desktop"
 
-      - name: Upload artifact
-        uses: actions/upload-artifact@v4
+      - name: Create Release
+        uses: ncipollo/release-action@v1.18.0
         with:
-          name: Code-Game-Windows
-          path: ${{ steps.export.outputs.archive_directory }}/*
+          token: ${{ secrets.GITHUB_TOKEN }}
+          tag: ${{ github.ref_name }}
+          name: ${{ github.ref_name }}
+          generateReleaseNotes: true
+          artifacts: ${{ steps.export.outputs.archive_directory }}/*
