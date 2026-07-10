@@ -7,5 +7,6 @@ ERROR_EMPTY,Please enter both username and password.,Vui lòng nhập tên đăn
 ERROR_INVALID,Invalid username or password.,Tên đăng nhập hoặc mật khẩu không đúng.
 FORGOT_PASSWORD,Forgot password?,Quên mật khẩu?
 FORGOT_PASSWORD_MSG,Contact admin to reset password.,Liên hệ admin để đặt lại mật khẩu.
+LOG_OUT,Log Out,Đăng xuất
 LANG_EN,English,English
 LANG_VI,Tiếng Việt,Tiếng Việt

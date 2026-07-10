@@ -1,0 +1,13 @@
+[gd_scene format=3 uid="uid://cnu3s5uf4pavh"]
+
+[ext_resource type="Script" uid="uid://yys1ewii8s60" path="res://scripts/settings_dropdown.gd" id="1_jxe1r"]
+
+[node name="SettingsButton" type="Button" unique_id=1589812112]
+
+[node name="SettingsDropdown" type="VBoxContainer" parent="." unique_id=631257256]
+visible = false
+layout_mode = 0
+offset_top = 40.0
+offset_right = 120.0
+offset_bottom = 120.0
+script = ExtResource("1_jxe1r")
