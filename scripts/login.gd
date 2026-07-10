@@ -34,7 +34,8 @@ func _ready() -> void:
 	if SessionManager.is_logged_in:
 		get_tree().change_scene_to_file("res://scenes/game.tscn")
 		return
-	_load_credentials()
+	if SessionLogic.has_saved_credentials():
+		_load_credentials()
 	var langs: Array[Dictionary] = [
 		{"locale": "en", "label": tr("LANG_EN")},
 		{"locale": "vi", "label": tr("LANG_VI")},
@@ -53,7 +54,7 @@ func _on_login_pressed() -> void:
 
 	if username == "admin" and password == "admin":
 		_save_credentials(username, password)
-		SessionManager.login(username)
+		SessionLogic.login(username)
 		get_tree().change_scene_to_file("res://scenes/game.tscn")
 	else:
 		error_label.text = tr("ERROR_INVALID")

@@ -31,8 +31,8 @@ func _ready() -> void:
 	mine_button.pressed.connect(_on_mine_pressed)
 	upgrade_button.pressed.connect(_on_upgrade_pressed)
 
-	ResourceManager.resources_updated.connect(_update_ui)
-	ResourceManager.message_logged.connect(_show_message)
+	ResourceLogic.resources_updated.connect(_update_ui)
+	ResourceLogic.message_logged.connect(_show_message)
 
 	tick_timer.timeout.connect(_on_tick)
 	tick_timer.start()
@@ -64,36 +64,36 @@ func _show_message(text: String) -> void:
 		message_label.text = ""
 
 func _on_wood_pressed() -> void:
-	ResourceManager.gather_wood()
+	ResourceLogic.gather_wood()
 
 func _on_stone_pressed() -> void:
-	ResourceManager.gather_stone()
+	ResourceLogic.gather_stone()
 
 func _on_food_pressed() -> void:
-	ResourceManager.gather_food()
+	ResourceLogic.gather_food()
 
 func _on_gold_pressed() -> void:
-	ResourceManager.gather_gold()
+	ResourceLogic.gather_gold()
 
 func _on_lumber_camp_pressed() -> void:
-	if not ResourceManager.buy_lumber_camp():
+	if not ResourceLogic.buy_lumber_camp():
 		_show_message("Not enough wood!")
 
 func _on_quarry_pressed() -> void:
-	if not ResourceManager.buy_quarry():
+	if not ResourceLogic.buy_quarry():
 		_show_message("Not enough stone!")
 
 func _on_farm_pressed() -> void:
-	if not ResourceManager.buy_farm():
+	if not ResourceLogic.buy_farm():
 		_show_message("Not enough food!")
 
 func _on_mine_pressed() -> void:
-	if not ResourceManager.buy_mine():
+	if not ResourceLogic.buy_mine():
 		_show_message("Not enough resources for Mine!")
 
 func _on_upgrade_pressed() -> void:
-	if not ResourceManager.upgrade_click_power():
+	if not ResourceLogic.upgrade_click_power():
 		_show_message("Not enough gold!")
 
 func _on_tick() -> void:
-	ResourceManager._on_tick()
+	ResourceLogic.on_tick()

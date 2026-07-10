@@ -50,7 +50,7 @@ func _on_settings_option(action: String) -> void:
 			else:
 				resource_game_ui.show()
 		"logout":
-			SessionManager.logout()
+			SessionLogic.logout()
 			get_tree().change_scene_to_file("res://scenes/login.tscn")
 
 func _unhandled_input(event: InputEvent) -> void:

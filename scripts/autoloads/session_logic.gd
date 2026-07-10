@@ -1,12 +1,10 @@
 extends Node
 
-var is_logged_in: bool = false
-
 func login(_username: String) -> void:
-	is_logged_in = true
+	SessionManager.is_logged_in = true
 
 func logout() -> void:
-	is_logged_in = false
+	SessionManager.is_logged_in = false
 
 func has_saved_credentials() -> bool:
 	var config := ConfigFile.new()
