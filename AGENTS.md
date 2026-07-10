@@ -1,5 +1,9 @@
 # Project Rules
 
+## Git
+
+Only commit changes made during the current session. Do not commit pre-existing uncommitted changes.
+
 ## Screenshots
 
 When taking a screenshot, rename the file to describe its purpose.
