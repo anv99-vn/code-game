@@ -1,0 +1,30 @@
+name: Build Windows EXE
+
+on:
+  push:
+    tags:
+      - "v*"
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    name: Build Windows Executable
+    
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Godot
+        uses: firebelley/godot-build-action@v5.1.0
+        with:
+          godot-version: "4.7"
+          godot-status: "stable"
+          export-template: "windows"
+          create-export-presets: true
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: Code-Game-Windows
+          path: build/windows/
