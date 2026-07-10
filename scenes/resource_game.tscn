@@ -1,0 +1,177 @@
+[gd_scene format=3 uid="uid://mpl7rnnyr0d1"]
+
+[ext_resource type="Script" uid="uid://122gmcjpf5wl" path="res://scripts/resource_game.gd" id="1_vdyat"]
+
+[node name="ResourceGame" type="Control" unique_id=1786764351]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_vdyat")
+
+[node name="TopPanel" type="PanelContainer" parent="." unique_id=2024085616]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 60.0
+grow_horizontal = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="TopPanel" unique_id=2035941994]
+layout_mode = 2
+
+[node name="ResourceHBox" type="HBoxContainer" parent="TopPanel/MarginContainer" unique_id=1335321159]
+layout_mode = 2
+theme_override_constants/separation = 40
+alignment = 1
+
+[node name="WoodLabel" type="Label" parent="TopPanel/MarginContainer/ResourceHBox" unique_id=552832326]
+layout_mode = 2
+text = "Wood: 0"
+horizontal_alignment = 1
+
+[node name="StoneLabel" type="Label" parent="TopPanel/MarginContainer/ResourceHBox" unique_id=1655066783]
+layout_mode = 2
+text = "Stone: 0"
+horizontal_alignment = 1
+
+[node name="FoodLabel" type="Label" parent="TopPanel/MarginContainer/ResourceHBox" unique_id=91742943]
+layout_mode = 2
+text = "Food: 0"
+horizontal_alignment = 1
+
+[node name="GoldLabel" type="Label" parent="TopPanel/MarginContainer/ResourceHBox" unique_id=1708264349]
+layout_mode = 2
+text = "Gold: 0"
+horizontal_alignment = 1
+
+[node name="ContentHBox" type="HBoxContainer" parent="." unique_id=2053719307]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 70.0
+offset_bottom = -70.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/separation = 20
+
+[node name="GatherPanel" type="PanelContainer" parent="ContentHBox" unique_id=1242534356]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="MarginContainer" type="MarginContainer" parent="ContentHBox/GatherPanel" unique_id=1437543000]
+layout_mode = 2
+
+[node name="GatherVBox" type="VBoxContainer" parent="ContentHBox/GatherPanel/MarginContainer" unique_id=497766591]
+layout_mode = 2
+theme_override_constants/separation = 16
+alignment = 1
+
+[node name="GatherTitle" type="Label" parent="ContentHBox/GatherPanel/MarginContainer/GatherVBox" unique_id=1853261882]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "Gather Resources"
+horizontal_alignment = 1
+
+[node name="WoodButton" type="Button" parent="ContentHBox/GatherPanel/MarginContainer/GatherVBox" unique_id=676396093]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_font_sizes/font_size = 20
+text = "Chop Wood (+1)"
+
+[node name="StoneButton" type="Button" parent="ContentHBox/GatherPanel/MarginContainer/GatherVBox" unique_id=2048337531]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_font_sizes/font_size = 20
+text = "Mine Stone (+1)"
+
+[node name="FoodButton" type="Button" parent="ContentHBox/GatherPanel/MarginContainer/GatherVBox" unique_id=780253270]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_font_sizes/font_size = 20
+text = "Forage Food (+1)"
+
+[node name="GoldButton" type="Button" parent="ContentHBox/GatherPanel/MarginContainer/GatherVBox" unique_id=12064221]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_font_sizes/font_size = 20
+text = "Pan Gold (+1)"
+
+[node name="BuildingsPanel" type="PanelContainer" parent="ContentHBox" unique_id=1874784287]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="MarginContainer" type="MarginContainer" parent="ContentHBox/BuildingsPanel" unique_id=1183793490]
+layout_mode = 2
+
+[node name="BuildingsVBox" type="VBoxContainer" parent="ContentHBox/BuildingsPanel/MarginContainer" unique_id=1399816118]
+layout_mode = 2
+theme_override_constants/separation = 12
+alignment = 1
+
+[node name="BuildingsTitle" type="Label" parent="ContentHBox/BuildingsPanel/MarginContainer/BuildingsVBox" unique_id=1735956305]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "Buildings & Upgrades"
+horizontal_alignment = 1
+
+[node name="LumberCampButton" type="Button" parent="ContentHBox/BuildingsPanel/MarginContainer/BuildingsVBox" unique_id=2093556237]
+layout_mode = 2
+theme_override_font_sizes/font_size = 16
+text = "Lumber Camp (50 wood)"
+
+[node name="QuarryButton" type="Button" parent="ContentHBox/BuildingsPanel/MarginContainer/BuildingsVBox" unique_id=823740411]
+layout_mode = 2
+theme_override_font_sizes/font_size = 16
+text = "Quarry (50 stone)"
+
+[node name="FarmButton" type="Button" parent="ContentHBox/BuildingsPanel/MarginContainer/BuildingsVBox" unique_id=86215592]
+layout_mode = 2
+theme_override_font_sizes/font_size = 16
+text = "Farm (50 food)"
+
+[node name="MineButton" type="Button" parent="ContentHBox/BuildingsPanel/MarginContainer/BuildingsVBox" unique_id=1281867771]
+layout_mode = 2
+theme_override_font_sizes/font_size = 16
+text = "Mine (100 wood, 100 stone)"
+
+[node name="UpgradeButton" type="Button" parent="ContentHBox/BuildingsPanel/MarginContainer/BuildingsVBox" unique_id=1701777753]
+layout_mode = 2
+theme_override_font_sizes/font_size = 16
+text = "Click Power (25 gold)"
+
+[node name="BottomPanel" type="PanelContainer" parent="." unique_id=1803089309]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -60.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="MarginContainer" type="MarginContainer" parent="BottomPanel" unique_id=478070698]
+layout_mode = 2
+
+[node name="MessageLabel" type="Label" parent="BottomPanel/MarginContainer" unique_id=306789510]
+layout_mode = 2
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TickTimer" type="Timer" parent="." unique_id=496113519]
+
+[node name="Background" type="ColorRect" parent="." unique_id=867055293]
+z_index = -1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.12, 0.15, 0.18, 1)
