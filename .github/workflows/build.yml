@@ -15,16 +15,15 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Setup Godot
-        uses: firebelley/godot-build-action@v5.1.0
+      - name: Build Windows
+        id: build
+        uses: mlm-games/godot-build-action@v1
         with:
-          godot-version: "4.7"
-          godot-status: "stable"
-          export-template: "windows"
-          create-export-presets: true
+          EXPORT_PRESET_NAME: "Windows Desktop"
+          GODOT_VER: "4.7-stable"
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
           name: Code-Game-Windows
-          path: build/windows/
+          path: ${{ steps.build.outputs.build }}
