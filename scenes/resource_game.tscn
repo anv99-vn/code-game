@@ -1,6 +1,15 @@
 [gd_scene format=3 uid="uid://mpl7rnnyr0d1"]
 
 [ext_resource type="Script" uid="uid://122gmcjpf5wl" path="res://scripts/resource_game.gd" id="1_vdyat"]
+[ext_resource type="Texture2D" path="res://assets/resources/icon_wood.png" id="2_wood"]
+[ext_resource type="Texture2D" path="res://assets/resources/icon_stone.png" id="3_stone"]
+[ext_resource type="Texture2D" path="res://assets/resources/icon_food.png" id="4_food"]
+[ext_resource type="Texture2D" path="res://assets/resources/icon_gold.png" id="5_gold"]
+[ext_resource type="Texture2D" path="res://assets/resources/icon_lumber_camp.png" id="6_lumber"]
+[ext_resource type="Texture2D" path="res://assets/resources/icon_quarry.png" id="7_quarry"]
+[ext_resource type="Texture2D" path="res://assets/resources/icon_farm.png" id="8_farm"]
+[ext_resource type="Texture2D" path="res://assets/resources/icon_mine.png" id="9_mine"]
+[ext_resource type="Texture2D" path="res://assets/resources/icon_upgrade.png" id="10_upgrade"]
 
 [node name="ResourceGame" type="Control" unique_id=1786764351]
 layout_mode = 3
@@ -26,20 +35,44 @@ layout_mode = 2
 theme_override_constants/separation = 40
 alignment = 1
 
+[node name="WoodIcon" type="TextureRect" parent="TopPanel/MarginContainer/ResourceHBox"]
+custom_minimum_size = Vector2(24, 24)
+layout_mode = 2
+expand_mode = 3
+texture = ExtResource("2_wood")
+
 [node name="WoodLabel" type="Label" parent="TopPanel/MarginContainer/ResourceHBox" unique_id=552832326]
 layout_mode = 2
 text = "Wood: 0"
 horizontal_alignment = 1
+
+[node name="StoneIcon" type="TextureRect" parent="TopPanel/MarginContainer/ResourceHBox"]
+custom_minimum_size = Vector2(24, 24)
+layout_mode = 2
+expand_mode = 3
+texture = ExtResource("3_stone")
 
 [node name="StoneLabel" type="Label" parent="TopPanel/MarginContainer/ResourceHBox" unique_id=1655066783]
 layout_mode = 2
 text = "Stone: 0"
 horizontal_alignment = 1
 
+[node name="FoodIcon" type="TextureRect" parent="TopPanel/MarginContainer/ResourceHBox"]
+custom_minimum_size = Vector2(24, 24)
+layout_mode = 2
+expand_mode = 3
+texture = ExtResource("4_food")
+
 [node name="FoodLabel" type="Label" parent="TopPanel/MarginContainer/ResourceHBox" unique_id=91742943]
 layout_mode = 2
 text = "Food: 0"
 horizontal_alignment = 1
+
+[node name="GoldIcon" type="TextureRect" parent="TopPanel/MarginContainer/ResourceHBox"]
+custom_minimum_size = Vector2(24, 24)
+layout_mode = 2
+expand_mode = 3
+texture = ExtResource("5_gold")
 
 [node name="GoldLabel" type="Label" parent="TopPanel/MarginContainer/ResourceHBox" unique_id=1708264349]
 layout_mode = 2
@@ -78,27 +111,71 @@ theme_override_font_sizes/font_size = 24
 text = "Gather Resources"
 horizontal_alignment = 1
 
-[node name="WoodButton" type="Button" parent="ContentHBox/GatherPanel/MarginContainer/GatherVBox" unique_id=676396093]
+[node name="WoodRow" type="HBoxContainer" parent="ContentHBox/GatherPanel/MarginContainer/GatherVBox"]
 layout_mode = 2
+theme_override_constants/separation = 12
 size_flags_vertical = 3
+
+[node name="WoodIcon" type="TextureRect" parent="ContentHBox/GatherPanel/MarginContainer/GatherVBox/WoodRow"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+expand_mode = 3
+texture = ExtResource("2_wood")
+
+[node name="WoodButton" type="Button" parent="ContentHBox/GatherPanel/MarginContainer/GatherVBox/WoodRow" unique_id=676396093]
+layout_mode = 2
+size_flags_horizontal = 3
 theme_override_font_sizes/font_size = 20
 text = "Chop Wood (+1)"
 
-[node name="StoneButton" type="Button" parent="ContentHBox/GatherPanel/MarginContainer/GatherVBox" unique_id=2048337531]
+[node name="StoneRow" type="HBoxContainer" parent="ContentHBox/GatherPanel/MarginContainer/GatherVBox"]
 layout_mode = 2
+theme_override_constants/separation = 12
 size_flags_vertical = 3
+
+[node name="StoneIcon" type="TextureRect" parent="ContentHBox/GatherPanel/MarginContainer/GatherVBox/StoneRow"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+expand_mode = 3
+texture = ExtResource("3_stone")
+
+[node name="StoneButton" type="Button" parent="ContentHBox/GatherPanel/MarginContainer/GatherVBox/StoneRow" unique_id=2048337531]
+layout_mode = 2
+size_flags_horizontal = 3
 theme_override_font_sizes/font_size = 20
 text = "Mine Stone (+1)"
 
-[node name="FoodButton" type="Button" parent="ContentHBox/GatherPanel/MarginContainer/GatherVBox" unique_id=780253270]
+[node name="FoodRow" type="HBoxContainer" parent="ContentHBox/GatherPanel/MarginContainer/GatherVBox"]
 layout_mode = 2
+theme_override_constants/separation = 12
 size_flags_vertical = 3
+
+[node name="FoodIcon" type="TextureRect" parent="ContentHBox/GatherPanel/MarginContainer/GatherVBox/FoodRow"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+expand_mode = 3
+texture = ExtResource("4_food")
+
+[node name="FoodButton" type="Button" parent="ContentHBox/GatherPanel/MarginContainer/GatherVBox/FoodRow" unique_id=780253270]
+layout_mode = 2
+size_flags_horizontal = 3
 theme_override_font_sizes/font_size = 20
 text = "Forage Food (+1)"
 
-[node name="GoldButton" type="Button" parent="ContentHBox/GatherPanel/MarginContainer/GatherVBox" unique_id=12064221]
+[node name="GoldRow" type="HBoxContainer" parent="ContentHBox/GatherPanel/MarginContainer/GatherVBox"]
 layout_mode = 2
+theme_override_constants/separation = 12
 size_flags_vertical = 3
+
+[node name="GoldIcon" type="TextureRect" parent="ContentHBox/GatherPanel/MarginContainer/GatherVBox/GoldRow"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+expand_mode = 3
+texture = ExtResource("5_gold")
+
+[node name="GoldButton" type="Button" parent="ContentHBox/GatherPanel/MarginContainer/GatherVBox/GoldRow" unique_id=12064221]
+layout_mode = 2
+size_flags_horizontal = 3
 theme_override_font_sizes/font_size = 20
 text = "Pan Gold (+1)"
 
@@ -121,28 +198,83 @@ theme_override_font_sizes/font_size = 24
 text = "Buildings & Upgrades"
 horizontal_alignment = 1
 
-[node name="LumberCampButton" type="Button" parent="ContentHBox/BuildingsPanel/MarginContainer/BuildingsVBox" unique_id=2093556237]
+[node name="LumberRow" type="HBoxContainer" parent="ContentHBox/BuildingsPanel/MarginContainer/BuildingsVBox"]
 layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="LumberIcon" type="TextureRect" parent="ContentHBox/BuildingsPanel/MarginContainer/BuildingsVBox/LumberRow"]
+custom_minimum_size = Vector2(24, 24)
+layout_mode = 2
+expand_mode = 3
+texture = ExtResource("6_lumber")
+
+[node name="LumberCampButton" type="Button" parent="ContentHBox/BuildingsPanel/MarginContainer/BuildingsVBox/LumberRow" unique_id=2093556237]
+layout_mode = 2
+size_flags_horizontal = 3
 theme_override_font_sizes/font_size = 16
 text = "Lumber Camp (50 wood)"
 
-[node name="QuarryButton" type="Button" parent="ContentHBox/BuildingsPanel/MarginContainer/BuildingsVBox" unique_id=823740411]
+[node name="QuarryRow" type="HBoxContainer" parent="ContentHBox/BuildingsPanel/MarginContainer/BuildingsVBox"]
 layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="QuarryIcon" type="TextureRect" parent="ContentHBox/BuildingsPanel/MarginContainer/BuildingsVBox/QuarryRow"]
+custom_minimum_size = Vector2(24, 24)
+layout_mode = 2
+expand_mode = 3
+texture = ExtResource("7_quarry")
+
+[node name="QuarryButton" type="Button" parent="ContentHBox/BuildingsPanel/MarginContainer/BuildingsVBox/QuarryRow" unique_id=823740411]
+layout_mode = 2
+size_flags_horizontal = 3
 theme_override_font_sizes/font_size = 16
 text = "Quarry (50 stone)"
 
-[node name="FarmButton" type="Button" parent="ContentHBox/BuildingsPanel/MarginContainer/BuildingsVBox" unique_id=86215592]
+[node name="FarmRow" type="HBoxContainer" parent="ContentHBox/BuildingsPanel/MarginContainer/BuildingsVBox"]
 layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="FarmIcon" type="TextureRect" parent="ContentHBox/BuildingsPanel/MarginContainer/BuildingsVBox/FarmRow"]
+custom_minimum_size = Vector2(24, 24)
+layout_mode = 2
+expand_mode = 3
+texture = ExtResource("8_farm")
+
+[node name="FarmButton" type="Button" parent="ContentHBox/BuildingsPanel/MarginContainer/BuildingsVBox/FarmRow" unique_id=86215592]
+layout_mode = 2
+size_flags_horizontal = 3
 theme_override_font_sizes/font_size = 16
 text = "Farm (50 food)"
 
-[node name="MineButton" type="Button" parent="ContentHBox/BuildingsPanel/MarginContainer/BuildingsVBox" unique_id=1281867771]
+[node name="MineRow" type="HBoxContainer" parent="ContentHBox/BuildingsPanel/MarginContainer/BuildingsVBox"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 16
-text = "Mine (100 wood, 100 stone)"
+theme_override_constants/separation = 8
 
-[node name="UpgradeButton" type="Button" parent="ContentHBox/BuildingsPanel/MarginContainer/BuildingsVBox" unique_id=1701777753]
+[node name="MineIcon" type="TextureRect" parent="ContentHBox/BuildingsPanel/MarginContainer/BuildingsVBox/MineRow"]
+custom_minimum_size = Vector2(24, 24)
 layout_mode = 2
+expand_mode = 3
+texture = ExtResource("9_mine")
+
+[node name="MineButton" type="Button" parent="ContentHBox/BuildingsPanel/MarginContainer/BuildingsVBox/MineRow" unique_id=1281867771]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 16
+text = "Mine (150 wood, 150 stone)"
+
+[node name="UpgradeRow" type="HBoxContainer" parent="ContentHBox/BuildingsPanel/MarginContainer/BuildingsVBox"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="UpgradeIcon" type="TextureRect" parent="ContentHBox/BuildingsPanel/MarginContainer/BuildingsVBox/UpgradeRow"]
+custom_minimum_size = Vector2(24, 24)
+layout_mode = 2
+expand_mode = 3
+texture = ExtResource("10_upgrade")
+
+[node name="UpgradeButton" type="Button" parent="ContentHBox/BuildingsPanel/MarginContainer/BuildingsVBox/UpgradeRow" unique_id=1701777753]
+layout_mode = 2
+size_flags_horizontal = 3
 theme_override_font_sizes/font_size = 16
 text = "Click Power (25 gold)"
 

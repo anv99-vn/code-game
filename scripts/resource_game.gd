@@ -5,16 +5,16 @@ extends Control
 @onready var food_label: Label = $TopPanel/MarginContainer/ResourceHBox/FoodLabel
 @onready var gold_label: Label = $TopPanel/MarginContainer/ResourceHBox/GoldLabel
 
-@onready var wood_button: Button = $ContentHBox/GatherPanel/MarginContainer/GatherVBox/WoodButton
-@onready var stone_button: Button = $ContentHBox/GatherPanel/MarginContainer/GatherVBox/StoneButton
-@onready var food_button: Button = $ContentHBox/GatherPanel/MarginContainer/GatherVBox/FoodButton
-@onready var gold_button: Button = $ContentHBox/GatherPanel/MarginContainer/GatherVBox/GoldButton
+@onready var wood_button: Button = $ContentHBox/GatherPanel/MarginContainer/GatherVBox/WoodRow/WoodButton
+@onready var stone_button: Button = $ContentHBox/GatherPanel/MarginContainer/GatherVBox/StoneRow/StoneButton
+@onready var food_button: Button = $ContentHBox/GatherPanel/MarginContainer/GatherVBox/FoodRow/FoodButton
+@onready var gold_button: Button = $ContentHBox/GatherPanel/MarginContainer/GatherVBox/GoldRow/GoldButton
 
-@onready var lumber_camp_button: Button = $ContentHBox/BuildingsPanel/MarginContainer/BuildingsVBox/LumberCampButton
-@onready var quarry_button: Button = $ContentHBox/BuildingsPanel/MarginContainer/BuildingsVBox/QuarryButton
-@onready var farm_button: Button = $ContentHBox/BuildingsPanel/MarginContainer/BuildingsVBox/FarmButton
-@onready var mine_button: Button = $ContentHBox/BuildingsPanel/MarginContainer/BuildingsVBox/MineButton
-@onready var upgrade_button: Button = $ContentHBox/BuildingsPanel/MarginContainer/BuildingsVBox/UpgradeButton
+@onready var lumber_camp_button: Button = $ContentHBox/BuildingsPanel/MarginContainer/BuildingsVBox/LumberRow/LumberCampButton
+@onready var quarry_button: Button = $ContentHBox/BuildingsPanel/MarginContainer/BuildingsVBox/QuarryRow/QuarryButton
+@onready var farm_button: Button = $ContentHBox/BuildingsPanel/MarginContainer/BuildingsVBox/FarmRow/FarmButton
+@onready var mine_button: Button = $ContentHBox/BuildingsPanel/MarginContainer/BuildingsVBox/MineRow/MineButton
+@onready var upgrade_button: Button = $ContentHBox/BuildingsPanel/MarginContainer/BuildingsVBox/UpgradeRow/UpgradeButton
 
 @onready var message_label: Label = $BottomPanel/MarginContainer/MessageLabel
 @onready var tick_timer: Timer = $TickTimer
