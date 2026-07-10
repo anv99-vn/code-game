@@ -21,7 +21,7 @@ config/features=PackedStringArray("4.7")
 
 [autoload]
 
-MCPRuntime="*uid://bw3tctmeqid6b"
+MCPRuntime="*res://addons/godot_mcp/runtime/mcp_runtime.gd"
 
 [editor_plugins]
 

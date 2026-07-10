@@ -23,7 +23,7 @@ func _init_tools() -> void:
 	if _initialized:
 		return
 	_initialized = true
-	
+
 	_file_tools = preload("res://addons/godot_mcp/tools/file_tools.gd").new()
 	_file_tools.name = "FileTools"
 	add_child(_file_tools)
@@ -122,10 +122,10 @@ func _init_tools() -> void:
 
 func set_editor_plugin(plugin: EditorPlugin) -> void:
 	_editor_plugin = plugin
-	
+
 	# Initialize tools first (must be done synchronously)
 	_init_tools()
-	
+
 	# Pass editor plugin reference to all tool handlers
 	if _file_tools: _file_tools.set_editor_plugin(plugin)
 	if _scene_tools: _scene_tools.set_editor_plugin(plugin)
