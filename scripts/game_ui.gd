@@ -1,7 +1,9 @@
 extends CanvasLayer
 
-@onready var settings_button: Button = $SettingsButton
-@onready var settings_dropdown = $SettingsButton/SettingsDropdown
+@onready var settings_button: Button = $"../UILayer/SettingsButton"
+@onready var settings_dropdown = $"../UILayer/SettingsButton/SettingsDropdown"
+var resource_game_ui: Control = null
+const RESOURCE_GAME_SCENE := preload("res://scenes/resource_game.tscn")
 
 func _ready() -> void:
 	settings_button.icon = load("res://assets/icons/icon_gear.png")
@@ -18,14 +20,18 @@ func _ready() -> void:
 	hover.corner_radius_bottom_left = 8
 	settings_button.add_theme_stylebox_override("hover", hover)
 	if not SessionManager.is_logged_in:
-		get_tree().change_scene_to_file("res://scenes/login.tscn")
+		call_deferred("_go_to_login")
 		return
 	var opts: Array[Dictionary] = [
-		{"action": "logout", "label": "Log Out", "icon": "res://assets/icons/icon_logout.png"},
+		{"action": "resources", "label": tr("RESOURCES"), "icon": "res://assets/icons/icon_resource.png"},
+		{"action": "logout", "label": tr("LOG_OUT"), "icon": "res://assets/icons/icon_logout.png"},
 	]
 	settings_dropdown.options = opts
 	settings_dropdown.option_selected.connect(_on_settings_option)
 	settings_button.pressed.connect(_on_settings_pressed)
+
+func _go_to_login() -> void:
+	get_tree().change_scene_to_file("res://scenes/login.tscn")
 
 func _on_settings_pressed() -> void:
 	if settings_dropdown.visible:
@@ -35,6 +41,14 @@ func _on_settings_pressed() -> void:
 
 func _on_settings_option(action: String) -> void:
 	match action:
+		"resources":
+			if resource_game_ui == null:
+				resource_game_ui = RESOURCE_GAME_SCENE.instantiate()
+				add_child(resource_game_ui)
+			elif resource_game_ui.visible:
+				resource_game_ui.hide()
+			else:
+				resource_game_ui.show()
 		"logout":
 			SessionManager.logout()
 			get_tree().change_scene_to_file("res://scenes/login.tscn")
