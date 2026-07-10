@@ -8,7 +8,7 @@ func _ready() -> void:
 	ResourceManager.wood = 100
 	ResourceManager.stone = 100
 	ResourceManager.food = 100
-	ResourceManager.gold = 0
+	ResourceManager.gold = 100
 	resources_updated.emit()
 
 func gather_wood() -> void:
