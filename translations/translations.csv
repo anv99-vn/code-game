@@ -5,4 +5,7 @@ PASSWORD,Password,Mật khẩu
 LOGIN_BUTTON,Login,Đăng nhập
 ERROR_EMPTY,Please enter both username and password.,Vui lòng nhập tên đăng nhập và mật khẩu.
 ERROR_INVALID,Invalid username or password.,Tên đăng nhập hoặc mật khẩu không đúng.
-LANG,English,Tiếng Việt
+FORGOT_PASSWORD,Forgot password?,Quên mật khẩu?
+FORGOT_PASSWORD_MSG,Contact admin to reset password.,Liên hệ admin để đặt lại mật khẩu.
+LANG_EN,English,English
+LANG_VI,Tiếng Việt,Tiếng Việt

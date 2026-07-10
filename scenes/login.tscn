@@ -1,49 +1,73 @@
 [gd_scene format=3 uid="uid://fsva1jchsulb"]
 
 [ext_resource type="Script" uid="uid://rhel3jxp88bx" path="res://scripts/login.gd" id="1_5cd0j"]
-[ext_resource type="PackedScene" uid="uid://dhbfm1eys5c3d" path="res://scenes/lang_button.tscn" id="2_hbxdl"]
+[ext_resource type="Texture2D" uid="uid://bhilfpsc3f704" path="res://assets/ui/bg_login.png" id="3_7j4f1"]
+[ext_resource type="Texture2D" uid="uid://3bgxj6wkqsky" path="res://assets/ui/logo_console.png" id="3_r3fp8"]
+[ext_resource type="Texture2D" uid="uid://bbxkdxlg3k7gg" path="res://assets/icons/icon_user_w.png" id="5_9n4p5"]
+[ext_resource type="Texture2D" uid="uid://ci4sofrtxy8yh" path="res://assets/icons/icon_lock_w.png" id="6_1q7r6"]
+[ext_resource type="Script" uid="uid://cj0po26iwrxjq" path="res://scripts/lang_dropdown.gd" id="6_r3fp8"]
 
-[sub_resource type="Gradient" id="0"]
-colors = PackedColorArray(0.85, 0.93, 1, 1, 0.78, 0.94, 0.91, 1)
+[sub_resource type="StyleBoxFlat" id="card"]
+bg_color = Color(0.114, 0.231, 0.545, 1)
+corner_radius_top_left = 24
+corner_radius_top_right = 24
+corner_radius_bottom_right = 24
+corner_radius_bottom_left = 24
 
-[sub_resource type="GradientTexture2D" id="0b"]
-gradient = SubResource("0")
-fill = 1
-fill_to = Vector2(0, 1)
-
-[sub_resource type="StyleBoxFlat" id="5"]
-content_margin_left = 14.0
+[sub_resource type="StyleBoxFlat" id="input"]
+content_margin_left = 44.0
 content_margin_top = 10.0
 content_margin_right = 14.0
 content_margin_bottom = 10.0
-bg_color = Color(0.95, 0.95, 0.97, 1)
+bg_color = Color(0, 0, 0, 0)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(1, 1, 1, 0.5)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[sub_resource type="StyleBoxFlat" id="input_focus"]
+content_margin_left = 44.0
+content_margin_top = 10.0
+content_margin_right = 14.0
+content_margin_bottom = 10.0
+bg_color = Color(0, 0, 0, 0)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(1, 1, 1, 0.9)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[sub_resource type="StyleBoxFlat" id="btn_normal"]
+bg_color = Color(1, 1, 1, 1)
 corner_radius_top_left = 8
 corner_radius_top_right = 8
 corner_radius_bottom_right = 8
 corner_radius_bottom_left = 8
 
-[sub_resource type="StyleBoxFlat" id="2"]
-bg_color = Color(0.13, 0.55, 1, 1)
+[sub_resource type="StyleBoxFlat" id="btn_pressed"]
+bg_color = Color(0.9, 0.91, 0.93, 1)
 corner_radius_top_left = 8
 corner_radius_top_right = 8
 corner_radius_bottom_right = 8
 corner_radius_bottom_left = 8
 
-[sub_resource type="StyleBoxFlat" id="4"]
-bg_color = Color(0.1, 0.45, 0.9, 1)
+[sub_resource type="StyleBoxFlat" id="btn_hover"]
+bg_color = Color(0.95, 0.96, 0.98, 1)
 corner_radius_top_left = 8
 corner_radius_top_right = 8
 corner_radius_bottom_right = 8
 corner_radius_bottom_left = 8
 
-[sub_resource type="StyleBoxFlat" id="3"]
-bg_color = Color(0.2, 0.6, 1, 1)
-corner_radius_top_left = 8
-corner_radius_top_right = 8
-corner_radius_bottom_right = 8
-corner_radius_bottom_left = 8
-
-[node name="Login" type="Control" unique_id=203678256]
+[node name="Login" type="Control" unique_id=1955053360]
 auto_translate_mode = 1
 layout_mode = 3
 anchors_preset = 15
@@ -53,87 +77,49 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_5cd0j")
 
-[node name="Background" type="TextureRect" parent="." unique_id=770234906]
+[node name="Background" type="TextureRect" parent="." unique_id=1541379477]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = SubResource("0b")
+texture = ExtResource("3_7j4f1")
 stretch_mode = 6
 
-[node name="CardBg" type="ColorRect" parent="." unique_id=1026351776]
+[node name="CardBg" type="Panel" parent="." unique_id=2042795440]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -200.0
+offset_left = -240.0
 offset_top = -210.0
-offset_right = 200.0
+offset_right = 240.0
 offset_bottom = 210.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_styles/panel = SubResource("card")
 
-[node name="TitleLabel" type="Label" parent="." unique_id=847407077]
-auto_translate_mode = 1
+[node name="Logo" type="TextureRect" parent="." unique_id=6129230]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -160.0
+offset_left = -40.0
 offset_top = -180.0
-offset_right = 160.0
-offset_bottom = -150.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_colors/font_color = Color(0.13, 0.13, 0.13, 1)
-theme_override_font_sizes/font_size = 24
-text = "LOGIN_TITLE"
-horizontal_alignment = 1
-
-[node name="UsernameLabel" type="Label" parent="." unique_id=1156484677]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -160.0
-offset_top = -120.0
-offset_right = 160.0
+offset_right = 40.0
 offset_bottom = -100.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_colors/font_color = Color(0.35, 0.35, 0.4, 1)
-theme_override_font_sizes/font_size = 13
-text = "USERNAME"
+texture = ExtResource("3_r3fp8")
+expand_mode = 5
 
-[node name="UsernameInput" type="LineEdit" parent="." unique_id=540885103]
+[node name="UsernameInput" type="LineEdit" parent="." unique_id=978798486]
 unique_name_in_owner = true
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -160.0
-offset_top = -98.0
-offset_right = 160.0
-offset_bottom = -54.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_font_sizes/font_size = 14
-theme_override_styles/normal = SubResource("5")
-theme_override_styles/focus = SubResource("5")
-placeholder_text = "Enter username"
-
-[node name="PasswordLabel" type="Label" parent="." unique_id=788881944]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -143,56 +129,33 @@ anchor_bottom = 0.5
 offset_left = -160.0
 offset_top = -40.0
 offset_right = 160.0
-offset_bottom = -20.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_colors/font_color = Color(0.35, 0.35, 0.4, 1)
-theme_override_font_sizes/font_size = 13
-text = "PASSWORD"
-
-[node name="PasswordInput" type="LineEdit" parent="." unique_id=292965855]
-unique_name_in_owner = true
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -160.0
-offset_top = -18.0
-offset_right = 160.0
-offset_bottom = 26.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_font_sizes/font_size = 14
-theme_override_styles/normal = SubResource("5")
-theme_override_styles/focus = SubResource("5")
-placeholder_text = "Enter password"
-secret = true
-
-[node name="LoginButton" type="Button" parent="." unique_id=1810359098]
-unique_name_in_owner = true
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -160.0
-offset_top = 40.0
-offset_right = 160.0
-offset_bottom = 88.0
+offset_bottom = 4.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_colors/font_color = Color(1, 1, 1, 1)
-theme_override_font_sizes/font_size = 16
-theme_override_styles/normal = SubResource("2")
-theme_override_styles/pressed = SubResource("4")
-theme_override_styles/hover = SubResource("3")
-text = "LOGIN_BUTTON"
+theme_override_colors/font_placeholder_color = Color(1, 1, 1, 0.5)
+theme_override_font_sizes/font_size = 14
+theme_override_styles/normal = SubResource("input")
+theme_override_styles/focus = SubResource("input_focus")
+placeholder_text = "USERNAME"
 
-[node name="ErrorLabel" type="Label" parent="." unique_id=92763947]
+[node name="UserIcon" type="TextureRect" parent="." unique_id=1106138277]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -150.0
+offset_top = -30.0
+offset_right = -126.0
+offset_bottom = -6.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("5_9n4p5")
+expand_mode = 5
+
+[node name="PasswordInput" type="LineEdit" parent="." unique_id=123513644]
 unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 8
@@ -201,25 +164,119 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -160.0
-offset_top = 160.0
+offset_top = 24.0
 offset_right = 160.0
-offset_bottom = 180.0
+offset_bottom = 68.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_colors/font_color = Color(0.86, 0.21, 0.27, 1)
-theme_override_font_sizes/font_size = 12
-horizontal_alignment = 1
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_placeholder_color = Color(1, 1, 1, 0.5)
+theme_override_font_sizes/font_size = 14
+theme_override_styles/normal = SubResource("input")
+theme_override_styles/focus = SubResource("input_focus")
+placeholder_text = "PASSWORD"
+secret = true
 
-[node name="LangButton" parent="." unique_id=1238473430 instance=ExtResource("2_hbxdl")]
-layout_mode = 0
+[node name="LockIcon" type="TextureRect" parent="." unique_id=245052365]
+layout_mode = 1
+anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = 430.0
-offset_top = -300.0
-offset_right = 530.0
-offset_bottom = -260.0
+offset_left = -150.0
+offset_top = 34.0
+offset_right = -126.0
+offset_bottom = 58.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("6_1q7r6")
+expand_mode = 5
+
+[node name="LoginButton" type="Button" parent="." unique_id=2050003046]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -160.0
+offset_top = 100.0
+offset_right = 160.0
+offset_bottom = 148.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.114, 0.231, 0.545, 1)
+theme_override_colors/font_pressed_color = Color(0.1, 0.2, 0.5, 1)
+theme_override_colors/font_hover_color = Color(0.15, 0.3, 0.65, 1)
+theme_override_font_sizes/font_size = 16
+theme_override_styles/normal = SubResource("btn_normal")
+theme_override_styles/pressed = SubResource("btn_pressed")
+theme_override_styles/hover = SubResource("btn_hover")
+text = "LOGIN_BUTTON"
+
+[node name="ForgotPassword" type="Button" parent="." unique_id=1966058448]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -160.0
+offset_top = 155.0
+offset_right = 160.0
+offset_bottom = 178.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 1, 1, 0.7)
+theme_override_colors/font_hover_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 12
+text = "FORGOT_PASSWORD"
+flat = true
+alignment = 2
+
+[node name="ErrorLabel" type="Label" parent="." unique_id=1824728417]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -160.0
+offset_top = 190.0
+offset_right = 160.0
+offset_bottom = 210.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 0.6, 0.6, 1)
+theme_override_font_sizes/font_size = 12
+horizontal_alignment = 1
+
+[node name="LangButton" type="Button" parent="." unique_id=199669830]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -140.0
+offset_top = 16.0
+offset_right = -16.0
+offset_bottom = 52.0
+grow_horizontal = 0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 12
+text = "English"
+alignment = 0
+
+[node name="LangDropdown" type="VBoxContainer" parent="LangButton" unique_id=291513591]
+visible = false
+layout_mode = 0
+offset_top = 36.0
+offset_right = 140.0
+offset_bottom = 36.0
+script = ExtResource("6_r3fp8")
 
 [connection signal="pressed" from="LoginButton" to="." method="_on_login_pressed"]
 [connection signal="pressed" from="LangButton" to="." method="_on_lang_pressed"]

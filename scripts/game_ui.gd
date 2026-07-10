@@ -1,9 +1,48 @@
 extends CanvasLayer
 
-@onready var logout_button: Button = %LogoutButton
+@onready var settings_button: Button = $SettingsButton
+@onready var settings_dropdown = $SettingsButton/SettingsDropdown
 
 func _ready() -> void:
-	logout_button.pressed.connect(_on_logout_pressed)
+	settings_button.icon = load("res://assets/icons/icon_gear.png")
+	settings_button.text = ""
+	var transparent := StyleBoxFlat.new()
+	transparent.bg_color = Color(0, 0, 0, 0)
+	settings_button.add_theme_stylebox_override("normal", transparent)
+	settings_button.add_theme_stylebox_override("pressed", transparent)
+	var hover := StyleBoxFlat.new()
+	hover.bg_color = Color(1, 1, 1, 0.15)
+	hover.corner_radius_top_left = 8
+	hover.corner_radius_top_right = 8
+	hover.corner_radius_bottom_right = 8
+	hover.corner_radius_bottom_left = 8
+	settings_button.add_theme_stylebox_override("hover", hover)
+	if not SessionManager.is_logged_in:
+		get_tree().change_scene_to_file("res://scenes/login.tscn")
+		return
+	var opts: Array[Dictionary] = [
+		{"action": "logout", "label": "Log Out", "icon": "res://assets/icons/icon_logout.png"},
+	]
+	settings_dropdown.options = opts
+	settings_dropdown.option_selected.connect(_on_settings_option)
+	settings_button.pressed.connect(_on_settings_pressed)
 
-func _on_logout_pressed() -> void:
-	get_tree().change_scene_to_file("res://scenes/login.tscn")
+func _on_settings_pressed() -> void:
+	if settings_dropdown.visible:
+		settings_dropdown.close()
+	else:
+		settings_dropdown.open()
+
+func _on_settings_option(action: String) -> void:
+	match action:
+		"logout":
+			SessionManager.logout()
+			get_tree().change_scene_to_file("res://scenes/login.tscn")
+
+func _unhandled_input(event: InputEvent) -> void:
+	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed and settings_dropdown.visible:
+		var btn_rect := Rect2(settings_button.global_position, settings_button.size)
+		var ddown_rect := Rect2(settings_dropdown.global_position, settings_dropdown.size * settings_dropdown.scale)
+		var mouse_pos := get_viewport().get_mouse_position()
+		if not btn_rect.has_point(mouse_pos) and not ddown_rect.has_point(mouse_pos):
+			settings_dropdown.close()
