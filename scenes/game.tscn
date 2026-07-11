@@ -55,7 +55,7 @@ offset_top = 10.0
 offset_right = -10.0
 offset_bottom = 50.0
 
-[node name="ChopButton" type="Button" parent="UILayer" unique_id=1483188161]
+[node name="ActionButton" type="Button" parent="UILayer" unique_id=1483188161]
 anchors_preset = 3
 anchor_left = 1.0
 anchor_top = 1.0
@@ -65,19 +65,6 @@ offset_left = -130.0
 offset_top = -60.0
 offset_right = -10.0
 offset_bottom = -10.0
-flat = true
-
-[node name="MineButton" type="Button" parent="UILayer" unique_id=1946613627]
-visible = false
-anchors_preset = 3
-anchor_left = 1.0
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -130.0
-offset_top = -120.0
-offset_right = -10.0
-offset_bottom = -70.0
 flat = true
 
 [node name="Tree1" parent="." unique_id=664118593 instance=ExtResource("5_iywne")]

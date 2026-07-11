@@ -2,11 +2,11 @@ extends CanvasLayer
 
 @onready var settings_button: Button = $"../UILayer/SettingsButton"
 @onready var settings_dropdown = $"../UILayer/SettingsButton/SettingsDropdown"
-@onready var chop_button: Button = $"../UILayer/ChopButton"
-@onready var mine_button: Button = $"../UILayer/MineButton"
+@onready var action_button: Button = $"../UILayer/ActionButton"
 var resource_game_ui: Control = null
 var _nearby_trees: int = 0
 var _nearby_stones: int = 0
+var _current_action: String = ""
 const RESOURCE_GAME_SCENE := preload("res://scenes/resource_game.tscn")
 
 func _ready() -> void:
@@ -23,8 +23,7 @@ func _ready() -> void:
 	hover.corner_radius_bottom_right = 8
 	hover.corner_radius_bottom_left = 8
 	settings_button.add_theme_stylebox_override("hover", hover)
-	_setup_chop_button()
-	_setup_mine_button()
+	_setup_action_button()
 	if not SessionManager.is_logged_in:
 		call_deferred("_go_to_login")
 		return
@@ -36,91 +35,66 @@ func _ready() -> void:
 	settings_dropdown.option_selected.connect(_on_settings_option)
 	settings_button.pressed.connect(_on_settings_pressed)
 
-func _setup_chop_button() -> void:
-	chop_button.icon = load("res://assets/icons/icon_chop.png")
-	chop_button.text = ""
+func _setup_action_button() -> void:
+	action_button.text = ""
 	var normal := StyleBoxFlat.new()
 	normal.bg_color = Color(0, 0, 0, 0.35)
 	normal.corner_radius_top_left = 24
 	normal.corner_radius_top_right = 24
 	normal.corner_radius_bottom_right = 24
 	normal.corner_radius_bottom_left = 24
-	chop_button.add_theme_stylebox_override("normal", normal)
+	action_button.add_theme_stylebox_override("normal", normal)
 	var pressed := StyleBoxFlat.new()
 	pressed.bg_color = Color(0.2, 0.2, 0.2, 0.6)
 	pressed.corner_radius_top_left = 24
 	pressed.corner_radius_top_right = 24
 	pressed.corner_radius_bottom_right = 24
 	pressed.corner_radius_bottom_left = 24
-	chop_button.add_theme_stylebox_override("pressed", pressed)
+	action_button.add_theme_stylebox_override("pressed", pressed)
 	var hover := StyleBoxFlat.new()
 	hover.bg_color = Color(1, 1, 1, 0.15)
 	hover.corner_radius_top_left = 24
 	hover.corner_radius_top_right = 24
 	hover.corner_radius_bottom_right = 24
 	hover.corner_radius_bottom_left = 24
-	chop_button.add_theme_stylebox_override("hover", hover)
-	chop_button.button_down.connect(_on_chop_pressed)
-	chop_button.button_up.connect(_on_chop_released)
-	chop_button.visible = false
+	action_button.add_theme_stylebox_override("hover", hover)
+	action_button.button_down.connect(_on_action_pressed)
+	action_button.button_up.connect(_on_action_released)
+	action_button.visible = false
 	for tree in get_tree().get_nodes_in_group("trees"):
 		if not tree.is_connected("chop_proximity_changed", _on_chop_proximity_changed):
 			tree.chop_proximity_changed.connect(_on_chop_proximity_changed)
-
-func _setup_mine_button() -> void:
-	mine_button.icon = load("res://assets/icons/icon_mine.png")
-	mine_button.text = ""
-	var normal := StyleBoxFlat.new()
-	normal.bg_color = Color(0, 0, 0, 0.35)
-	normal.corner_radius_top_left = 24
-	normal.corner_radius_top_right = 24
-	normal.corner_radius_bottom_right = 24
-	normal.corner_radius_bottom_left = 24
-	mine_button.add_theme_stylebox_override("normal", normal)
-	var pressed := StyleBoxFlat.new()
-	pressed.bg_color = Color(0.2, 0.2, 0.2, 0.6)
-	pressed.corner_radius_top_left = 24
-	pressed.corner_radius_top_right = 24
-	pressed.corner_radius_bottom_right = 24
-	pressed.corner_radius_bottom_left = 24
-	mine_button.add_theme_stylebox_override("pressed", pressed)
-	var hover := StyleBoxFlat.new()
-	hover.bg_color = Color(1, 1, 1, 0.15)
-	hover.corner_radius_top_left = 24
-	hover.corner_radius_top_right = 24
-	hover.corner_radius_bottom_right = 24
-	hover.corner_radius_bottom_left = 24
-	mine_button.add_theme_stylebox_override("hover", hover)
-	mine_button.button_down.connect(_on_mine_pressed)
-	mine_button.button_up.connect(_on_mine_released)
-	mine_button.visible = false
 	for stone in get_tree().get_nodes_in_group("stones"):
 		if not stone.is_connected("mine_proximity_changed", _on_mine_proximity_changed):
 			stone.mine_proximity_changed.connect(_on_mine_proximity_changed)
 
-func _on_mine_pressed() -> void:
-	var ev := InputEventAction.new()
-	ev.action = "mine"
-	ev.pressed = true
-	Input.parse_input_event(ev)
-
-func _on_mine_released() -> void:
-	var ev := InputEventAction.new()
-	ev.action = "mine"
-	ev.pressed = false
-	Input.parse_input_event(ev)
-
-func _on_mine_proximity_changed(nearby: bool) -> void:
-	if nearby:
-		_nearby_stones += 1
+func _update_action_button() -> void:
+	if _nearby_trees > 0:
+		_current_action = "chop"
+		action_button.icon = load("res://assets/icons/icon_chop.png")
+		action_button.visible = true
+	elif _nearby_stones > 0:
+		_current_action = "mine"
+		action_button.icon = load("res://assets/icons/icon_mine.png")
+		action_button.visible = true
 	else:
-		_nearby_stones = max(0, _nearby_stones - 1)
-	mine_button.visible = _nearby_stones > 0
+		_current_action = ""
+		action_button.visible = false
 
-func _on_chop_pressed() -> void:
+func _on_action_pressed() -> void:
+	if _current_action == "":
+		return
 	var ev := InputEventAction.new()
-	ev.action = "chop"
+	ev.action = _current_action
 	ev.pressed = true
+	Input.parse_input_event(ev)
+
+func _on_action_released() -> void:
+	if _current_action == "":
+		return
+	var ev := InputEventAction.new()
+	ev.action = _current_action
+	ev.pressed = false
 	Input.parse_input_event(ev)
 
 func _on_chop_proximity_changed(nearby: bool) -> void:
@@ -128,13 +102,14 @@ func _on_chop_proximity_changed(nearby: bool) -> void:
 		_nearby_trees += 1
 	else:
 		_nearby_trees = max(0, _nearby_trees - 1)
-	chop_button.visible = _nearby_trees > 0
+	_update_action_button()
 
-func _on_chop_released() -> void:
-	var ev := InputEventAction.new()
-	ev.action = "chop"
-	ev.pressed = false
-	Input.parse_input_event(ev)
+func _on_mine_proximity_changed(nearby: bool) -> void:
+	if nearby:
+		_nearby_stones += 1
+	else:
+		_nearby_stones = max(0, _nearby_stones - 1)
+	_update_action_button()
 
 func _go_to_login() -> void:
 	get_tree().change_scene_to_file("res://scenes/login.tscn")
