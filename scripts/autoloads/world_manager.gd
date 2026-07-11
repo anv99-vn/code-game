@@ -56,7 +56,6 @@ func generate_objects(parent: Node2D, player_pos: Vector2 = Vector2(400, 300)) -
 	for _i in gold_source_count:
 		if _try_place(GOLD_SOURCE_SCENE, parent, player_pos, placed) != null:
 			gold_sources_made += 1
-	print("WorldManager: generated %d trees, %d stones, %d gold sources" % [trees_made, stones_made, gold_sources_made])
 	objects_generated.emit()
 
 func _try_place(scene: PackedScene, parent: Node2D, player_pos: Vector2, placed: Array[Vector2]) -> Node2D:

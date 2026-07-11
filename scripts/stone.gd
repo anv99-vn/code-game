@@ -42,7 +42,6 @@ func _ready() -> void:
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("mine") and _player_nearby and not _depleted:
-		print("Received mine signal",event)
 		_mine()
 
 
