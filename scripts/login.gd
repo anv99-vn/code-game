@@ -32,7 +32,6 @@ func _ready() -> void:
 	lang_button.add_theme_stylebox_override("hover", lang_hover)
 	forgot_password.pressed.connect(_on_forgot_password_pressed)
 	if SessionManager.is_logged_in:
-		ResourceLogic.start_passive_income()
 		get_tree().change_scene_to_file("res://scenes/game.tscn")
 		return
 	if SessionLogic.has_saved_credentials():
