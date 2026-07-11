@@ -12,20 +12,48 @@ jobs:
     name: Build Windows Executable
     permissions:
       contents: write
-    
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Export game
-        id: export
+      - name: Strip dev autoloads before export
+        shell: bash
+        run: |
+          # Remove MCPRuntime autoload line from project.godot
+          sed -i '/^MCPRuntime=/d' project.godot
+
+      - name: Export main executable (embedded PCK)
+        id: export_main
         uses: firebelley/godot-export@v7.0.0
         with:
           godot_executable_download_url: https://github.com/godotengine/godot/releases/download/4.7-stable/Godot_v4.7-stable_linux.x86_64.zip
           godot_export_templates_download_url: https://github.com/godotengine/godot/releases/download/4.7-stable/Godot_v4.7-stable_export_templates.tpz
           relative_project_path: ./
-          archive_output: true
+          archive_output: false
           presets_to_export: "Windows Desktop"
+
+      - name: Export Assets Core pack
+        id: export_assets_core
+        uses: firebelley/godot-export@v7.0.0
+        with:
+          godot_executable_download_url: https://github.com/godotengine/godot/releases/download/4.7-stable/Godot_v4.7-stable_linux.x86_64.zip
+          godot_export_templates_download_url: https://github.com/godotengine/godot/releases/download/4.7-stable/Godot_v4.7-stable_export_templates.tpz
+          relative_project_path: ./
+          archive_output: false
+          presets_to_export: "Assets Core"
+
+      - name: Create distribution zip
+        shell: bash
+        run: |
+          cd build
+          mkdir -p dist/Code-Game
+          cp windows/Code-Game.exe dist/Code-Game/
+          if [ -f packs/assets_core.pck ]; then
+            cp packs/assets_core.pck dist/Code-Game/
+          fi
+          cd dist
+          7z a -tzip ../Code-Game-${{ github.ref_name }}.zip Code-Game/
 
       - name: Create Release
         uses: ncipollo/release-action@v1.18.0
@@ -34,4 +62,4 @@ jobs:
           tag: ${{ github.ref_name }}
           name: ${{ github.ref_name }}
           generateReleaseNotes: true
-          artifacts: ${{ steps.export.outputs.archive_directory }}/*
+          artifacts: build/Code-Game-${{ github.ref_name }}.zip
