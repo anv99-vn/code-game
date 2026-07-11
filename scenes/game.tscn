@@ -24,6 +24,10 @@ texture = ExtResource("2_ds2d6")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Player" unique_id=954044468]
 shape = SubResource("CircleShape2D_2yhen")
 
+[node name="Camera2D" type="Camera2D" parent="Player"]
+position_smoothing_enabled = true
+position_smoothing_speed = 5.0
+
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1001473901]
 script = ExtResource("1_lnu2h")
 
