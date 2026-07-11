@@ -22,7 +22,7 @@ RES_GOLD,Gold: %d,Vàng: %d
 RES_LUMBER_CAMP,Lumber Camp (%d wood) - Own: %d,Trạm khai thác gỗ (%d gỗ) - Sở hữu: %d
 RES_QUARRY,Quarry (%d stone) - Own: %d,Mỏ đá (%d đá) - Sở hữu: %d
 RES_FARM,Farm (%d food) - Own: %d,Nông trại (%d thực phẩm) - Sở hữu: %d
-RES_MINE,Mine (%d wood, %d stone) - Own: %d,Mỏ (%d gỗ, %d đá) - Sở hữu: %d
+RES_MINE,Mine (%d wood; %d stone) - Own: %d,Mỏ (%d gỗ; %d đá) - Sở hữu: %d
 RES_CLICK_POWER,Click Power (%d gold) - Level: %d,Lực nhấp (%d vàng) - Cấp: %d
 RES_ERR_WOOD,Not enough wood!,Không đủ gỗ!
 RES_ERR_STONE,Not enough stone!,Không đủ đá!
