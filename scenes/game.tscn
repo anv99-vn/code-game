@@ -58,6 +58,20 @@ offset_top = 10.0
 offset_right = -10.0
 offset_bottom = 50.0
 
+[node name="ActionButtonBackground" type="ColorRect" parent="UILayer" unique_id=918372654]
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -138.0
+offset_top = -167.0
+offset_right = -76.0
+offset_bottom = -105.0
+grow_horizontal = 0
+grow_vertical = 0
+color = Color(0, 0, 0, 0.5)
+
 [node name="ActionButton" type="TextureButton" parent="UILayer" unique_id=1483188161]
 custom_minimum_size = Vector2(60, 60)
 custom_maximum_size = Vector2(60, 60)
