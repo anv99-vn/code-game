@@ -23,7 +23,7 @@ func _ready() -> void:
 		call_deferred("_go_to_login")
 		return
 	var opts: Array[Dictionary] = [
-		{"action": "resources", "label": tr("RESOURCES"), "icon": "res://assets/icons/icon_resource.png"},
+		{"action": "resources", "label": tr("RES_LABEL"), "icon": "res://assets/icons/icon_resource.png"},
 		{"action": "logout", "label": tr("LOG_OUT"), "icon": "res://assets/icons/icon_logout.png"},
 	]
 	settings_dropdown.options = opts

@@ -8,7 +8,7 @@ ERROR_INVALID,Invalid username or password.,Tên đăng nhập hoặc mật kh�
 FORGOT_PASSWORD,Forgot password?,Quên mật khẩu?
 FORGOT_PASSWORD_MSG,Contact admin to reset password.,Liên hệ admin để đặt lại mật khẩu.
 LOG_OUT,Log Out,Đăng xuất
-RESOURCES,Resources,Tài nguyên
+RES_LABEL,Resources,Tài nguyên
 RES_GATHER_TITLE,Gather Resources,Thu thập tài nguyên
 RES_BUILD_TITLE,Buildings & Upgrades,Xây dựng & Nâng cấp
 RES_CHOP_WOOD,Chop Wood (+1),Đốn gỗ (+1)
