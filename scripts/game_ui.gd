@@ -24,6 +24,7 @@ func _ready() -> void:
 	hover.corner_radius_bottom_left = 8
 	settings_button.add_theme_stylebox_override("hover", hover)
 	_setup_action_button()
+	WorldManager.objects_generated.connect(_connect_resource_nodes)
 	if not SessionManager.is_logged_in:
 		call_deferred("_go_to_login")
 		return
@@ -61,6 +62,8 @@ func _setup_action_button() -> void:
 	action_button.button_down.connect(_on_action_pressed)
 	action_button.button_up.connect(_on_action_released)
 	action_button.visible = false
+
+func _connect_resource_nodes() -> void:
 	for tree in get_tree().get_nodes_in_group("trees"):
 		if not tree.is_connected("chop_proximity_changed", _on_chop_proximity_changed):
 			tree.chop_proximity_changed.connect(_on_chop_proximity_changed)
