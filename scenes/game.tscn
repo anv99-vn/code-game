@@ -1,17 +1,17 @@
 [gd_scene format=3 uid="uid://4y218hwwfsqc"]
 
+[ext_resource type="Script" path="res://scripts/game.gd" id="1_game"]
 [ext_resource type="Script" uid="uid://dn0eda358oebx" path="res://scripts/player.gd" id="1_2yhen"]
 [ext_resource type="Script" uid="uid://foo64xhf2fa2" path="res://scripts/game_ui.gd" id="1_lnu2h"]
 [ext_resource type="Texture2D" uid="uid://b7jj2rex1ktj0" path="res://assets/player.png" id="2_ds2d6"]
 [ext_resource type="PackedScene" uid="uid://cnu3s5uf4pavh" path="res://scenes/settings_button.tscn" id="4_lbhrr"]
-[ext_resource type="PackedScene" uid="uid://cx0ns72lrxcja" path="res://scenes/tree.tscn" id="5_iywne"]
-[ext_resource type="PackedScene" uid="uid://c3b7tcerscak" path="res://scenes/stone.tscn" id="6_p57ef"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_2yhen"]
 radius = 32.0
 
 [node name="JoystickDemo" type="Node2D" unique_id=473169652]
 y_sort_enabled = true
+script = ExtResource("1_game")
 
 [node name="Player" type="CharacterBody2D" parent="." unique_id=777069773 groups=["player"]]
 position = Vector2(400, 300)
@@ -66,33 +66,3 @@ offset_top = -60.0
 offset_right = -10.0
 offset_bottom = -10.0
 flat = true
-
-[node name="Tree1" parent="." unique_id=664118593 instance=ExtResource("5_iywne")]
-position = Vector2(250, 200)
-
-[node name="Tree2" parent="." unique_id=756327324 instance=ExtResource("5_iywne")]
-position = Vector2(580, 220)
-
-[node name="Tree3" parent="." unique_id=1376643763 instance=ExtResource("5_iywne")]
-position = Vector2(850, 260)
-
-[node name="Tree4" parent="." unique_id=1229445153 instance=ExtResource("5_iywne")]
-position = Vector2(320, 460)
-
-[node name="Tree5" parent="." unique_id=401328326 instance=ExtResource("5_iywne")]
-position = Vector2(680, 480)
-
-[node name="Tree6" parent="." unique_id=1636495022 instance=ExtResource("5_iywne")]
-position = Vector2(470, 380)
-
-[node name="Stone1" parent="." unique_id=1568570212 instance=ExtResource("6_p57ef")]
-position = Vector2(720, 350)
-
-[node name="Stone2" parent="." unique_id=750415113 instance=ExtResource("6_p57ef")]
-position = Vector2(540, 540)
-
-[node name="Stone3" parent="." unique_id=1360033863 instance=ExtResource("6_p57ef")]
-position = Vector2(150, 380)
-
-[node name="Stone4" parent="." unique_id=1451375741 instance=ExtResource("6_p57ef")]
-position = Vector2(920, 440)
