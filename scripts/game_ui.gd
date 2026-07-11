@@ -2,7 +2,7 @@ extends CanvasLayer
 
 @onready var settings_button: Button = $"../UILayer/SettingsButton"
 @onready var settings_dropdown = $"../UILayer/SettingsButton/SettingsDropdown"
-@onready var action_button: Button = $"../UILayer/ActionButton"
+@onready var action_button: TextureButton = $"../UILayer/ActionButton"
 var resource_game_ui: Control = null
 var _current_action: String = ""
 const RESOURCE_GAME_SCENE := preload("res://scenes/resource_game.tscn")
@@ -34,28 +34,7 @@ func _ready() -> void:
 	settings_button.pressed.connect(_on_settings_pressed)
 
 func _setup_action_button() -> void:
-	action_button.text = ""
-	var normal := StyleBoxFlat.new()
-	normal.bg_color = Color(0, 0, 0, 0.35)
-	normal.corner_radius_top_left = 24
-	normal.corner_radius_top_right = 24
-	normal.corner_radius_bottom_right = 24
-	normal.corner_radius_bottom_left = 24
-	action_button.add_theme_stylebox_override("normal", normal)
-	var pressed := StyleBoxFlat.new()
-	pressed.bg_color = Color(0.2, 0.2, 0.2, 0.6)
-	pressed.corner_radius_top_left = 24
-	pressed.corner_radius_top_right = 24
-	pressed.corner_radius_bottom_right = 24
-	pressed.corner_radius_bottom_left = 24
-	action_button.add_theme_stylebox_override("pressed", pressed)
-	var hover := StyleBoxFlat.new()
-	hover.bg_color = Color(1, 1, 1, 0.15)
-	hover.corner_radius_top_left = 24
-	hover.corner_radius_top_right = 24
-	hover.corner_radius_bottom_right = 24
-	hover.corner_radius_bottom_left = 24
-	action_button.add_theme_stylebox_override("hover", hover)
+	action_button.texture_normal = load("res://assets/icons/icon_chop.png")
 	action_button.button_down.connect(_on_action_pressed)
 	action_button.button_up.connect(_on_action_released)
 	action_button.visible = false
@@ -67,11 +46,15 @@ func _on_focus_changed(focused: Node2D) -> void:
 		action_button.visible = false
 	elif focused.is_in_group("trees"):
 		_current_action = "chop"
-		action_button.icon = load("res://assets/icons/icon_chop.png")
+		action_button.texture_normal = load("res://assets/icons/icon_chop.png")
 		action_button.visible = true
 	elif focused.is_in_group("stones"):
 		_current_action = "mine"
-		action_button.icon = load("res://assets/icons/icon_mine.png")
+		action_button.texture_normal = load("res://assets/icons/icon_mine.png")
+		action_button.visible = true
+	elif focused.is_in_group("gold_sources"):
+		_current_action = "pan"
+		action_button.texture_normal = load("res://assets/icons/icon_pan.png")
 		action_button.visible = true
 
 func _on_action_pressed() -> void:

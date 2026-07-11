@@ -58,17 +58,18 @@ offset_top = 10.0
 offset_right = -10.0
 offset_bottom = 50.0
 
-[node name="ActionButton" type="Button" parent="UILayer" unique_id=1483188161]
+[node name="ActionButton" type="TextureButton" parent="UILayer" unique_id=1483188161]
+custom_minimum_size = Vector2(60, 60)
+custom_maximum_size = Vector2(60, 60)
 anchors_preset = 3
 anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -146.0
-offset_top = -138.0
-offset_right = -26.0
-offset_bottom = -88.0
+offset_left = -131.0
+offset_top = -160.0
+offset_right = -83.0
+offset_bottom = -112.0
 grow_horizontal = 0
 grow_vertical = 0
-flat = true
-visible = false
+stretch_mode = 6

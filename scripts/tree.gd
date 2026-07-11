@@ -83,6 +83,7 @@ func _fell() -> void:
 	stump_sprite.visible = true
 	prompt_label.visible = false
 	health_bar.visible = false
+	InteractionManager.unregister(self)
 	_respawn_at = Time.get_ticks_msec() / 1000.0 + respawn_time
 	cooldown_label.visible = _player_nearby
 
@@ -107,6 +108,8 @@ func _respawn() -> void:
 	health_bar.value = max_health
 	cooldown_label.visible = false
 	cooldown_label.text = ""
+	if _player_nearby:
+		InteractionManager.register(self)
 
 
 func _on_body_entered(body: Node2D) -> void:
