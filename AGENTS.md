@@ -15,3 +15,7 @@ Always save screenshots to `addons/godot_mcp/cache/screenshots/` (use `save_to: 
 ## Thread Attachments
 
 When a file is attached to a thread, only read that specific file. Do not read other files in the project unless explicitly asked.
+
+## Testing
+
+When running only a test scene, update autoloads to update data as needed for the test.
