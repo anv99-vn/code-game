@@ -8,5 +8,31 @@ ERROR_INVALID,Invalid username or password.,Tên đăng nhập hoặc mật kh�
 FORGOT_PASSWORD,Forgot password?,Quên mật khẩu?
 FORGOT_PASSWORD_MSG,Contact admin to reset password.,Liên hệ admin để đặt lại mật khẩu.
 LOG_OUT,Log Out,Đăng xuất
+RESOURCES,Resources,Tài nguyên
+RES_GATHER_TITLE,Gather Resources,Thu thập tài nguyên
+RES_BUILD_TITLE,Buildings & Upgrades,Xây dựng & Nâng cấp
+RES_CHOP_WOOD,Chop Wood (+1),Đốn gỗ (+1)
+RES_MINE_STONE,Mine Stone (+1),Đào đá (+1)
+RES_FORAGE_FOOD,Forage Food (+1),Thu lượm thực phẩm (+1)
+RES_PAN_GOLD,Pan Gold (+1),Rửa vàng (+1)
+RES_WOOD,Wood: %d,Gỗ: %d
+RES_STONE,Stone: %d,Đá: %d
+RES_FOOD,Food: %d,Thực phẩm: %d
+RES_GOLD,Gold: %d,Vàng: %d
+RES_LUMBER_CAMP,Lumber Camp (%d wood) - Own: %d,Trạm khai thác gỗ (%d gỗ) - Sở hữu: %d
+RES_QUARRY,Quarry (%d stone) - Own: %d,Mỏ đá (%d đá) - Sở hữu: %d
+RES_FARM,Farm (%d food) - Own: %d,Nông trại (%d thực phẩm) - Sở hữu: %d
+RES_MINE,Mine (%d wood, %d stone) - Own: %d,Mỏ (%d gỗ, %d đá) - Sở hữu: %d
+RES_CLICK_POWER,Click Power (%d gold) - Level: %d,Lực nhấp (%d vàng) - Cấp: %d
+RES_ERR_WOOD,Not enough wood!,Không đủ gỗ!
+RES_ERR_STONE,Not enough stone!,Không đủ đá!
+RES_ERR_FOOD,Not enough food!,Không đủ thực phẩm!
+RES_ERR_MINE,Not enough resources for Mine!,Không đủ tài nguyên cho Mỏ!
+RES_ERR_GOLD,Not enough gold!,Không đủ vàng!
+RES_MSG_LUMBER,Built Lumber Camp! Now generating +%d wood/sec.,Đã xây Trạm khai thác gỗ! Hiện tạo +%d gỗ/giây.
+RES_MSG_QUARRY,Built Quarry! Now generating +%d stone/sec.,Đã xây Mỏ đá! Hiện tạo +%d đá/giây.
+RES_MSG_FARM,Built Farm! Now generating +%d food/sec.,Đã xây Nông trại! Hiện tạo +%d thực phẩm/giây.
+RES_MSG_MINE,Built Mine! Now generating +%d gold/sec.,Đã xây Mỏ! Hiện tạo +%d vàng/giây.
+RES_MSG_UPGRADE,Upgraded Click Power! Now gathering +%d per click.,Đã nâng cấp Lực nhấp! Hiện thu thập +%d mỗi lần nhấp.
 LANG_EN,English,English
 LANG_VI,Tiếng Việt,Tiếng Việt

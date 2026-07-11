@@ -40,16 +40,16 @@ func _ready() -> void:
 	_update_ui()
 
 func _update_ui() -> void:
-	wood_label.text = "Wood: %d" % ResourceManager.wood
-	stone_label.text = "Stone: %d" % ResourceManager.stone
-	food_label.text = "Food: %d" % ResourceManager.food
-	gold_label.text = "Gold: %d" % ResourceManager.gold
+	wood_label.text = tr("RES_WOOD") % ResourceManager.wood
+	stone_label.text = tr("RES_STONE") % ResourceManager.stone
+	food_label.text = tr("RES_FOOD") % ResourceManager.food
+	gold_label.text = tr("RES_GOLD") % ResourceManager.gold
 
-	lumber_camp_button.text = "Lumber Camp (%d wood) - Own: %d" % [ResourceManager.lumber_camp_cost_wood, ResourceManager.lumber_camps]
-	quarry_button.text = "Quarry (%d stone) - Own: %d" % [ResourceManager.quarry_cost_stone, ResourceManager.quarries]
-	farm_button.text = "Farm (%d food) - Own: %d" % [ResourceManager.farm_cost_food, ResourceManager.farms]
-	mine_button.text = "Mine (%d wood, %d stone) - Own: %d" % [ResourceManager.mine_cost_wood, ResourceManager.mine_cost_stone, ResourceManager.mines]
-	upgrade_button.text = "Click Power (%d gold) - Level: %d" % [ResourceManager.click_power_cost_gold, ResourceManager.click_power]
+	lumber_camp_button.text = tr("RES_LUMBER_CAMP") % [ResourceManager.lumber_camp_cost_wood, ResourceManager.lumber_camps]
+	quarry_button.text = tr("RES_QUARRY") % [ResourceManager.quarry_cost_stone, ResourceManager.quarries]
+	farm_button.text = tr("RES_FARM") % [ResourceManager.farm_cost_food, ResourceManager.farms]
+	mine_button.text = tr("RES_MINE") % [ResourceManager.mine_cost_wood, ResourceManager.mine_cost_stone, ResourceManager.mines]
+	upgrade_button.text = tr("RES_CLICK_POWER") % [ResourceManager.click_power_cost_gold, ResourceManager.click_power]
 
 	lumber_camp_button.disabled = ResourceManager.wood < ResourceManager.lumber_camp_cost_wood
 	quarry_button.disabled = ResourceManager.stone < ResourceManager.quarry_cost_stone
@@ -77,23 +77,23 @@ func _on_gold_pressed() -> void:
 
 func _on_lumber_camp_pressed() -> void:
 	if not ResourceLogic.buy_lumber_camp():
-		_show_message("Not enough wood!")
+		_show_message(tr("RES_ERR_WOOD"))
 
 func _on_quarry_pressed() -> void:
 	if not ResourceLogic.buy_quarry():
-		_show_message("Not enough stone!")
+		_show_message(tr("RES_ERR_STONE"))
 
 func _on_farm_pressed() -> void:
 	if not ResourceLogic.buy_farm():
-		_show_message("Not enough food!")
+		_show_message(tr("RES_ERR_FOOD"))
 
 func _on_mine_pressed() -> void:
 	if not ResourceLogic.buy_mine():
-		_show_message("Not enough resources for Mine!")
+		_show_message(tr("RES_ERR_MINE"))
 
 func _on_upgrade_pressed() -> void:
 	if not ResourceLogic.upgrade_click_power():
-		_show_message("Not enough gold!")
+		_show_message(tr("RES_ERR_GOLD"))
 
 func _on_tick() -> void:
 	ResourceLogic.on_tick()

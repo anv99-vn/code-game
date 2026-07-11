@@ -34,7 +34,7 @@ func buy_lumber_camp() -> bool:
 		ResourceManager.lumber_camp_cost_wood = int(ResourceManager.lumber_camp_cost_wood * 1.5)
 		resources_updated.emit()
 		building_updated.emit("lumber_camp")
-		message_logged.emit("Built Lumber Camp! Now generating +%d wood/sec." % ResourceManager.lumber_camps)
+		message_logged.emit(tr("RES_MSG_LUMBER") % ResourceManager.lumber_camps)
 		return true
 	return false
 
@@ -45,7 +45,7 @@ func buy_quarry() -> bool:
 		ResourceManager.quarry_cost_stone = int(ResourceManager.quarry_cost_stone * 1.5)
 		resources_updated.emit()
 		building_updated.emit("quarry")
-		message_logged.emit("Built Quarry! Now generating +%d stone/sec." % ResourceManager.quarries)
+		message_logged.emit(tr("RES_MSG_QUARRY") % ResourceManager.quarries)
 		return true
 	return false
 
@@ -56,7 +56,7 @@ func buy_farm() -> bool:
 		ResourceManager.farm_cost_food = int(ResourceManager.farm_cost_food * 1.5)
 		resources_updated.emit()
 		building_updated.emit("farm")
-		message_logged.emit("Built Farm! Now generating +%d food/sec." % ResourceManager.farms)
+		message_logged.emit(tr("RES_MSG_FARM") % ResourceManager.farms)
 		return true
 	return false
 
@@ -69,7 +69,7 @@ func buy_mine() -> bool:
 		ResourceManager.mine_cost_stone = int(ResourceManager.mine_cost_stone * 1.5)
 		resources_updated.emit()
 		building_updated.emit("mine")
-		message_logged.emit("Built Mine! Now generating +%d gold/sec." % ResourceManager.mines)
+		message_logged.emit(tr("RES_MSG_MINE") % ResourceManager.mines)
 		return true
 	return false
 
@@ -80,7 +80,7 @@ func upgrade_click_power() -> bool:
 		ResourceManager.click_power_cost_gold = int(ResourceManager.click_power_cost_gold * 2.0)
 		resources_updated.emit()
 		building_updated.emit("upgrade")
-		message_logged.emit("Upgraded Click Power! Now gathering +%d per click." % ResourceManager.click_power)
+		message_logged.emit(tr("RES_MSG_UPGRADE") % ResourceManager.click_power)
 		return true
 	return false
 
