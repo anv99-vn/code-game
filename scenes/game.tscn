@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://4y218hwwfsqc"]
 
-[ext_resource type="Script" path="res://scripts/game.gd" id="1_game"]
 [ext_resource type="Script" uid="uid://dn0eda358oebx" path="res://scripts/player.gd" id="1_2yhen"]
+[ext_resource type="Script" uid="uid://1feikbu2akxb" path="res://scripts/game.gd" id="1_game"]
 [ext_resource type="Script" uid="uid://foo64xhf2fa2" path="res://scripts/game_ui.gd" id="1_lnu2h"]
 [ext_resource type="Texture2D" uid="uid://b7jj2rex1ktj0" path="res://assets/player.png" id="2_ds2d6"]
 [ext_resource type="PackedScene" uid="uid://cnu3s5uf4pavh" path="res://scenes/settings_button.tscn" id="4_lbhrr"]
@@ -31,11 +31,8 @@ script = ExtResource("1_lnu2h")
 anchors_preset = 2
 anchor_top = 1.0
 anchor_bottom = 1.0
-offset_left = 40.0
-offset_top = -180.0
-offset_right = 180.0
-offset_bottom = -40.0
-grow_horizontal = 0
+offset_top = -286.0
+offset_right = 303.0
 grow_vertical = 0
 joystick_mode = 2
 joystick_size = 120.0
@@ -61,8 +58,10 @@ anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -130.0
-offset_top = -60.0
-offset_right = -10.0
-offset_bottom = -10.0
+offset_left = -146.0
+offset_top = -138.0
+offset_right = -26.0
+offset_bottom = -88.0
+grow_horizontal = 0
+grow_vertical = 0
 flat = true
