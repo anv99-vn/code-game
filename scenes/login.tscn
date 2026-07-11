@@ -268,7 +268,7 @@ theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 12
 text = "English"
-alignment = 0
+alignment = 1
 
 [node name="LangDropdown" type="VBoxContainer" parent="LangButton" unique_id=291513591]
 visible = false
