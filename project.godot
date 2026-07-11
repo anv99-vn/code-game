@@ -27,6 +27,7 @@ SessionManager="*res://scripts/autoloads/session_manager.gd"
 ResourceLogic="*res://scripts/autoloads/resource_logic.gd"
 SessionLogic="*res://scripts/autoloads/session_logic.gd"
 WorldManager="*res://scripts/autoloads/world_manager.gd"
+InteractionManager="*res://scripts/autoloads/interaction_manager.gd"
 
 [editor_plugins]
 

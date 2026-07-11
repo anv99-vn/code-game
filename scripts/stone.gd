@@ -34,6 +34,7 @@ func _ready() -> void:
 		mine_area.body_entered.connect(_on_body_entered)
 	if mine_area.is_connected("body_exited", _on_body_exited) == false:
 		mine_area.body_exited.connect(_on_body_exited)
+	InteractionManager.focus_changed.connect(_on_focus_changed)
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -94,15 +95,22 @@ func _respawn() -> void:
 func _on_body_entered(body: Node2D) -> void:
 	if body.is_in_group("player"):
 		_player_nearby = true
-		if not _depleted:
-			prompt_label.visible = true
-			health_bar.visible = true
+		InteractionManager.set_player(body)
+		InteractionManager.register(self)
 		mine_proximity_changed.emit(true)
 
 
 func _on_body_exited(body: Node2D) -> void:
 	if body.is_in_group("player"):
 		_player_nearby = false
+		InteractionManager.unregister(self)
 		prompt_label.visible = false
 		health_bar.visible = false
 		mine_proximity_changed.emit(false)
+
+
+func _on_focus_changed(focused: Node2D) -> void:
+	var is_focused: bool = focused == self
+	if not _depleted and _player_nearby:
+		prompt_label.visible = is_focused
+		health_bar.visible = is_focused

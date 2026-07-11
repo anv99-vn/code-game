@@ -4,8 +4,6 @@ extends CanvasLayer
 @onready var settings_dropdown = $"../UILayer/SettingsButton/SettingsDropdown"
 @onready var action_button: Button = $"../UILayer/ActionButton"
 var resource_game_ui: Control = null
-var _nearby_trees: int = 0
-var _nearby_stones: int = 0
 var _current_action: String = ""
 const RESOURCE_GAME_SCENE := preload("res://scenes/resource_game.tscn")
 
@@ -61,25 +59,20 @@ func _setup_action_button() -> void:
 	action_button.button_down.connect(_on_action_pressed)
 	action_button.button_up.connect(_on_action_released)
 	action_button.visible = false
-	for tree in get_tree().get_nodes_in_group("trees"):
-		if not tree.is_connected("chop_proximity_changed", _on_chop_proximity_changed):
-			tree.chop_proximity_changed.connect(_on_chop_proximity_changed)
-	for stone in get_tree().get_nodes_in_group("stones"):
-		if not stone.is_connected("mine_proximity_changed", _on_mine_proximity_changed):
-			stone.mine_proximity_changed.connect(_on_mine_proximity_changed)
+	InteractionManager.focus_changed.connect(_on_focus_changed)
 
-func _update_action_button() -> void:
-	if _nearby_trees > 0:
+func _on_focus_changed(focused: Node2D) -> void:
+	if focused == null:
+		_current_action = ""
+		action_button.visible = false
+	elif focused.is_in_group("trees"):
 		_current_action = "chop"
 		action_button.icon = load("res://assets/icons/icon_chop.png")
 		action_button.visible = true
-	elif _nearby_stones > 0:
+	elif focused.is_in_group("stones"):
 		_current_action = "mine"
 		action_button.icon = load("res://assets/icons/icon_mine.png")
 		action_button.visible = true
-	else:
-		_current_action = ""
-		action_button.visible = false
 
 func _on_action_pressed() -> void:
 	if _current_action == "":
@@ -96,20 +89,6 @@ func _on_action_released() -> void:
 	ev.action = _current_action
 	ev.pressed = false
 	Input.parse_input_event(ev)
-
-func _on_chop_proximity_changed(nearby: bool) -> void:
-	if nearby:
-		_nearby_trees += 1
-	else:
-		_nearby_trees = max(0, _nearby_trees - 1)
-	_update_action_button()
-
-func _on_mine_proximity_changed(nearby: bool) -> void:
-	if nearby:
-		_nearby_stones += 1
-	else:
-		_nearby_stones = max(0, _nearby_stones - 1)
-	_update_action_button()
 
 func _go_to_login() -> void:
 	get_tree().change_scene_to_file("res://scenes/login.tscn")
