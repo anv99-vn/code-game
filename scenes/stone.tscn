@@ -1,0 +1,49 @@
+[gd_scene format=3 uid="uid://c3b7tcerscak"]
+
+[ext_resource type="Script" uid="uid://byk8bhmyyurmk" path="res://scripts/stone.gd" id="1_hmdus"]
+[ext_resource type="Texture2D" uid="uid://c840yj3p8wjyi" path="res://assets/resources/stone.png" id="2_tuldt"]
+[ext_resource type="Texture2D" uid="uid://b7axh7d22xa6j" path="res://assets/resources/stone_depleted.png" id="3_f651v"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_f651v"]
+radius = 30.0
+
+[node name="Stone" type="StaticBody2D" unique_id=1568570212]
+script = ExtResource("1_hmdus")
+
+[node name="StoneSprite" type="Sprite2D" parent="." unique_id=1272148197]
+y_sort_enabled = true
+texture = ExtResource("2_tuldt")
+offset = Vector2(0, -28)
+
+[node name="DepletedSprite" type="Sprite2D" parent="." unique_id=1720991836]
+visible = false
+texture = ExtResource("3_f651v")
+offset = Vector2(0, -16)
+
+[node name="PromptLabel" type="Label" parent="." unique_id=389321225]
+visible = false
+z_index = 10
+offset_left = -60.0
+offset_top = -90.0
+offset_right = 60.0
+offset_bottom = -72.0
+text = "Press K to mine"
+horizontal_alignment = 1
+
+[node name="HealthBar" type="ProgressBar" parent="." unique_id=1318305425]
+visible = false
+z_index = 10
+offset_left = -24.0
+offset_top = -66.0
+offset_right = 24.0
+offset_bottom = -52.0
+max_value = 4.0
+value = 4.0
+show_percentage = false
+
+[node name="MineArea" type="Area2D" parent="." unique_id=1146007225]
+collision_layer = 0
+
+[node name="MineCollision" type="CollisionShape2D" parent="MineArea" unique_id=16263908]
+position = Vector2(0, -28)
+shape = SubResource("CircleShape2D_f651v")

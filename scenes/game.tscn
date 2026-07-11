@@ -5,6 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://b7jj2rex1ktj0" path="res://assets/player.png" id="2_ds2d6"]
 [ext_resource type="PackedScene" uid="uid://cnu3s5uf4pavh" path="res://scenes/settings_button.tscn" id="4_lbhrr"]
 [ext_resource type="PackedScene" uid="uid://cx0ns72lrxcja" path="res://scenes/tree.tscn" id="5_iywne"]
+[ext_resource type="PackedScene" uid="uid://c3b7tcerscak" path="res://scenes/stone.tscn" id="6_p57ef"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_2yhen"]
 radius = 32.0
@@ -66,6 +67,19 @@ offset_right = -10.0
 offset_bottom = -10.0
 flat = true
 
+[node name="MineButton" type="Button" parent="UILayer" unique_id=1946613627]
+visible = false
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -130.0
+offset_top = -120.0
+offset_right = -10.0
+offset_bottom = -70.0
+flat = true
+
 [node name="Tree1" parent="." unique_id=664118593 instance=ExtResource("5_iywne")]
 position = Vector2(250, 200)
 
@@ -83,3 +97,15 @@ position = Vector2(680, 480)
 
 [node name="Tree6" parent="." unique_id=1636495022 instance=ExtResource("5_iywne")]
 position = Vector2(470, 380)
+
+[node name="Stone1" parent="." unique_id=1568570212 instance=ExtResource("6_p57ef")]
+position = Vector2(720, 350)
+
+[node name="Stone2" parent="." unique_id=750415113 instance=ExtResource("6_p57ef")]
+position = Vector2(540, 540)
+
+[node name="Stone3" parent="." unique_id=1360033863 instance=ExtResource("6_p57ef")]
+position = Vector2(150, 380)
+
+[node name="Stone4" parent="." unique_id=1451375741 instance=ExtResource("6_p57ef")]
+position = Vector2(920, 440)
