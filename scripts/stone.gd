@@ -29,6 +29,7 @@ func _ready() -> void:
 	health_bar.value = max_health
 	health_bar.visible = false
 	add_to_group("stones")
+	WorldManager.register_stone(global_position)
 	if mine_area.is_connected("body_entered", _on_body_entered) == false:
 		mine_area.body_entered.connect(_on_body_entered)
 	if mine_area.is_connected("body_exited", _on_body_exited) == false:
