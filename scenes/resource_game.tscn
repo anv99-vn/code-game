@@ -296,8 +296,6 @@ layout_mode = 2
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="TickTimer" type="Timer" parent="." unique_id=496113519]
-
 [node name="Background" type="ColorRect" parent="." unique_id=867055293]
 z_index = -1
 layout_mode = 1

@@ -17,7 +17,7 @@ extends Control
 @onready var upgrade_button: Button = $ContentHBox/BuildingsPanel/MarginContainer/BuildingsVBox/UpgradeRow/UpgradeButton
 
 @onready var message_label: Label = $BottomPanel/MarginContainer/MessageLabel
-@onready var tick_timer: Timer = $TickTimer
+var _message_generation: int = 0
 
 func _ready() -> void:
 	wood_button.pressed.connect(_on_wood_pressed)
@@ -33,9 +33,6 @@ func _ready() -> void:
 
 	ResourceLogic.resources_updated.connect(_update_ui)
 	ResourceLogic.message_logged.connect(_show_message)
-
-	tick_timer.timeout.connect(_on_tick)
-	tick_timer.start()
 
 	_update_ui()
 
@@ -58,9 +55,11 @@ func _update_ui() -> void:
 	upgrade_button.disabled = ResourceManager.gold < ResourceManager.click_power_cost_gold
 
 func _show_message(text: String) -> void:
+	_message_generation += 1
+	var gen := _message_generation
 	message_label.text = text
 	await get_tree().create_timer(3.0).timeout
-	if message_label.text == text:
+	if _message_generation == gen:
 		message_label.text = ""
 
 func _on_wood_pressed() -> void:
@@ -94,6 +93,3 @@ func _on_mine_pressed() -> void:
 func _on_upgrade_pressed() -> void:
 	if not ResourceLogic.upgrade_click_power():
 		_show_message(tr("RES_ERR_GOLD"))
-
-func _on_tick() -> void:
-	ResourceLogic.on_tick()

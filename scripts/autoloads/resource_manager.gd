@@ -1,19 +1,19 @@
 extends Node
 
 # Resources
-var wood: int = 0
-var stone: int = 0
-var food: int = 0
-var gold: int = 0
+var wood: int = 50
+var stone: int = 50
+var food: int = 50
+var gold: int = 50
 
 # Click power (base gather amount)
 var click_power: int = 1
 
 # Buildings (counts)
-var lumber_camps: int = 0
-var quarries: int = 0
-var farms: int = 0
-var mines: int = 0
+var lumber_camps: int = 1
+var quarries: int = 1
+var farms: int = 1
+var mines: int = 1
 
 # Building costs
 var lumber_camp_cost_wood: int = 50
