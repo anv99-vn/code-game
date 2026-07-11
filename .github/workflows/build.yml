@@ -1,4 +1,4 @@
-name: Build Windows EXE
+name: Build PCK Packs
 
 on:
   push:
@@ -9,7 +9,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    name: Build Windows Executable
+    name: Build PCK Packs
     permissions:
       contents: write
 
@@ -22,18 +22,18 @@ jobs:
         run: |
           sed -i '/^MCPRuntime=/d' project.godot
 
-      - name: Export main executable (embedded PCK)
-        id: export_main
+      - name: Export Main PCK
+        id: export_main_pck
         uses: firebelley/godot-export@v7.0.0
         with:
           godot_executable_download_url: https://github.com/godotengine/godot/releases/download/4.7-stable/Godot_v4.7-stable_linux.x86_64.zip
           godot_export_templates_download_url: https://github.com/godotengine/godot/releases/download/4.7-stable/Godot_v4.7-stable_export_templates.tpz
           relative_project_path: ./
           archive_output: false
-          presets_to_export: "Windows Desktop"
+          presets_to_export: "Main PCK"
 
-      - name: Export Assets Core pack
-        id: export_assets_core
+      - name: Export Assets Core PCK
+        id: export_assets_core_pck
         uses: firebelley/godot-export@v7.0.0
         with:
           godot_executable_download_url: https://github.com/godotengine/godot/releases/download/4.7-stable/Godot_v4.7-stable_linux.x86_64.zip
@@ -42,17 +42,17 @@ jobs:
           archive_output: false
           presets_to_export: "Assets Core"
 
-      - name: Create distribution zip
+      - name: Create PCK zip
         shell: bash
         run: |
-          BUILD_DIR="${{ steps.export_main.outputs.build_directory }}"
-          mkdir -p dist/Code-Game
-          cp "$BUILD_DIR/Windows Desktop"/* dist/Code-Game/
+          BUILD_DIR="${{ steps.export_main_pck.outputs.build_directory }}"
+          mkdir -p dist/packs
+          cp "$BUILD_DIR/Main PCK"/* dist/packs/
           if [ -d "$BUILD_DIR/Assets Core" ]; then
-            cp "$BUILD_DIR/Assets Core"/* dist/Code-Game/ 2>/dev/null || true
+            cp "$BUILD_DIR/Assets Core"/* dist/packs/ 2>/dev/null || true
           fi
           cd dist
-          7z a -tzip Code-Game-${{ github.ref_name }}.zip Code-Game/
+          7z a -tzip packs-${{ github.ref_name }}.zip packs/
 
       - name: Create Release
         uses: ncipollo/release-action@v1.18.0
@@ -61,4 +61,4 @@ jobs:
           tag: ${{ github.ref_name }}
           name: ${{ github.ref_name }}
           generateReleaseNotes: true
-          artifacts: dist/Code-Game-${{ github.ref_name }}.zip
+          artifacts: dist/packs-${{ github.ref_name }}.zip
