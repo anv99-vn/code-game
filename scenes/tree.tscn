@@ -46,3 +46,12 @@ offset_bottom = -86.0
 max_value = 3.0
 value = 3.0
 show_percentage = false
+
+[node name="CooldownLabel" type="Label" parent="." unique_id=53084621]
+visible = false
+z_index = 10
+offset_left = -24.0
+offset_top = -100.0
+offset_right = 24.0
+offset_bottom = -86.0
+horizontal_alignment = 1

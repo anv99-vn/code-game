@@ -11,12 +11,14 @@ signal chop_proximity_changed(nearby: bool)
 var _health: int = 0
 var _player_nearby: bool = false
 var _felled: bool = false
+var _respawn_at: float = 0.0
 
 @onready var tree_sprite: Sprite2D = $TreeSprite
 @onready var stump_sprite: Sprite2D = $StumpSprite
 @onready var chop_area: Area2D = $ChopArea
 @onready var prompt_label: Label = $PromptLabel
 @onready var health_bar: ProgressBar = $HealthBar
+@onready var cooldown_label: Label = $CooldownLabel
 
 
 func _ready() -> void:
@@ -28,6 +30,7 @@ func _ready() -> void:
 	health_bar.max_value = max_health
 	health_bar.value = max_health
 	health_bar.visible = false
+	cooldown_label.visible = false
 	add_to_group("trees")
 	WorldManager.register_tree(global_position)
 	if chop_area.is_connected("body_entered", _on_body_entered) == false:
@@ -80,8 +83,20 @@ func _fell() -> void:
 	stump_sprite.visible = true
 	prompt_label.visible = false
 	health_bar.visible = false
-	await get_tree().create_timer(respawn_time).timeout
-	_respawn()
+	_respawn_at = Time.get_ticks_msec() / 1000.0 + respawn_time
+	cooldown_label.visible = _player_nearby
+
+
+func _process(_delta: float) -> void:
+	if not _felled:
+		return
+	var remaining := _respawn_at - Time.get_ticks_msec() / 1000.0
+	if remaining <= 0.0:
+		cooldown_label.visible = false
+		_respawn()
+		return
+	cooldown_label.text = "%ds" % ceil(remaining)
+	cooldown_label.visible = _player_nearby
 
 
 func _respawn() -> void:
@@ -90,6 +105,8 @@ func _respawn() -> void:
 	tree_sprite.visible = true
 	stump_sprite.visible = false
 	health_bar.value = max_health
+	cooldown_label.visible = false
+	cooldown_label.text = ""
 
 
 func _on_body_entered(body: Node2D) -> void:
