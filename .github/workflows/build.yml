@@ -45,14 +45,11 @@ jobs:
       - name: Create distribution zip
         shell: bash
         run: |
-          echo "Main build dir: ${{ steps.export_main.outputs.build_directory }}"
-          echo "Assets build dir: ${{ steps.export_assets_core.outputs.build_directory }}"
-          ls -la "${{ steps.export_main.outputs.build_directory }}" || true
-          ls -la "${{ steps.export_assets_core.outputs.build_directory }}" || true
+          BUILD_DIR="${{ steps.export_main.outputs.build_directory }}"
           mkdir -p dist/Code-Game
-          cp "${{ steps.export_main.outputs.build_directory }}"/* dist/Code-Game/
-          if [ -d "${{ steps.export_assets_core.outputs.build_directory }}" ]; then
-            cp "${{ steps.export_assets_core.outputs.build_directory }}"/* dist/Code-Game/ 2>/dev/null || true
+          cp "$BUILD_DIR/Windows Desktop"/* dist/Code-Game/
+          if [ -d "$BUILD_DIR/Assets Core" ]; then
+            cp "$BUILD_DIR/Assets Core"/* dist/Code-Game/ 2>/dev/null || true
           fi
           cd dist
           7z a -tzip ../Code-Game-${{ github.ref_name }}.zip Code-Game/
