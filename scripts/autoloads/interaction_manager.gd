@@ -19,8 +19,6 @@ func register(obj: Node2D) -> void:
 
 func unregister(obj: Node2D) -> void:
 	_nearby.erase(obj)
-	if _focused == obj:
-		_focused = null
 	_update_focus()
 
 

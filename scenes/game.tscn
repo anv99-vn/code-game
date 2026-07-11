@@ -71,3 +71,4 @@ offset_bottom = -88.0
 grow_horizontal = 0
 grow_vertical = 0
 flat = true
+visible = false
