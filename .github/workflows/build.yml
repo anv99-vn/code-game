@@ -52,7 +52,7 @@ jobs:
             cp "$BUILD_DIR/Assets Core"/* dist/Code-Game/ 2>/dev/null || true
           fi
           cd dist
-          7z a -tzip ../Code-Game-${{ github.ref_name }}.zip Code-Game/
+          7z a -tzip Code-Game-${{ github.ref_name }}.zip Code-Game/
 
       - name: Create Release
         uses: ncipollo/release-action@v1.18.0
