@@ -3,10 +3,10 @@ extends StaticBody2D
 signal tree_chopped
 signal chop_proximity_changed(nearby: bool)
 
-@export var max_health: int = 3
-@export var wood_per_hit: int = 2
-@export var wood_bonus_on_fall: int = 5
-@export var respawn_time: float = 8.0
+var max_health: int = 3
+var per_hit: int = 2
+var bonus_on_deplete: int = 5
+var respawn_time: float = 8.0
 
 var _health: int = 0
 var _player_nearby: bool = false
@@ -22,6 +22,7 @@ var _respawn_at: float = 0.0
 
 
 func _ready() -> void:
+	_load_config()
 	_health = max_health
 	_felled = false
 	tree_sprite.visible = true
@@ -40,6 +41,16 @@ func _ready() -> void:
 	InteractionManager.focus_changed.connect(_on_focus_changed)
 
 
+func _load_config() -> void:
+	var config := YAMLParser.load_file("res://data/resources.yml")
+	if config.has("tree"):
+		var tree_data: Dictionary = config["tree"]
+		max_health = tree_data.get("max_health", max_health)
+		per_hit = tree_data.get("per_hit", per_hit)
+		bonus_on_deplete = tree_data.get("bonus_on_deplete", bonus_on_deplete)
+		respawn_time = tree_data.get("respawn_time", respawn_time)
+
+
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("chop") and _player_nearby and not _felled:
 		_chop()
@@ -47,7 +58,7 @@ func _unhandled_input(event: InputEvent) -> void:
 
 func _chop() -> void:
 	_health -= 1
-	_add_wood(wood_per_hit)
+	_add_wood(per_hit)
 	_shake()
 	_hit_flash()
 	health_bar.value = _health
@@ -77,7 +88,7 @@ func _shake() -> void:
 
 func _fell() -> void:
 	_felled = true
-	_add_wood(wood_bonus_on_fall)
+	_add_wood(bonus_on_deplete)
 	tree_sprite.visible = false
 	stump_sprite.visible = true
 	prompt_label.visible = false

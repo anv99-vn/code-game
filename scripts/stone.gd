@@ -3,10 +3,10 @@ extends StaticBody2D
 signal stone_mined
 signal mine_proximity_changed(nearby: bool)
 
-@export var max_health: int = 4
-@export var stone_per_hit: int = 2
-@export var stone_bonus_on_deplete: int = 5
-@export var respawn_time: float = 10.0
+var max_health: int = 4
+var per_hit: int = 2
+var bonus_on_deplete: int = 5
+var respawn_time: float = 10.0
 
 var _health: int = 0
 var _player_nearby: bool = false
@@ -22,6 +22,7 @@ var _respawn_at: float = 0.0
 
 
 func _ready() -> void:
+	_load_config()
 	_health = max_health
 	_depleted = false
 	stone_sprite.visible = true
@@ -40,6 +41,16 @@ func _ready() -> void:
 	InteractionManager.focus_changed.connect(_on_focus_changed)
 
 
+func _load_config() -> void:
+	var config := YAMLParser.load_file("res://data/resources.yml")
+	if config.has("stone"):
+		var stone_data: Dictionary = config["stone"]
+		max_health = stone_data.get("max_health", max_health)
+		per_hit = stone_data.get("per_hit", per_hit)
+		bonus_on_deplete = stone_data.get("bonus_on_deplete", bonus_on_deplete)
+		respawn_time = stone_data.get("respawn_time", respawn_time)
+
+
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("mine") and _player_nearby and not _depleted:
 		_mine()
@@ -47,7 +58,7 @@ func _unhandled_input(event: InputEvent) -> void:
 
 func _mine() -> void:
 	_health -= 1
-	_add_stone(stone_per_hit)
+	_add_stone(per_hit)
 	_shake()
 	_hit_flash()
 	health_bar.value = _health
@@ -77,7 +88,7 @@ func _shake() -> void:
 
 func _deplete() -> void:
 	_depleted = true
-	_add_stone(stone_bonus_on_deplete)
+	_add_stone(bonus_on_deplete)
 	stone_sprite.visible = false
 	depleted_sprite.visible = true
 	prompt_label.visible = false
