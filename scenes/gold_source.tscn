@@ -1,7 +1,8 @@
 [gd_scene format=3 uid="uid://dx0m2sbikh4xj"]
 
 [ext_resource type="Script" uid="uid://cbj8cxym1qc8i" path="res://scripts/gold_source.gd" id="1_gold"]
-[ext_resource type="Texture2D" path="res://assets/resources/gold_nugget.png" id="2_gold"]
+[ext_resource type="Texture2D" uid="uid://d1vj2x1s6b246" path="res://assets/resources/gold_nugget.png" id="2_gold"]
+[ext_resource type="Texture2D" uid="uid://5bx8bdtjtuws" path="res://assets/resources/gold_depleted.png" id="3_qpeve"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_gold"]
 radius = 28.0
@@ -17,6 +18,7 @@ offset = Vector2(0, -24)
 
 [node name="DepletedSprite" type="Sprite2D" parent="." unique_id=1153285912]
 visible = false
+texture = ExtResource("3_qpeve")
 offset = Vector2(0, -16)
 
 [node name="PromptLabel" type="Label" parent="." unique_id=235937826]
