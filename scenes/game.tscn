@@ -42,8 +42,7 @@ texture = ExtResource("2_ds2d6")
 shape = SubResource("CircleShape2D_2yhen")
 
 [node name="Camera2D" type="Camera2D" parent="Player" unique_id=21195865]
-position_smoothing_enabled = true
-position_smoothing_speed = 25.0
+position_smoothing_enabled = false
 script = ExtResource("4_p57ef")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1001473901]

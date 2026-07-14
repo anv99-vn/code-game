@@ -109,6 +109,19 @@ func _respawn() -> void:
 	cooldown_label.text = ""
 	if _player_nearby:
 		InteractionManager.register(self)
+	_respawn_glow(gold_sprite)
+
+
+func _respawn_glow(sprite: Sprite2D) -> void:
+	var mat := ShaderMaterial.new()
+	mat.shader = preload("res://shaders/reborn_glow.gdshader")
+	mat.set_shader_parameter("intensity", 1.0)
+	sprite.material = mat
+	var tween := create_tween()
+	tween.tween_property(mat, "shader_parameter/intensity", 0.0, 0.3)
+	tween.finished.connect(func() -> void:
+		sprite.material = null
+	)
 
 
 func _on_body_entered(body: Node2D) -> void:
