@@ -1,11 +1,28 @@
 [gd_scene format=3 uid="uid://cnu3s5uf4pavh"]
 
 [ext_resource type="Script" uid="uid://yys1ewii8s60" path="res://scripts/settings_dropdown.gd" id="1_jxe1r"]
+[ext_resource type="Texture2D" path="res://assets/icons/icon_gear.png" id="2_gear"]
+
+[sub_resource type="StyleBoxFlat" id="settings_transparent"]
+bg_color = Color(0, 0, 0, 0)
+
+[sub_resource type="StyleBoxFlat" id="settings_hover"]
+bg_color = Color(1, 1, 1, 0.15)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
 
 [node name="SettingsButton" type="Button" unique_id=1589812112]
+text = ""
+icon = ExtResource("2_gear")
+theme_override_styles/normal = SubResource("settings_transparent")
+theme_override_styles/pressed = SubResource("settings_transparent")
+theme_override_styles/hover = SubResource("settings_hover")
 
 [node name="SettingsDropdown" type="VBoxContainer" parent="." unique_id=631257256]
 visible = false
+pivot_offset = Vector2(50, 0)
 layout_mode = 0
 offset_top = 40.0
 offset_right = 120.0

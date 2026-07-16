@@ -9,19 +9,6 @@ var _current_action: String = ""
 const RESOURCE_GAME_SCENE := preload("res://scenes/resource_game.tscn")
 
 func _ready() -> void:
-	settings_button.icon = load("res://assets/icons/icon_gear.png")
-	settings_button.text = ""
-	var transparent := StyleBoxFlat.new()
-	transparent.bg_color = Color(0, 0, 0, 0)
-	settings_button.add_theme_stylebox_override("normal", transparent)
-	settings_button.add_theme_stylebox_override("pressed", transparent)
-	var hover := StyleBoxFlat.new()
-	hover.bg_color = Color(1, 1, 1, 0.15)
-	hover.corner_radius_top_left = 8
-	hover.corner_radius_top_right = 8
-	hover.corner_radius_bottom_right = 8
-	hover.corner_radius_bottom_left = 8
-	settings_button.add_theme_stylebox_override("hover", hover)
 	_setup_action_button()
 	if not SessionManager.is_logged_in:
 		call_deferred("_go_to_login")
@@ -35,7 +22,6 @@ func _ready() -> void:
 	settings_button.pressed.connect(_on_settings_pressed)
 
 func _setup_action_button() -> void:
-	action_button.texture_normal = load("res://assets/icons/icon_chop.png")
 	action_button.button_down.connect(_on_action_pressed)
 	action_button.button_up.connect(_on_action_released)
 	action_button.visible = false
