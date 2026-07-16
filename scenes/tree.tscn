@@ -16,6 +16,7 @@ texture = ExtResource("2_vplca")
 offset = Vector2(0, -40)
 
 [node name="StumpSprite" type="Sprite2D" parent="." unique_id=494548789]
+visible = false
 texture = ExtResource("3_viusy")
 offset = Vector2(0, -24)
 

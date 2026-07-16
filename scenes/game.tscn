@@ -7,6 +7,8 @@
 [ext_resource type="PackedScene" uid="uid://cnu3s5uf4pavh" path="res://scenes/settings_button.tscn" id="4_lbhrr"]
 [ext_resource type="Script" uid="uid://060ra6x8scdu" path="res://scripts/camera.gd" id="4_p57ef"]
 
+[ext_resource type="Texture2D" path="res://assets/icons/icon_chop.png" id="5_chop"]
+
 [sub_resource type="CircleShape2D" id="CircleShape2D_2yhen"]
 radius = 32.0
 
@@ -90,6 +92,7 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_action_bg")
 [node name="ActionButton" type="TextureButton" parent="UILayer" unique_id=1483188161]
 custom_minimum_size = Vector2(60, 60)
 custom_maximum_size = Vector2(60, 60)
+texture_normal = ExtResource("5_chop")
 anchors_preset = 3
 anchor_left = 1.0
 anchor_top = 1.0
