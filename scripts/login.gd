@@ -9,27 +9,6 @@ extends Control
 @onready var lang_dropdown = $LangButton/LangDropdown
 
 func _ready() -> void:
-	# Set placeholder texts manually (LineEdit placeholders don't auto-translate)
-	username_input.placeholder_text = tr("USERNAME")
-	password_input.placeholder_text = tr("PASSWORD")
-	lang_button.icon = load("res://assets/icons/icon_globe_small.png")
-	lang_button.add_theme_color_override("font_color", Color(1, 1, 1, 0.9))
-	lang_button.add_theme_color_override("font_hover_color", Color(1, 1, 1, 1))
-	var lang_bg := StyleBoxFlat.new()
-	lang_bg.bg_color = Color(1, 1, 1, 0.15)
-	lang_bg.corner_radius_top_left = 8
-	lang_bg.corner_radius_top_right = 8
-	lang_bg.corner_radius_bottom_right = 8
-	lang_bg.corner_radius_bottom_left = 8
-	lang_button.add_theme_stylebox_override("normal", lang_bg)
-	lang_button.add_theme_stylebox_override("pressed", lang_bg)
-	var lang_hover := StyleBoxFlat.new()
-	lang_hover.bg_color = Color(1, 1, 1, 0.25)
-	lang_hover.corner_radius_top_left = 8
-	lang_hover.corner_radius_top_right = 8
-	lang_hover.corner_radius_bottom_right = 8
-	lang_hover.corner_radius_bottom_left = 8
-	lang_button.add_theme_stylebox_override("hover", lang_hover)
 	forgot_password.pressed.connect(_on_forgot_password_pressed)
 	if SessionManager.is_logged_in:
 		get_tree().change_scene_to_file("res://scenes/game.tscn")

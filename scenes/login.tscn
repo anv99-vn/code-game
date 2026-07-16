@@ -6,6 +6,21 @@
 [ext_resource type="Texture2D" uid="uid://bbxkdxlg3k7gg" path="res://assets/icons/icon_user_w.png" id="5_9n4p5"]
 [ext_resource type="Texture2D" uid="uid://ci4sofrtxy8yh" path="res://assets/icons/icon_lock_w.png" id="6_1q7r6"]
 [ext_resource type="Script" uid="uid://cj0po26iwrxjq" path="res://scripts/lang_dropdown.gd" id="6_r3fp8"]
+[ext_resource type="Texture2D" path="res://assets/icons/icon_globe_small.png" id="7_globe"]
+
+[sub_resource type="StyleBoxFlat" id="lang_bg"]
+bg_color = Color(1, 1, 1, 0.15)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="lang_hover"]
+bg_color = Color(1, 1, 1, 0.25)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
 
 [sub_resource type="StyleBoxFlat" id="card"]
 bg_color = Color(0.114, 0.231, 0.545, 1)
@@ -264,9 +279,13 @@ offset_top = 16.0
 offset_right = -16.0
 offset_bottom = 52.0
 grow_horizontal = 0
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
+theme_override_colors/font_color = Color(1, 1, 1, 0.9)
+theme_override_colors/font_hover_color = Color(1, 1, 1, 1)
 theme_override_font_sizes/font_size = 12
+theme_override_styles/normal = SubResource("lang_bg")
+theme_override_styles/pressed = SubResource("lang_bg")
+theme_override_styles/hover = SubResource("lang_hover")
+icon = ExtResource("7_globe")
 text = "English"
 alignment = 1
 
