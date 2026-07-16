@@ -44,18 +44,12 @@ func clear_objects() -> void:
 func generate_objects(parent: Node2D, player_pos: Vector2 = Vector2(400, 300)) -> void:
 	clear_objects()
 	var placed: Array[Vector2] = []
-	var trees_made := 0
-	var stones_made := 0
-	var gold_sources_made := 0
 	for _i in tree_count:
-		if _try_place(TREE_SCENE, parent, player_pos, placed) != null:
-			trees_made += 1
+		_try_place(TREE_SCENE, parent, player_pos, placed)
 	for _i in stone_count:
-		if _try_place(STONE_SCENE, parent, player_pos, placed) != null:
-			stones_made += 1
+		_try_place(STONE_SCENE, parent, player_pos, placed)
 	for _i in gold_source_count:
-		if _try_place(GOLD_SOURCE_SCENE, parent, player_pos, placed) != null:
-			gold_sources_made += 1
+		_try_place(GOLD_SOURCE_SCENE, parent, player_pos, placed)
 	objects_generated.emit()
 
 func _try_place(scene: PackedScene, parent: Node2D, player_pos: Vector2, placed: Array[Vector2]) -> Node2D:
