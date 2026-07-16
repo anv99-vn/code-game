@@ -11,7 +11,6 @@ var options: Array[Dictionary] = []:
 
 
 func _ready() -> void:
-	pivot_offset = Vector2(50, 0)
 	_rebuild()
 
 
