@@ -24,14 +24,7 @@ var _respawn_at: float = 0.0
 func _ready() -> void:
 	_load_config()
 	_health = max_health
-	_felled = false
-	tree_sprite.visible = true
 	stump_sprite.visible = false
-	prompt_label.visible = false
-	health_bar.max_value = max_health
-	health_bar.value = max_health
-	health_bar.visible = false
-	cooldown_label.visible = false
 	add_to_group("trees")
 	WorldManager.register_tree(global_position)
 	if chop_area.is_connected("body_entered", _on_body_entered) == false:
