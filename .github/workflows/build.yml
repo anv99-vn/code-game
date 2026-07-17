@@ -17,6 +17,12 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Remove MCP addon
+        run: |
+          sed -i '/MCPRuntime=/d' project.godot
+          sed -i '/godot_mcp/d' project.godot
+          rm -rf addons/godot_mcp
+
       - name: Reimport project
         run: |
           wget -q https://github.com/godotengine/godot/releases/download/4.7.1-stable/Godot_v4.7.1-stable_linux.x86_64.zip
