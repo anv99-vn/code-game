@@ -2,6 +2,7 @@ extends StaticBody2D
 
 signal tree_chopped
 signal chop_proximity_changed(nearby: bool)
+signal registered(pos: Vector2)
 
 var max_health: int = 3
 var per_hit: int = 2
@@ -26,7 +27,7 @@ func _ready() -> void:
 	_health = max_health
 	stump_sprite.visible = false
 	add_to_group("trees")
-	WorldManager.register_tree(global_position)
+	registered.emit(global_position)
 	if chop_area.is_connected("body_entered", _on_body_entered) == false:
 		chop_area.body_entered.connect(_on_body_entered)
 	if chop_area.is_connected("body_exited", _on_body_exited) == false:

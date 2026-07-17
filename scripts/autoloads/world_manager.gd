@@ -2,9 +2,9 @@ extends Node
 
 signal objects_generated
 
-const STONE_SCENE := preload("res://scenes/stone.tscn")
-const TREE_SCENE := preload("res://scenes/tree.tscn")
-const GOLD_SOURCE_SCENE := preload("res://scenes/gold_source.tscn")
+var _tree_scene: PackedScene = null
+var _stone_scene: PackedScene = null
+var _gold_source_scene: PackedScene = null
 
 @export var map_bounds: Rect2 = Rect2(80, 120, 1000, 440)
 @export var tree_count: int = 6
@@ -43,16 +43,19 @@ func clear_objects() -> void:
 
 func generate_objects(parent: Node2D, player_pos: Vector2 = Vector2(400, 300)) -> void:
 	clear_objects()
+	_tree_scene = load("res://scenes/tree.tscn")
+	_stone_scene = load("res://scenes/stone.tscn")
+	_gold_source_scene = load("res://scenes/gold_source.tscn")
 	var placed: Array[Vector2] = []
 	for _i in tree_count:
-		_try_place(TREE_SCENE, parent, player_pos, placed)
+		_try_place(_tree_scene, parent, player_pos, placed, register_tree)
 	for _i in stone_count:
-		_try_place(STONE_SCENE, parent, player_pos, placed)
+		_try_place(_stone_scene, parent, player_pos, placed, register_stone)
 	for _i in gold_source_count:
-		_try_place(GOLD_SOURCE_SCENE, parent, player_pos, placed)
+		_try_place(_gold_source_scene, parent, player_pos, placed, register_gold_source)
 	objects_generated.emit()
 
-func _try_place(scene: PackedScene, parent: Node2D, player_pos: Vector2, placed: Array[Vector2]) -> Node2D:
+func _try_place(scene: PackedScene, parent: Node2D, player_pos: Vector2, placed: Array[Vector2], register_fn: Callable) -> Node2D:
 	for _attempt in placement_attempts:
 		var pos := Vector2(
 			randf_range(map_bounds.position.x, map_bounds.end.x),
@@ -69,6 +72,7 @@ func _try_place(scene: PackedScene, parent: Node2D, player_pos: Vector2, placed:
 			continue
 		var node := scene.instantiate()
 		node.position = pos
+		node.registered.connect(register_fn)
 		parent.add_child(node)
 		placed.append(pos)
 		return node

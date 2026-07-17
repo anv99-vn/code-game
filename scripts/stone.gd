@@ -2,6 +2,7 @@ extends StaticBody2D
 
 signal stone_mined
 signal mine_proximity_changed(nearby: bool)
+signal registered(pos: Vector2)
 
 var max_health: int = 4
 var per_hit: int = 2
@@ -25,7 +26,7 @@ func _ready() -> void:
 	_load_config()
 	_health = max_health
 	add_to_group("stones")
-	WorldManager.register_stone(global_position)
+	registered.emit(global_position)
 	if mine_area.is_connected("body_entered", _on_body_entered) == false:
 		mine_area.body_entered.connect(_on_body_entered)
 	if mine_area.is_connected("body_exited", _on_body_exited) == false:
