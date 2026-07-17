@@ -75,10 +75,6 @@ pan={
 ])
 }
 
-[rendering]
-
-renderer/rendering_method="gl_compatibility"
-
 [input_devices]
 
 pointing/emulate_touch_from_mouse="true"
