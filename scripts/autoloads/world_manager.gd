@@ -18,19 +18,24 @@ var stone_positions: Array[Vector2] = []
 var tree_positions: Array[Vector2] = []
 var gold_source_positions: Array[Vector2] = []
 
+
 func register_stone(pos: Vector2) -> void:
 	stone_positions.append(pos)
+
 
 func register_tree(pos: Vector2) -> void:
 	tree_positions.append(pos)
 
+
 func register_gold_source(pos: Vector2) -> void:
 	gold_source_positions.append(pos)
+
 
 func clear_positions() -> void:
 	stone_positions.clear()
 	tree_positions.clear()
 	gold_source_positions.clear()
+
 
 func clear_objects() -> void:
 	for node in get_tree().get_nodes_in_group("stones"):
@@ -40,6 +45,7 @@ func clear_objects() -> void:
 	for node in get_tree().get_nodes_in_group("gold_sources"):
 		node.queue_free()
 	clear_positions()
+
 
 func generate_objects(parent: Node2D, player_pos: Vector2 = Vector2(400, 300)) -> void:
 	clear_objects()
@@ -54,6 +60,7 @@ func generate_objects(parent: Node2D, player_pos: Vector2 = Vector2(400, 300)) -
 	for _i in gold_source_count:
 		_try_place(_gold_source_scene, parent, player_pos, placed, register_gold_source)
 	objects_generated.emit()
+
 
 func _try_place(scene: PackedScene, parent: Node2D, player_pos: Vector2, placed: Array[Vector2], register_fn: Callable) -> Node2D:
 	for _attempt in placement_attempts:
@@ -78,3 +85,14 @@ func _try_place(scene: PackedScene, parent: Node2D, player_pos: Vector2, placed:
 		return node
 	push_warning("WorldManager: could not find a valid spot after %d attempts" % placement_attempts)
 	return null
+
+
+func _on_node_added(node: Node) -> void:
+	if node.is_in_group("game_scene") and node is Node2D:
+		var player := node.get_node_or_null("Player")
+		if player and player is CharacterBody2D:
+			generate_objects(node, player.global_position)
+
+
+func _ready() -> void:
+	get_tree().node_added.connect(_on_node_added)

@@ -7,7 +7,7 @@
 [sub_resource type="CircleShape2D" id="CircleShape2D_avsvi"]
 radius = 37.65634
 
-[node name="Node" type="StaticBody2D" unique_id=664118593]
+[node name="Node" type="StaticBody2D" unique_id=664118593 groups=["trees"]]
 script = ExtResource("1_avsvi")
 
 [node name="TreeSprite" type="Sprite2D" parent="." unique_id=2122303833]

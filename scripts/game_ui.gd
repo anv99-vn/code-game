@@ -1,5 +1,7 @@
 extends CanvasLayer
 
+signal logout_requested
+
 @onready var settings_button: Button = $"../UILayer/SettingsButton"
 @onready var settings_dropdown = $"../UILayer/SettingsButton/SettingsDropdown"
 @onready var action_button: TextureButton = $"../UILayer/ActionButton"
@@ -8,11 +10,20 @@ var resource_game_ui: Control = null
 var _current_action: String = ""
 const RESOURCE_GAME_SCENE := preload("res://scenes/resource_game.tscn")
 
+
 func _ready() -> void:
 	_setup_action_button()
-	if not SessionManager.is_logged_in:
-		call_deferred("_go_to_login")
-		return
+	_setup_settings()
+
+
+func _setup_action_button() -> void:
+	action_button.button_down.connect(_on_action_pressed)
+	action_button.button_up.connect(_on_action_released)
+	action_button.visible = false
+	action_button_bg.visible = false
+
+
+func _setup_settings() -> void:
 	var opts: Array[Dictionary] = [
 		{"action": "resources", "label": tr("RES_LABEL"), "icon": "res://assets/icons/icon_resource.png"},
 		{"action": "logout", "label": tr("LOG_OUT"), "icon": "res://assets/icons/icon_logout.png"},
@@ -21,12 +32,6 @@ func _ready() -> void:
 	settings_dropdown.option_selected.connect(_on_settings_option)
 	settings_button.pressed.connect(_on_settings_pressed)
 
-func _setup_action_button() -> void:
-	action_button.button_down.connect(_on_action_pressed)
-	action_button.button_up.connect(_on_action_released)
-	action_button.visible = false
-	action_button_bg.visible = false
-	InteractionManager.focus_changed.connect(_on_focus_changed)
 
 func _on_focus_changed(focused: Node2D) -> void:
 	if focused == null:
@@ -34,45 +39,53 @@ func _on_focus_changed(focused: Node2D) -> void:
 		action_button.visible = false
 		action_button_bg.visible = false
 	elif focused.is_in_group("trees"):
-		_current_action = "chop"
-		action_button.texture_normal = load("res://assets/icons/icon_chop.png")
-		action_button.visible = true
-		action_button_bg.visible = true
+		_set_action("chop", "res://assets/icons/icon_chop.png")
 	elif focused.is_in_group("stones"):
-		_current_action = "mine"
-		action_button.texture_normal = load("res://assets/icons/icon_mine.png")
-		action_button.visible = true
-		action_button_bg.visible = true
+		_set_action("mine", "res://assets/icons/icon_mine.png")
 	elif focused.is_in_group("gold_sources"):
-		_current_action = "pan"
-		action_button.texture_normal = load("res://assets/icons/icon_pan.png")
-		action_button.visible = true
-		action_button_bg.visible = true
+		_set_action("pan", "res://assets/icons/icon_pan.png")
+
+
+func _set_action(action: String, icon_path: String) -> void:
+	_current_action = action
+	action_button.texture_normal = load(icon_path)
+	action_button.visible = true
+	action_button_bg.visible = true
+
 
 func _on_action_pressed() -> void:
-	if _current_action == "":
+	if _current_action.is_empty():
 		return
 	var ev := InputEventAction.new()
 	ev.action = _current_action
 	ev.pressed = true
 	Input.parse_input_event(ev)
 
+
 func _on_action_released() -> void:
-	if _current_action == "":
+	if _current_action.is_empty():
 		return
 	var ev := InputEventAction.new()
 	ev.action = _current_action
 	ev.pressed = false
 	Input.parse_input_event(ev)
 
+
+func on_login_changed(is_logged_in: bool) -> void:
+	if not is_logged_in:
+		call_deferred("_go_to_login")
+
+
 func _go_to_login() -> void:
 	get_tree().change_scene_to_file("res://scenes/login.tscn")
+
 
 func _on_settings_pressed() -> void:
 	if settings_dropdown.visible:
 		settings_dropdown.close()
 	else:
 		settings_dropdown.open()
+
 
 func _on_settings_option(action: String) -> void:
 	match action:
@@ -85,8 +98,8 @@ func _on_settings_option(action: String) -> void:
 			else:
 				resource_game_ui.show()
 		"logout":
-			SessionLogic.logout()
-			get_tree().change_scene_to_file("res://scenes/login.tscn")
+			logout_requested.emit()
+
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed and settings_dropdown.visible:

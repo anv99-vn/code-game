@@ -5,13 +5,13 @@ extends Control
 @onready var food_label: Label = $TopPanel/MarginContainer/ResourceHBox/FoodLabel
 @onready var gold_label: Label = $TopPanel/MarginContainer/ResourceHBox/GoldLabel
 
+
 func _ready() -> void:
-	ResourceLogic.resources_updated.connect(_update_ui)
+	pass
 
-	_update_ui()
 
-func _update_ui() -> void:
-	wood_label.text = tr("RES_WOOD") % ResourceManager.wood
-	stone_label.text = tr("RES_STONE") % ResourceManager.stone
-	food_label.text = tr("RES_FOOD") % ResourceManager.food
-	gold_label.text = tr("RES_GOLD") % ResourceManager.gold
+func _update_display(wood: int, stone: int, food: int, gold: int) -> void:
+	wood_label.text = tr("RES_WOOD") % wood
+	stone_label.text = tr("RES_STONE") % stone
+	food_label.text = tr("RES_FOOD") % food
+	gold_label.text = tr("RES_GOLD") % gold

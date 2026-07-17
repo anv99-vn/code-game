@@ -6,29 +6,28 @@
 [ext_resource type="Texture2D" uid="uid://b7jj2rex1ktj0" path="res://assets/player.png" id="2_ds2d6"]
 [ext_resource type="PackedScene" uid="uid://cnu3s5uf4pavh" path="res://scenes/settings_button.tscn" id="4_lbhrr"]
 [ext_resource type="Script" uid="uid://060ra6x8scdu" path="res://scripts/camera.gd" id="4_p57ef"]
-
-[ext_resource type="Texture2D" path="res://assets/icons/icon_chop.png" id="5_chop"]
+[ext_resource type="Texture2D" uid="uid://4fxgtqeaa2ab" path="res://assets/icons/icon_chop.png" id="5_chop"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_2yhen"]
 radius = 32.0
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_action_bg"]
-bg_color = Color(0, 0, 0, 0.55)
-corner_radius_top_left = 10
-corner_radius_top_right = 10
-corner_radius_bottom_right = 10
-corner_radius_bottom_left = 10
-border_width_top = 2
-border_width_bottom = 2
-border_width_left = 2
-border_width_right = 2
-border_color = Color(1, 1, 1, 0.15)
 content_margin_left = 4.0
 content_margin_top = 4.0
 content_margin_right = 4.0
 content_margin_bottom = 4.0
+bg_color = Color(0, 0, 0, 0.55)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(1, 1, 1, 0.15)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
 
-[node name="JoystickDemo" type="Node2D" unique_id=473169652]
+[node name="JoystickDemo" type="Node2D" unique_id=473169652 groups=["game_scene"]]
 y_sort_enabled = true
 script = ExtResource("1_game")
 
@@ -44,10 +43,9 @@ texture = ExtResource("2_ds2d6")
 shape = SubResource("CircleShape2D_2yhen")
 
 [node name="Camera2D" type="Camera2D" parent="Player" unique_id=21195865]
-position_smoothing_enabled = false
 script = ExtResource("4_p57ef")
 
-[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1001473901]
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1001473901 groups=["game_ui"]]
 script = ExtResource("1_lnu2h")
 
 [node name="VirtualJoystick" type="VirtualJoystick" parent="CanvasLayer" unique_id=1728891923]
@@ -92,7 +90,6 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_action_bg")
 [node name="ActionButton" type="TextureButton" parent="UILayer" unique_id=1483188161]
 custom_minimum_size = Vector2(60, 60)
 custom_maximum_size = Vector2(60, 60)
-texture_normal = ExtResource("5_chop")
 anchors_preset = 3
 anchor_left = 1.0
 anchor_top = 1.0
@@ -104,4 +101,5 @@ offset_right = -76.0
 offset_bottom = -106.0
 grow_horizontal = 0
 grow_vertical = 0
+texture_normal = ExtResource("5_chop")
 stretch_mode = 6

@@ -6,7 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://bfi7027onrs77" path="res://assets/resources/icon_food.png" id="4_food"]
 [ext_resource type="Texture2D" uid="uid://bcouqyulbuqoq" path="res://assets/resources/icon_gold.png" id="5_gold"]
 
-[node name="ResourceGame" type="Control" unique_id=1786764351]
+[node name="ResourceGame" type="Control" unique_id=1786764351 groups=["resource_display"]]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0

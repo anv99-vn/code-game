@@ -1,5 +1,7 @@
 extends Control
 
+signal login_requested(username: String)
+
 @onready var username_input: LineEdit = %UsernameInput
 @onready var password_input: LineEdit = %PasswordInput
 @onready var error_label: Label = %ErrorLabel
@@ -8,13 +10,10 @@ extends Control
 @onready var lang_button: Button = $LangButton
 @onready var lang_dropdown = $LangButton/LangDropdown
 
+
 func _ready() -> void:
+	add_to_group("login_screen")
 	forgot_password.pressed.connect(_on_forgot_password_pressed)
-	if SessionManager.is_logged_in:
-		get_tree().change_scene_to_file("res://scenes/game.tscn")
-		return
-	if SessionLogic.has_saved_credentials():
-		_load_credentials()
 	var langs: Array[Dictionary] = [
 		{"locale": "en", "label": tr("LANG_EN")},
 		{"locale": "vi", "label": tr("LANG_VI")},
@@ -22,6 +21,17 @@ func _ready() -> void:
 	lang_dropdown.options = langs
 	lang_dropdown.language_selected.connect(_on_language_selected)
 	_update_lang_button_text()
+
+
+func on_login_changed(is_logged_in: bool) -> void:
+	if is_logged_in:
+		get_tree().change_scene_to_file("res://scenes/game.tscn")
+
+
+func on_credentials_loaded(saved: bool) -> void:
+	if saved:
+		_load_credentials.call_deferred()
+
 
 func _on_login_pressed() -> void:
 	var username := username_input.text.strip_edges()
@@ -33,16 +43,17 @@ func _on_login_pressed() -> void:
 
 	if username == "admin" and password == "admin":
 		_save_credentials(username, password)
-		SessionLogic.login(username)
-		get_tree().change_scene_to_file("res://scenes/game.tscn")
+		login_requested.emit(username)
 	else:
 		error_label.text = tr("ERROR_INVALID")
+
 
 func _save_credentials(username: String, password: String) -> void:
 	var config := ConfigFile.new()
 	config.set_value("login", "username", username)
 	config.set_value("login", "password", password)
 	config.save("user://login.cfg")
+
 
 func _load_credentials() -> void:
 	var config := ConfigFile.new()
@@ -51,26 +62,27 @@ func _load_credentials() -> void:
 	username_input.text = config.get_value("login", "username", "")
 	password_input.text = config.get_value("login", "password", "")
 
+
 func _on_lang_pressed() -> void:
 	if lang_dropdown.visible:
 		lang_dropdown.close()
 	else:
 		lang_dropdown.open(TranslationServer.get_locale().left(2))
 
+
 func _on_language_selected(locale: String) -> void:
 	TranslationServer.set_locale(locale)
-	# Manually update texts (auto-translate can be unreliable at runtime)
 	login_button.text = tr("LOGIN_BUTTON")
 	forgot_password.text = tr("FORGOT_PASSWORD")
 	username_input.placeholder_text = tr("USERNAME")
 	password_input.placeholder_text = tr("PASSWORD")
-	# Rebuild dropdown with translated labels
 	var langs: Array[Dictionary] = [
 		{"locale": "en", "label": tr("LANG_EN")},
 		{"locale": "vi", "label": tr("LANG_VI")},
 	]
 	lang_dropdown.options = langs
 	_update_lang_button_text()
+
 
 func _update_lang_button_text() -> void:
 	var current := TranslationServer.get_locale().left(2)
@@ -80,8 +92,10 @@ func _update_lang_button_text() -> void:
 			return
 	lang_button.text = tr("LANG_EN")
 
+
 func _on_forgot_password_pressed() -> void:
 	error_label.text = tr("FORGOT_PASSWORD_MSG")
+
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed and lang_dropdown.visible:

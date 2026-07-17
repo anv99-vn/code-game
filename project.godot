@@ -24,8 +24,6 @@ config/features=PackedStringArray("4.7")
 MCPRuntime="*res://addons/godot_mcp/runtime/mcp_runtime.gd"
 ResourceManager="*res://scripts/autoloads/resource_manager.gd"
 SessionManager="*res://scripts/autoloads/session_manager.gd"
-ResourceLogic="*res://scripts/autoloads/resource_logic.gd"
-SessionLogic="*res://scripts/autoloads/session_logic.gd"
 WorldManager="*res://scripts/autoloads/world_manager.gd"
 InteractionManager="*res://scripts/autoloads/interaction_manager.gd"
 

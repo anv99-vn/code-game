@@ -1,8 +1,11 @@
 extends StaticBody2D
 
 signal gold_panned
-signal pan_proximity_changed(nearby: bool)
+signal harvested(amount: int)
+signal player_entered(body: Node2D)
+signal player_exited(body: Node2D)
 signal registered(pos: Vector2)
+signal pan_proximity_changed(nearby: bool)
 
 var max_health: int = 3
 var per_hit: int = 1
@@ -25,13 +28,11 @@ var _respawn_at: float = 0.0
 func _ready() -> void:
 	_load_config()
 	_health = max_health
-	add_to_group("gold_sources")
 	registered.emit(global_position)
-	if pan_area.is_connected("body_entered", _on_body_entered) == false:
+	if not pan_area.body_entered.is_connected(_on_body_entered):
 		pan_area.body_entered.connect(_on_body_entered)
-	if pan_area.is_connected("body_exited", _on_body_exited) == false:
+	if not pan_area.body_exited.is_connected(_on_body_exited):
 		pan_area.body_exited.connect(_on_body_exited)
-	InteractionManager.focus_changed.connect(_on_focus_changed)
 
 
 func _load_config() -> void:
@@ -67,8 +68,7 @@ func _hit_flash() -> void:
 
 
 func _add_gold(amount: int) -> void:
-	ResourceManager.gold += amount
-	ResourceLogic.resources_updated.emit()
+	harvested.emit(amount)
 	gold_panned.emit()
 
 
@@ -86,7 +86,6 @@ func _deplete() -> void:
 	depleted_sprite.visible = true
 	prompt_label.visible = false
 	health_bar.visible = false
-	InteractionManager.unregister(self)
 	_respawn_at = Time.get_ticks_msec() / 1000.0 + respawn_time
 	cooldown_label.visible = _player_nearby
 
@@ -111,8 +110,6 @@ func _respawn() -> void:
 	health_bar.value = max_health
 	cooldown_label.visible = false
 	cooldown_label.text = ""
-	if _player_nearby:
-		InteractionManager.register(self)
 	_respawn_glow(gold_sprite)
 
 
@@ -128,25 +125,23 @@ func _respawn_glow(sprite: Sprite2D) -> void:
 	)
 
 
+func set_focused(focused: bool) -> void:
+	if not _depleted and _player_nearby:
+		prompt_label.visible = focused
+		health_bar.visible = focused
+
+
 func _on_body_entered(body: Node2D) -> void:
 	if body.is_in_group("player"):
 		_player_nearby = true
-		InteractionManager.set_player(body)
-		InteractionManager.register(self)
+		player_entered.emit(body)
 		pan_proximity_changed.emit(true)
 
 
 func _on_body_exited(body: Node2D) -> void:
 	if body.is_in_group("player"):
 		_player_nearby = false
-		InteractionManager.unregister(self)
+		player_exited.emit(body)
 		prompt_label.visible = false
 		health_bar.visible = false
 		pan_proximity_changed.emit(false)
-
-
-func _on_focus_changed(focused: Node2D) -> void:
-	var is_focused: bool = focused == self
-	if not _depleted and _player_nearby:
-		prompt_label.visible = is_focused
-		health_bar.visible = is_focused
