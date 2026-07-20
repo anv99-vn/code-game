@@ -81,6 +81,12 @@ jobs:
           chmod +x Godot_v4.7.1-stable_linux.x86_64
           ./Godot_v4.7.1-stable_linux.x86_64 --headless --import --quit
 
+      - name: Configure Android keystore
+        run: |
+          sed -i 's|keystore/release=""|keystore/release="/tmp/keystore.keystore"|' export_presets.cfg
+          sed -i 's|keystore/release_user=""|keystore/release_user="${{ secrets.ANDROID_KEYSTORE_USER }}"|' export_presets.cfg
+          sed -i 's|keystore/release_password=""|keystore/release_password="${{ secrets.ANDROID_KEYSTORE_PASSWORD }}"|' export_presets.cfg
+
       - name: Export game
         id: export
         uses: firebelley/godot-export@v7.0.0
@@ -90,10 +96,6 @@ jobs:
           relative_project_path: ./
           archive_output: true
           presets_to_export: "Android"
-        env:
-          GODOT_ANDROID_KEYSTORE: /tmp/keystore.keystore
-          GODOT_ANDROID_KEYSTORE_USER: ${{ secrets.ANDROID_KEYSTORE_USER }}
-          GODOT_ANDROID_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
 
       - name: Upload Android artifact
         uses: actions/upload-artifact@v4
