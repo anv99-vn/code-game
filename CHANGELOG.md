@@ -1,13 +1,25 @@
-# Changelog
+# Release Notes
 
-## v2.3.1 - 2026-07-21
+## v2.3.1
 
-- Fix Windows matrix renderer patching: use INI-relative keys (`renderer/rendering_method`, `rendering_device/driver.windows`, `gl_compatibility/driver.windows`) so the per-variant driver actually replaces the committed d3d12 default instead of being ignored as a doubled-prefix setting.
+Fix Windows matrix renderer patching so each variant actually uses its intended rendering backend.
 
-## v2.3.0 - 2026-07-21
+- Use INI-relative keys (`renderer/rendering_method`, `rendering_device/driver.windows`, `gl_compatibility/driver.windows`) instead of doubled-prefix keys that Godot silently ignores
+- Each variant now exports with the correct driver: OpenGL uses `opengl3_angle`, Vulkan uses `vulkan`, DirectX uses `d3d12`
 
-- Build Windows export as 3 variants using a GitHub Actions matrix: OpenGL (`opengl3_angle`, gl_compatibility), Vulkan (`vulkan`, forward_plus), and DirectX 12 (`d3d12`, forward_plus). Each variant patches `project.godot` and renames the exported binary (`Code-Game-opengl.exe`, `Code-Game-vulkan.exe`, `Code-Game-directx.exe`).
+## v2.3.0
 
-## v2.2.1 - 2026-07-21
+Build 3 Windows variants from a single GitHub Actions matrix.
 
-- Switch Windows export rendering driver from Vulkan to DirectX 12 (d3d12) via `rendering/rendering_device/driver.windows` in project.godot.
+- `Code-Game-opengl.exe` — OpenGL via ANGLE (`gl_compatibility` + `opengl3_angle`)
+- `Code-Game-vulkan.exe` — Vulkan (`forward_plus` + `vulkan`)
+- `Code-Game-directx.exe` — DirectX 12 (`forward_plus` + `d3d12`)
+
+Each variant patches `project.godot` and renames the exported binary before upload.
+
+## v2.2.1
+
+Switch Windows export rendering driver to DirectX 12.
+
+- Set `rendering/rendering_device/driver.windows` to `d3d12` in project.godot
+- Enabled D3D12 Agility SDK multiarch in export preset
