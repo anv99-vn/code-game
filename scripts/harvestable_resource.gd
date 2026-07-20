@@ -13,6 +13,7 @@ signal proximity_changed(nearby: bool)
 @export var prompt_label_path: NodePath
 @export var health_bar_path: NodePath
 @export var cooldown_label_path: NodePath
+@export var respawn_bar_path: NodePath
 @export var config_key: String = ""
 @export var action: String = ""
 @export var max_health: int = 3
@@ -34,6 +35,7 @@ var _area: Area2D
 var _prompt_label: Label
 var _health_bar: ProgressBar
 var _cooldown_label: Label
+var _respawn_bar: ProgressBar
 
 const GLOW_SHADER := preload("res://shaders/reborn_glow.gdshader")
 
@@ -45,6 +47,7 @@ func _ready() -> void:
 	_prompt_label = get_node_or_null(prompt_label_path) as Label
 	_health_bar = get_node_or_null(health_bar_path) as ProgressBar
 	_cooldown_label = get_node_or_null(cooldown_label_path) as Label
+	_respawn_bar = get_node_or_null(respawn_bar_path) as ProgressBar
 	assert(_main_sprite != null, "HarvestableResource: main_sprite_path not set or not a Sprite2D on %s" % name)
 	assert(_depleted_sprite != null, "HarvestableResource: depleted_sprite_path not set or not a Sprite2D on %s" % name)
 	assert(_area != null, "HarvestableResource: interaction_area_path not set or not an Area2D on %s" % name)
@@ -55,6 +58,10 @@ func _ready() -> void:
 	_health = max_health
 	_health_bar.max_value = max_health
 	_health_bar.value = max_health
+	if _respawn_bar:
+		_respawn_bar.max_value = respawn_time
+		_respawn_bar.value = 0.0
+		_respawn_bar.visible = false
 	_depleted_sprite.visible = false
 	registered.emit(global_position)
 	if not _area.body_entered.is_connected(_on_body_entered):
@@ -115,7 +122,12 @@ func _deplete() -> void:
 	_prompt_label.visible = false
 	_health_bar.visible = false
 	_respawn_at = Time.get_ticks_msec() / 1000.0 + respawn_time
-	_cooldown_label.visible = _player_nearby
+	if _respawn_bar:
+		_respawn_bar.value = 0.0
+		_respawn_bar.max_value = respawn_time
+		_respawn_bar.visible = _player_nearby
+	else:
+		_cooldown_label.visible = _player_nearby
 
 
 func _process(_delta: float) -> void:
@@ -123,11 +135,18 @@ func _process(_delta: float) -> void:
 		return
 	var remaining := _respawn_at - Time.get_ticks_msec() / 1000.0
 	if remaining <= 0.0:
-		_cooldown_label.visible = false
+		if _respawn_bar:
+			_respawn_bar.visible = false
+		else:
+			_cooldown_label.visible = false
 		_respawn()
 		return
-	_cooldown_label.text = "%ds" % ceil(remaining)
-	_cooldown_label.visible = _player_nearby
+	if _respawn_bar:
+		_respawn_bar.value = respawn_time - remaining
+		_respawn_bar.visible = _player_nearby
+	else:
+		_cooldown_label.text = "%ds" % ceil(remaining)
+		_cooldown_label.visible = _player_nearby
 
 
 func _respawn() -> void:
@@ -136,8 +155,12 @@ func _respawn() -> void:
 	_main_sprite.visible = true
 	_depleted_sprite.visible = false
 	_health_bar.value = max_health
-	_cooldown_label.visible = false
-	_cooldown_label.text = ""
+	if _respawn_bar:
+		_respawn_bar.visible = false
+		_respawn_bar.value = 0.0
+	else:
+		_cooldown_label.visible = false
+		_cooldown_label.text = ""
 	_respawn_glow(_main_sprite)
 
 
@@ -178,4 +201,6 @@ func _on_body_exited(body: Node2D) -> void:
 		player_exited.emit(body)
 		_prompt_label.visible = false
 		_health_bar.visible = false
+		if _respawn_bar:
+			_respawn_bar.visible = false
 		proximity_changed.emit(false)
