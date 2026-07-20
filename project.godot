@@ -80,3 +80,7 @@ pointing/emulate_touch_from_mouse="true"
 [internationalization]
 
 locale/translations=["res://translations/translations.en.translation", "res://translations/translations.vi.translation"]
+
+[rendering]
+
+textures/vram_compression/import_etc2_astc=true
