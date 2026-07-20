@@ -8,6 +8,10 @@ When merging a pull request:
 1. Rebase the branch onto main before merging.
 2. Delete the branch locally and remotely after successful merge.
 
+When creating a tag:
+1. Create or update a `CHANGELOG.md` file with the tag version, date, and list of changes.
+2. Commit the changelog update before creating the tag.
+
 ## Screenshots
 
 When taking a screenshot, rename the file to describe its purpose.
