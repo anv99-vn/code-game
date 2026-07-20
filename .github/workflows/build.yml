@@ -1,4 +1,4 @@
-name: Build Windows EXE
+name: Build Game
 
 on:
   push:
@@ -7,12 +7,12 @@ on:
   workflow_dispatch:
 
 jobs:
-  build:
+  build-windows:
     runs-on: ubuntu-latest
     name: Build Windows Executable
     permissions:
       contents: write
-    
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -40,6 +40,88 @@ jobs:
           archive_output: true
           presets_to_export: "Windows Desktop"
 
+      - name: Upload Windows artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: windows-build
+          path: ${{ steps.export.outputs.archive_directory }}/*
+          retention-days: 7
+
+  build-android:
+    runs-on: ubuntu-latest
+    name: Build Android APK
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Remove MCP addon
+        run: |
+          sed -i '/MCPRuntime=/d' project.godot
+          sed -i '/godot_mcp/d' project.godot
+          rm -rf addons/godot_mcp
+
+      - name: Setup Java JDK
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+
+      - name: Decode keystore
+        run: |
+          echo "${{ secrets.ANDROID_KEYSTORE_BASE64 }}" | base64 -d > /tmp/keystore.keystore
+          chmod 600 /tmp/keystore.keystore
+
+      - name: Reimport project
+        run: |
+          wget -q https://github.com/godotengine/godot/releases/download/4.7.1-stable/Godot_v4.7.1-stable_linux.x86_64.zip
+          unzip Godot_v4.7.1-stable_linux.x86_64.zip
+          chmod +x Godot_v4.7.1-stable_linux.x86_64
+          ./Godot_v4.7.1-stable_linux.x86_64 --headless --import --quit
+
+      - name: Export game
+        id: export
+        uses: firebelley/godot-export@v7.0.0
+        with:
+          godot_executable_download_url: https://github.com/godotengine/godot/releases/download/4.7.1-stable/Godot_v4.7.1-stable_linux.x86_64.zip
+          godot_export_templates_download_url: https://github.com/godotengine/godot/releases/download/4.7.1-stable/Godot_v4.7.1-stable_export_templates.tpz
+          relative_project_path: ./
+          archive_output: true
+          presets_to_export: "Android"
+        env:
+          GODOT_ANDROID_KEYSTORE: /tmp/keystore.keystore
+          GODOT_ANDROID_KEYSTORE_USER: ${{ secrets.ANDROID_KEYSTORE_USER }}
+          GODOT_ANDROID_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+
+      - name: Upload Android artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: android-build
+          path: ${{ steps.export.outputs.archive_directory }}/*
+          retention-days: 7
+
+  release:
+    runs-on: ubuntu-latest
+    needs: [build-windows, build-android]
+    name: Create Release
+    permissions:
+      contents: write
+
+    steps:
+      - name: Download Windows artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: windows-build
+          path: ./artifacts/windows
+
+      - name: Download Android artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: android-build
+          path: ./artifacts/android
+
       - name: Create Release
         uses: ncipollo/release-action@v1.18.0
         with:
@@ -47,4 +129,4 @@ jobs:
           tag: ${{ github.ref_name }}
           name: ${{ github.ref_name }}
           generateReleaseNotes: true
-          artifacts: ${{ steps.export.outputs.archive_directory }}/*
+          artifacts: "./artifacts/windows/*,./artifacts/android/*"
