@@ -24,6 +24,7 @@ signal proximity_changed(nearby: bool)
 
 var _health: int = 0
 var _player_nearby: bool = false
+var _focused: bool = false
 var _depleted: bool = false
 var _respawn_at: float = 0.0
 
@@ -78,7 +79,7 @@ func _load_config() -> void:
 func _unhandled_input(event: InputEvent) -> void:
 	if action.is_empty():
 		return
-	if event.is_action_pressed(action) and _player_nearby and not _depleted:
+	if event.is_action_pressed(action) and _player_nearby and _focused and not _depleted:
 		_interact()
 
 
@@ -155,6 +156,7 @@ func _respawn_glow(sprite: Sprite2D) -> void:
 
 
 func set_focused(focused: bool) -> void:
+	_focused = focused
 	if _depleted or not _player_nearby:
 		_prompt_label.visible = false
 		_health_bar.visible = false
