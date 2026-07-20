@@ -7,8 +7,24 @@ on:
   workflow_dispatch:
 
 jobs:
+  release:
+    runs-on: ubuntu-latest
+    name: Create Release
+    permissions:
+      contents: write
+
+    steps:
+      - name: Create Release
+        uses: ncipollo/release-action@v1.18.0
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          tag: ${{ github.ref_name }}
+          name: ${{ github.ref_name }}
+          generateReleaseNotes: true
+
   build-windows:
     runs-on: ubuntu-latest
+    needs: [release]
     name: Build Windows Executable
     permissions:
       contents: write
@@ -31,24 +47,22 @@ jobs:
           ./Godot_v4.7.1-stable_linux.x86_64 --headless --import --quit
 
       - name: Export game
-        id: export
         uses: firebelley/godot-export@v7.0.0
         with:
           godot_executable_download_url: https://github.com/godotengine/godot/releases/download/4.7.1-stable/Godot_v4.7.1-stable_linux.x86_64.zip
           godot_export_templates_download_url: https://github.com/godotengine/godot/releases/download/4.7.1-stable/Godot_v4.7.1-stable_export_templates.tpz
           relative_project_path: ./
-          archive_output: true
+          archive_output: false
           presets_to_export: "Windows Desktop"
 
-      - name: Upload Windows artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: windows-build
-          path: ${{ steps.export.outputs.archive_directory }}/*
-          retention-days: 7
+      - name: Upload to release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: gh release upload ${{ github.ref_name }} build/windows/* --clobber
 
   build-android:
     runs-on: ubuntu-latest
+    needs: [release]
     name: Build Android APK
     permissions:
       contents: write
@@ -88,47 +102,15 @@ jobs:
           sed -i 's|keystore/release_password=""|keystore/release_password="${{ secrets.ANDROID_KEYSTORE_PASSWORD }}"|' export_presets.cfg
 
       - name: Export game
-        id: export
         uses: firebelley/godot-export@v7.0.0
         with:
           godot_executable_download_url: https://github.com/godotengine/godot/releases/download/4.7.1-stable/Godot_v4.7.1-stable_linux.x86_64.zip
           godot_export_templates_download_url: https://github.com/godotengine/godot/releases/download/4.7.1-stable/Godot_v4.7.1-stable_export_templates.tpz
           relative_project_path: ./
-          archive_output: true
+          archive_output: false
           presets_to_export: "Android"
 
-      - name: Upload Android artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: android-build
-          path: ${{ steps.export.outputs.archive_directory }}/*
-          retention-days: 7
-
-  release:
-    runs-on: ubuntu-latest
-    needs: [build-windows, build-android]
-    name: Create Release
-    permissions:
-      contents: write
-
-    steps:
-      - name: Download Windows artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: windows-build
-          path: ./artifacts/windows
-
-      - name: Download Android artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: android-build
-          path: ./artifacts/android
-
-      - name: Create Release
-        uses: ncipollo/release-action@v1.18.0
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          tag: ${{ github.ref_name }}
-          name: ${{ github.ref_name }}
-          generateReleaseNotes: true
-          artifacts: "./artifacts/windows/*,./artifacts/android/*"
+      - name: Upload to release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: gh release upload ${{ github.ref_name }} build/android/* --clobber
