@@ -27,3 +27,7 @@ When a file is attached to a thread, only read that specific file. Do not read o
 ## Testing
 
 When running only a test scene, update autoloads to update data as needed for the test.
+
+## GDScript
+
+Use the method call syntax for deferred calls: `my_func.call_deferred()` instead of `call_deferred("my_func")`.
