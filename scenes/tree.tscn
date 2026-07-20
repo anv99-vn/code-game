@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://cx0ns72lrxcja"]
 
-[ext_resource type="Script" uid="uid://b7tswe0uuawtq" path="res://scripts/tree.gd" id="1_avsvi"]
+[ext_resource type="Script" uid="uid://bvdyibnv2m2wl" path="res://scripts/harvestable_resource.gd" id="1_avsvi"]
 [ext_resource type="Texture2D" uid="uid://crl20af1m7cyv" path="res://assets/trees/tree.png" id="2_vplca"]
 [ext_resource type="Texture2D" uid="uid://o2vhkfu8cbvu" path="res://assets/trees/tree_stump.png" id="3_viusy"]
 
@@ -9,6 +9,15 @@ radius = 37.65634
 
 [node name="Node" type="StaticBody2D" unique_id=664118593 groups=["trees"]]
 script = ExtResource("1_avsvi")
+main_sprite_path = NodePath("TreeSprite")
+depleted_sprite_path = NodePath("StumpSprite")
+interaction_area_path = NodePath("ChopArea")
+prompt_label_path = NodePath("PromptLabel")
+health_bar_path = NodePath("HealthBar")
+cooldown_label_path = NodePath("CooldownLabel")
+config_key = "tree"
+action = "chop"
+shake_amount = 4.0
 
 [node name="TreeSprite" type="Sprite2D" parent="." unique_id=2122303833]
 y_sort_enabled = true

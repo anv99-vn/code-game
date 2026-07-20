@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://dx0m2sbikh4xj"]
 
-[ext_resource type="Script" uid="uid://cbj8cxym1qc8i" path="res://scripts/gold_source.gd" id="1_gold"]
+[ext_resource type="Script" uid="uid://bvdyibnv2m2wl" path="res://scripts/harvestable_resource.gd" id="1_gold"]
 [ext_resource type="Texture2D" uid="uid://d1vj2x1s6b246" path="res://assets/resources/gold_nugget.png" id="2_gold"]
 [ext_resource type="Texture2D" uid="uid://5bx8bdtjtuws" path="res://assets/resources/gold_depleted.png" id="3_qpeve"]
 
@@ -9,6 +9,14 @@ radius = 28.0
 
 [node name="GoldSource" type="StaticBody2D" unique_id=434060011 groups=["gold_sources"]]
 script = ExtResource("1_gold")
+main_sprite_path = NodePath("GoldSprite")
+depleted_sprite_path = NodePath("DepletedSprite")
+interaction_area_path = NodePath("PanArea")
+prompt_label_path = NodePath("PromptLabel")
+health_bar_path = NodePath("HealthBar")
+cooldown_label_path = NodePath("CooldownLabel")
+config_key = "gold"
+action = "pan"
 
 [node name="GoldSprite" type="Sprite2D" parent="." unique_id=829691878]
 y_sort_enabled = true

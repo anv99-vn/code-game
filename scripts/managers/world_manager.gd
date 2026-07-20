@@ -91,8 +91,10 @@ func _on_node_added(node: Node) -> void:
 	if node.is_in_group("game_scene") and node is Node2D:
 		var player := node.get_node_or_null("Player")
 		if player and player is CharacterBody2D:
-			generate_objects(node, player.global_position)
+			generate_objects.call_deferred(node, player.global_position)
 
 
 func _ready() -> void:
 	get_tree().node_added.connect(_on_node_added)
+	for node in get_tree().get_nodes_in_group("game_scene"):
+		_on_node_added(node)

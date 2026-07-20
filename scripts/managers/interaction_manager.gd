@@ -15,6 +15,11 @@ func get_focused() -> Node2D:
 
 func _ready() -> void:
 	get_tree().node_added.connect(_on_node_added)
+	for group in INTERACTABLE_GROUPS:
+		for node in get_tree().get_nodes_in_group(group):
+			_on_node_added(node)
+	for node in get_tree().get_nodes_in_group("game_ui"):
+		_on_node_added(node)
 
 
 func _on_node_added(node: Node) -> void:
