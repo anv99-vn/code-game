@@ -25,9 +25,25 @@ jobs:
   build-windows:
     runs-on: ubuntu-latest
     needs: [release]
-    name: Build Windows Executable
+    name: Build Windows (${{ matrix.variant.name }})
     permissions:
       contents: write
+    strategy:
+      fail-fast: false
+      matrix:
+        variant:
+          - name: opengl
+            rendering_method: gl_compatibility
+            driver_setting: rendering/gl_compatibility/driver.windows
+            driver: opengl3_angle
+          - name: vulkan
+            rendering_method: forward_plus
+            driver_setting: rendering/rendering_device/driver.windows
+            driver: vulkan
+          - name: directx
+            rendering_method: forward_plus
+            driver_setting: rendering/rendering_device/driver.windows
+            driver: d3d12
 
     steps:
       - name: Checkout
@@ -38,6 +54,27 @@ jobs:
           sed -i '/MCPRuntime=/d' project.godot
           sed -i '/godot_mcp/d' project.godot
           rm -rf addons/godot_mcp
+
+      - name: Configure renderer for ${{ matrix.variant.name }}
+        run: |
+          set -e
+          # Drop any pre-existing renderer/driver lines under [rendering]
+          sed -i '/^rendering\/renderer\/rendering_method=/d' project.godot
+          sed -i '/^rendering\/rendering_device\/driver.windows=/d' project.godot
+          sed -i '/^rendering\/gl_compatibility\/driver.windows=/d' project.godot
+          # Insert the desired method + driver right after the [rendering] header
+          awk -v method="rendering/renderer/rendering_method=\"${{ matrix.variant.rendering_method }}\"" \
+              -v driver="${{ matrix.variant.driver_setting }}=\"${{ matrix.variant.driver }}\"" \
+              '
+                $0 == "[rendering]" { print; print method; print driver; next }
+                { print }
+              ' project.godot > project.godot.tmp && mv project.godot.tmp project.godot
+          # Rename the exported binary per variant
+          sed -i "s|^export_path=\"build/windows/Code-Game.exe\"|export_path=\"build/windows/Code-Game-${{ matrix.variant.name }}.exe\"|" export_presets.cfg
+          echo "=== project.godot [rendering] ==="
+          grep -A6 '^\[rendering\]' project.godot
+          echo "=== export_path ==="
+          grep export_path export_presets.cfg
 
       - name: Reimport project
         run: |
@@ -58,7 +95,7 @@ jobs:
       - name: Upload to release
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: gh release upload ${{ github.ref_name }} /home/runner/.local/share/godot/builds/Windows\ Desktop/* --clobber
+        run: gh release upload ${{ github.ref_name }} "/home/runner/.local/share/godot/builds/Windows Desktop/Code-Game-${{ matrix.variant.name }}.exe" --clobber
 
   build-android:
     runs-on: ubuntu-latest
