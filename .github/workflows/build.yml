@@ -32,17 +32,19 @@ jobs:
       fail-fast: false
       matrix:
         variant:
+          # Keys use the INI-relative form (the [rendering] section header
+          # prepends "rendering/" to each key in project.godot).
           - name: opengl
             rendering_method: gl_compatibility
-            driver_setting: rendering/gl_compatibility/driver.windows
+            driver_key: gl_compatibility/driver.windows
             driver: opengl3_angle
           - name: vulkan
             rendering_method: forward_plus
-            driver_setting: rendering/rendering_device/driver.windows
+            driver_key: rendering_device/driver.windows
             driver: vulkan
           - name: directx
             rendering_method: forward_plus
-            driver_setting: rendering/rendering_device/driver.windows
+            driver_key: rendering_device/driver.windows
             driver: d3d12
 
     steps:
@@ -58,13 +60,15 @@ jobs:
       - name: Configure renderer for ${{ matrix.variant.name }}
         run: |
           set -e
-          # Drop any pre-existing renderer/driver lines under [rendering]
-          sed -i '/^rendering\/renderer\/rendering_method=/d' project.godot
-          sed -i '/^rendering\/rendering_device\/driver.windows=/d' project.godot
-          sed -i '/^rendering\/gl_compatibility\/driver.windows=/d' project.godot
+          # Drop any pre-existing renderer/driver lines under [rendering].
+          # Keys in project.godot appear without the "rendering/" prefix
+          # (that prefix comes from the [rendering] section header).
+          sed -i '/^renderer\/rendering_method=/d' project.godot
+          sed -i '/^rendering_device\/driver\./d' project.godot
+          sed -i '/^gl_compatibility\/driver\./d' project.godot
           # Insert the desired method + driver right after the [rendering] header
-          awk -v method="rendering/renderer/rendering_method=\"${{ matrix.variant.rendering_method }}\"" \
-              -v driver="${{ matrix.variant.driver_setting }}=\"${{ matrix.variant.driver }}\"" \
+          awk -v method="renderer/rendering_method=\"${{ matrix.variant.rendering_method }}\"" \
+              -v driver="${{ matrix.variant.driver_key }}=\"${{ matrix.variant.driver }}\"" \
               '
                 $0 == "[rendering]" { print; print method; print driver; next }
                 { print }
