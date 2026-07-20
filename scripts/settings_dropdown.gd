@@ -7,11 +7,11 @@ var options: Array[Dictionary] = []:
 	set(val):
 		options = val
 		if is_inside_tree():
-			call_deferred("_rebuild")
+			_rebuild.call_deferred()
 
 
 func _ready() -> void:
-	call_deferred("_rebuild")
+	_rebuild.call_deferred()
 
 
 func _rebuild() -> void:

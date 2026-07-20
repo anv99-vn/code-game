@@ -17,7 +17,7 @@ func _ready() -> void:
 	_tree_scene = load("res://scenes/tree.tscn")
 	_stone_scene = load("res://scenes/stone.tscn")
 	_gold_source_scene = load("res://scenes/gold_source.tscn")
-	call_deferred("_generate_objects")
+	_generate_objects.call_deferred()
 
 
 func _generate_objects() -> void:

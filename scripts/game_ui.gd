@@ -73,7 +73,7 @@ func _on_action_released() -> void:
 
 func on_login_changed(is_logged_in: bool) -> void:
 	if not is_logged_in:
-		call_deferred("_go_to_login")
+		_go_to_login.call_deferred()
 
 
 func _go_to_login() -> void:
