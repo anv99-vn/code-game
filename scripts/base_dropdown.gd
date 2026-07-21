@@ -1,6 +1,5 @@
 extends VBoxContainer
 
-signal opened
 signal closed
 
 
@@ -38,5 +37,5 @@ func _on_open() -> void:
 	pass
 
 
-func _on_option_pressed(value: String) -> void:
+func _on_option_pressed(_value: String) -> void:
 	pass

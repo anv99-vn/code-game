@@ -20,8 +20,8 @@ corner_radius_bottom_left = 8
 theme_override_styles/normal = SubResource("settings_transparent")
 theme_override_styles/pressed = SubResource("settings_transparent")
 theme_override_styles/hover = SubResource("settings_hover")
-text = "Setting"
 icon = ExtResource("2_gear")
+metadata/label_key = "SETTINGS"
 
 [node name="SettingsDropdown" type="VBoxContainer" parent="." unique_id=631257256]
 visible = false
@@ -38,7 +38,7 @@ size_flags_horizontal = 3
 text = "Click to Move: ON"
 icon = ExtResource("3_click")
 metadata/action = "click_to_move"
-metadata/label = "Click to Move"
+metadata/label_key = "CLICK_TO_MOVE"
 metadata/toggle = true
 
 [node name="ResourcesBtn" type="Button" parent="SettingsDropdown" unique_id=8452979]
@@ -47,7 +47,7 @@ size_flags_horizontal = 3
 text = "Resources"
 icon = ExtResource("4_resource")
 metadata/action = "resources"
-metadata/label = "Resources"
+metadata/label_key = "RES_LABEL"
 
 [node name="LogoutBtn" type="Button" parent="SettingsDropdown" unique_id=1923139812]
 layout_mode = 2
@@ -55,4 +55,4 @@ size_flags_horizontal = 3
 text = "Log Out"
 icon = ExtResource("5_logout")
 metadata/action = "logout"
-metadata/label = "Log Out"
+metadata/label_key = "LOG_OUT"

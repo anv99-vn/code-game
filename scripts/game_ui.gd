@@ -24,6 +24,7 @@ func _setup_action_button() -> void:
 
 
 func _setup_settings() -> void:
+	settings_button.text = tr("SETTINGS")
 	settings_dropdown.update_toggle("click_to_move", SettingsManager.click_to_move)
 	settings_dropdown.option_selected.connect(_on_settings_option)
 	settings_button.pressed.connect(_on_settings_pressed)
@@ -100,7 +101,20 @@ func _on_settings_pressed() -> void:
 	if settings_dropdown.visible:
 		settings_dropdown.close()
 	else:
+		_update_settings_labels()
 		settings_dropdown.open()
+
+
+func _update_settings_labels() -> void:
+	settings_button.text = tr("SETTINGS")
+	for child in settings_dropdown.get_children():
+		if child is Button:
+			var key: String = child.get_meta("label_key", "")
+			var action: String = child.get_meta("action", "")
+			if action == "click_to_move":
+				child.text = tr(key) + ": " + ("ON" if SettingsManager.click_to_move else "OFF")
+			else:
+				child.text = tr(key)
 
 
 func _on_settings_option(action: String) -> void:

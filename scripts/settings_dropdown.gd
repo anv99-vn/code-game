@@ -6,7 +6,7 @@ signal option_selected(action: String)
 func update_toggle(action: String, state: bool) -> void:
 	for child in get_children():
 		if child is Button and child.get_meta("action", "") == action:
-			child.text = child.get_meta("label", "") + ": " + ("ON" if state else "OFF")
+			child.text = tr(child.get_meta("label_key", "")) + ": " + ("ON" if state else "OFF")
 			break
 
 
