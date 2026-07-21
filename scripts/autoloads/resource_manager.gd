@@ -44,7 +44,7 @@ func _on_node_added(node: Node) -> void:
 	if node.is_in_group("resource_display") and node.has_method("_update_display"):
 		if not resources_updated.is_connected(node._update_display):
 			resources_updated.connect(node._update_display)
-			node._update_display(wood, stone, food, gold)
+			node._update_display.call_deferred(wood, stone, food, gold)
 
 
 func _on_harvested(amount: int, type: String) -> void:
