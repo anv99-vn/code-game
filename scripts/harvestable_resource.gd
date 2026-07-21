@@ -6,6 +6,7 @@ signal player_entered(body: Node2D)
 signal player_exited(body: Node2D)
 signal registered(pos: Vector2)
 signal proximity_changed(nearby: bool)
+signal depleted_changed(is_depleted: bool)
 
 @export var main_sprite_path: NodePath
 @export var depleted_sprite_path: NodePath
@@ -116,6 +117,7 @@ func _shake() -> void:
 
 func _deplete() -> void:
 	_depleted = true
+	depleted_changed.emit(true)
 	harvested.emit(bonus_on_deplete)
 	_main_sprite.visible = false
 	_depleted_sprite.visible = true
@@ -152,6 +154,7 @@ func _process(_delta: float) -> void:
 func _respawn() -> void:
 	_health = max_health
 	_depleted = false
+	depleted_changed.emit(false)
 	_main_sprite.visible = true
 	_depleted_sprite.visible = false
 	_health_bar.value = max_health

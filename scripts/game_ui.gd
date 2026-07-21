@@ -38,12 +38,25 @@ func _on_focus_changed(focused: Node2D) -> void:
 		_current_action = ""
 		action_button.visible = false
 		action_button_bg.visible = false
-	elif focused.is_in_group("trees"):
-		_set_action("chop", "res://assets/icons/icon_chop.png")
-	elif focused.is_in_group("stones"):
-		_set_action("mine", "res://assets/icons/icon_mine.png")
-	elif focused.is_in_group("gold_sources"):
-		_set_action("pan", "res://assets/icons/icon_pan.png")
+	elif focused.is_in_group("trees") or focused.is_in_group("stones") or focused.is_in_group("gold_sources"):
+		if focused.has_signal("depleted_changed"):
+			if focused._depleted:
+				action_button.visible = false
+				action_button_bg.visible = false
+				return
+			focused.depleted_changed.connect(_on_depleted_changed)
+		if focused.is_in_group("trees"):
+			_set_action("chop", "res://assets/icons/icon_chop.png")
+		elif focused.is_in_group("stones"):
+			_set_action("mine", "res://assets/icons/icon_mine.png")
+		elif focused.is_in_group("gold_sources"):
+			_set_action("pan", "res://assets/icons/icon_pan.png")
+
+
+func _on_depleted_changed(is_depleted: bool) -> void:
+	if is_depleted:
+		action_button.visible = false
+		action_button_bg.visible = false
 
 
 func _set_action(action: String, icon_path: String) -> void:
@@ -56,6 +69,9 @@ func _set_action(action: String, icon_path: String) -> void:
 func _on_action_pressed() -> void:
 	if _current_action.is_empty():
 		return
+	var tween := create_tween()
+	tween.tween_property(action_button, "scale", Vector2(0.85, 0.85), 0.08)\
+		.set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_QUAD)
 	var ev := InputEventAction.new()
 	ev.action = _current_action
 	ev.pressed = true
@@ -65,6 +81,9 @@ func _on_action_pressed() -> void:
 func _on_action_released() -> void:
 	if _current_action.is_empty():
 		return
+	var tween := create_tween()
+	tween.tween_property(action_button, "scale", Vector2.ONE, 0.1)\
+		.set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_BACK)
 	var ev := InputEventAction.new()
 	ev.action = _current_action
 	ev.pressed = false
