@@ -36,3 +36,4 @@ RES_MSG_MINE,Built Mine! Now generating +%d gold/sec.,Đã xây Mỏ! Hiện t�
 RES_MSG_UPGRADE,Upgraded Click Power! Now gathering +%d per click.,Đã nâng cấp Lực nhấp! Hiện thu thập +%d mỗi lần nhấp.
 LANG_EN,English,English
 LANG_VI,Tiếng Việt,Tiếng Việt
+CLICK_TO_MOVE,Click to Move,Nhấp để di chuyển

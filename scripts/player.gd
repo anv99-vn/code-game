@@ -10,7 +10,7 @@ var click_target: Vector2 = Vector2.INF
 var _click_effect_scene: PackedScene = preload("res://scenes/click_effect.tscn")
 
 func _unhandled_input(event: InputEvent) -> void:
-	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
+	if SettingsManager.click_to_move and event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
 		click_target = get_global_mouse_position()
 		_spawn_click_effect(click_target)
 

@@ -23,13 +23,18 @@ func _rebuild() -> void:
 
 	for opt in options:
 		var btn := Button.new()
-		btn.text = opt.get("label", "")
+		var action: String = opt.get("action", "")
+		var is_toggle: bool = opt.get("toggle", false)
+		var state: bool = opt.get("state", false)
+		if is_toggle:
+			btn.text = opt.get("label", "") + ": " + ("ON" if state else "OFF")
+		else:
+			btn.text = opt.get("label", "")
 		btn.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		btn.alignment = HORIZONTAL_ALIGNMENT_LEFT
 		var icon_path: String = opt.get("icon", "")
 		if not icon_path.is_empty():
 			btn.icon = load(icon_path)
-		var action: String = opt.get("action", "")
 		btn.pressed.connect(_on_option_pressed.bind(action))
 		add_child(btn)
 

@@ -25,6 +25,7 @@ func _setup_action_button() -> void:
 
 func _setup_settings() -> void:
 	var opts: Array[Dictionary] = [
+		{"action": "click_to_move", "label": tr("CLICK_TO_MOVE"), "icon": "res://assets/generated/icon_click.png", "toggle": true, "state": SettingsManager.click_to_move},
 		{"action": "resources", "label": tr("RES_LABEL"), "icon": "res://assets/icons/icon_resource.png"},
 		{"action": "logout", "label": tr("LOG_OUT"), "icon": "res://assets/icons/icon_logout.png"},
 	]
@@ -44,7 +45,8 @@ func _on_focus_changed(focused: Node2D) -> void:
 				action_button.visible = false
 				action_button_bg.visible = false
 				return
-			focused.depleted_changed.connect(_on_depleted_changed)
+			if not focused.depleted_changed.is_connected(_on_depleted_changed):
+				focused.depleted_changed.connect(_on_depleted_changed)
 		if focused.is_in_group("trees"):
 			_set_action("chop", "res://assets/icons/icon_chop.png")
 		elif focused.is_in_group("stones"):
@@ -108,6 +110,9 @@ func _on_settings_pressed() -> void:
 
 func _on_settings_option(action: String) -> void:
 	match action:
+		"click_to_move":
+			SettingsManager.click_to_move = not SettingsManager.click_to_move
+			_update_click_to_move_option()
 		"resources":
 			if resource_game_ui == null:
 				resource_game_ui = RESOURCE_GAME_SCENE.instantiate()
@@ -120,10 +125,21 @@ func _on_settings_option(action: String) -> void:
 			logout_requested.emit()
 
 
+func _update_click_to_move_option() -> void:
+	for i in range(settings_dropdown.options.size()):
+		if settings_dropdown.options[i].get("action") == "click_to_move":
+			settings_dropdown.options[i]["state"] = SettingsManager.click_to_move
+			break
+	settings_dropdown.options = settings_dropdown.options
+
+
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed and settings_dropdown.visible:
 		var btn_rect := Rect2(settings_button.global_position, settings_button.size)
 		var ddown_rect := Rect2(settings_dropdown.global_position, settings_dropdown.size * settings_dropdown.scale)
 		var mouse_pos := get_viewport().get_mouse_position()
+		var screen_rect := Rect2(Vector2.ZERO, get_viewport().get_visible_rect().size)
 		if not btn_rect.has_point(mouse_pos) and not ddown_rect.has_point(mouse_pos):
+			settings_dropdown.close()
+		elif not screen_rect.has_point(mouse_pos):
 			settings_dropdown.close()

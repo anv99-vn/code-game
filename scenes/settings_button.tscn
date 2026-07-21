@@ -22,9 +22,10 @@ theme_override_styles/hover = SubResource("settings_hover")
 
 [node name="SettingsDropdown" type="VBoxContainer" parent="." unique_id=631257256]
 visible = false
-pivot_offset = Vector2(50, 0)
+pivot_offset = Vector2(180, 0)
 layout_mode = 0
+offset_left = -180.0
 offset_top = 40.0
-offset_right = 120.0
+offset_right = 0.0
 offset_bottom = 120.0
 script = ExtResource("1_jxe1r")
