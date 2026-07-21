@@ -1,67 +1,41 @@
 @tool
-extends VBoxContainer
+extends "res://scripts/base_dropdown.gd"
 
 signal language_selected(locale: String)
 
-var options: Array[Dictionary] = []:
-	set(val):
-		options = val
-		if is_inside_tree():
-			_rebuild()
+
+func _get_meta_key() -> String:
+	return "locale"
 
 
-func _ready() -> void:
-	_rebuild()
+func _on_open() -> void:
+	_update_labels()
+	_highlight_current(TranslationServer.get_locale().left(2))
 
 
-func _rebuild(current_locale: String = "") -> void:
+func get_current_label(current_locale: String) -> String:
 	for child in get_children():
-		child.queue_free()
-
-	if options.is_empty():
-		return
-
-	for opt in options:
-		var btn := Button.new()
-		btn.text = "  " + opt.get("label", opt.get("locale", ""))
-		btn.icon = load("res://assets/icons/icon_globe_small.png")
-		btn.alignment = HORIZONTAL_ALIGNMENT_LEFT
-		btn.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-		btn.add_theme_color_override("font_color", Color(1, 1, 1, 0.9))
-		btn.add_theme_color_override("font_hover_color", Color(1, 1, 1, 1))
-		var is_current: bool = not current_locale.is_empty() and opt.get("locale") == current_locale
-		var btn_normal := StyleBoxFlat.new()
-		if is_current:
-			btn_normal.bg_color = Color(1, 1, 1, 0.2)
-		else:
-			btn_normal.bg_color = Color(0.08, 0.16, 0.4, 0.95)
-		btn.add_theme_stylebox_override("normal", btn_normal)
-		var btn_hover := StyleBoxFlat.new()
-		btn_hover.bg_color = Color(1, 1, 1, 0.3)
-		btn.add_theme_stylebox_override("hover", btn_hover)
-		var locale: String = opt.get("locale", "")
-		btn.pressed.connect(_on_option_pressed.bind(locale))
-		add_child(btn)
+		if child is Button and String(child.get_meta("locale", "")) == current_locale:
+			return String(child.get_meta("label_key", ""))
+	return ""
 
 
-func open(current_locale: String = "") -> void:
-	_rebuild(current_locale)
-	visible = true
-	scale = Vector2.ZERO
-	var tween := create_tween()
-	tween.tween_property(self, "scale", Vector2.ONE, 0.15)\
-		.set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_BACK)
+func _update_labels() -> void:
+	for child in get_children():
+		if child is Button:
+			child.text = "  " + tr(child.get_meta("label_key", ""))
 
 
-func close() -> void:
-	var tween := create_tween()
-	tween.tween_property(self, "scale", Vector2.ZERO, 0.1)\
-		.set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_QUINT)
-	tween.tween_callback(func():
-		visible = false
-	)
+func _highlight_current(current_locale: String) -> void:
+	for child in get_children():
+		if child is Button:
+			var is_current: bool = not current_locale.is_empty() and child.get_meta("locale", "") == current_locale
+			var btn_normal: StyleBoxFlat = child.get_theme_stylebox("normal").duplicate() as StyleBoxFlat
+			if btn_normal:
+				btn_normal.bg_color = Color(1, 1, 1, 0.2) if is_current else Color(0.08, 0.16, 0.4, 0.95)
+				child.add_theme_stylebox_override("normal", btn_normal)
 
 
-func _on_option_pressed(locale: String) -> void:
-	language_selected.emit(locale)
+func _on_option_pressed(value: String) -> void:
+	language_selected.emit(value)
 	close()

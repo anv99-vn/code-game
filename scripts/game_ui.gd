@@ -24,12 +24,7 @@ func _setup_action_button() -> void:
 
 
 func _setup_settings() -> void:
-	var opts: Array[Dictionary] = [
-		{"action": "click_to_move", "label": tr("CLICK_TO_MOVE"), "icon": "res://assets/generated/icon_click.png", "toggle": true, "state": SettingsManager.click_to_move},
-		{"action": "resources", "label": tr("RES_LABEL"), "icon": "res://assets/icons/icon_resource.png"},
-		{"action": "logout", "label": tr("LOG_OUT"), "icon": "res://assets/icons/icon_logout.png"},
-	]
-	settings_dropdown.options = opts
+	settings_dropdown.update_toggle("click_to_move", SettingsManager.click_to_move)
 	settings_dropdown.option_selected.connect(_on_settings_option)
 	settings_button.pressed.connect(_on_settings_pressed)
 
@@ -126,11 +121,7 @@ func _on_settings_option(action: String) -> void:
 
 
 func _update_click_to_move_option() -> void:
-	for i in range(settings_dropdown.options.size()):
-		if settings_dropdown.options[i].get("action") == "click_to_move":
-			settings_dropdown.options[i]["state"] = SettingsManager.click_to_move
-			break
-	settings_dropdown.options = settings_dropdown.options
+	settings_dropdown.update_toggle("click_to_move", SettingsManager.click_to_move)
 
 
 func _unhandled_input(event: InputEvent) -> void:

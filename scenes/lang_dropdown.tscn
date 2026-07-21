@@ -1,7 +1,48 @@
 [gd_scene format=3 uid="uid://dnjel6ww0h46h"]
 
 [ext_resource type="Script" uid="uid://cj0po26iwrxjq" path="res://scripts/lang_dropdown.gd" id="1_ly7je"]
+[ext_resource type="Texture2D" uid="uid://hch8r3v4l8qs" path="res://assets/icons/icon_globe_small.png" id="2_globe"]
+
+[sub_resource type="StyleBoxFlat" id="lang_normal"]
+bg_color = Color(0.08, 0.16, 0.4, 0.95)
+
+[sub_resource type="StyleBoxFlat" id="lang_hover"]
+bg_color = Color(1, 1, 1, 0.3)
 
 [node name="LangDropdown" type="VBoxContainer" unique_id=586458441]
+offset_left = -64.0
+offset_top = 25.0
+offset_right = 115.0
+offset_bottom = 85.0
 pivot_offset = Vector2(50, 0)
 script = ExtResource("1_ly7je")
+
+[node name="EnBtn" type="Button" parent="." unique_id=1279928381]
+custom_minimum_size = Vector2(0, 28)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(1, 1, 1, 0.9)
+theme_override_colors/font_hover_color = Color(1, 1, 1, 1)
+theme_override_constants/icon_max_width = 14
+theme_override_font_sizes/font_size = 11
+theme_override_styles/normal = SubResource("lang_normal")
+theme_override_styles/hover = SubResource("lang_hover")
+text = "  English"
+icon = ExtResource("2_globe")
+metadata/locale = "en"
+metadata/label_key = "LANG_EN"
+
+[node name="ViBtn" type="Button" parent="." unique_id=780564104]
+custom_minimum_size = Vector2(0, 28)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(1, 1, 1, 0.9)
+theme_override_colors/font_hover_color = Color(1, 1, 1, 1)
+theme_override_constants/icon_max_width = 14
+theme_override_font_sizes/font_size = 11
+theme_override_styles/normal = SubResource("lang_normal")
+theme_override_styles/hover = SubResource("lang_hover")
+text = "  Tiếng Việt"
+icon = ExtResource("2_globe")
+metadata/locale = "vi"
+metadata/label_key = "LANG_VI"

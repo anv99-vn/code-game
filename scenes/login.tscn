@@ -5,8 +5,8 @@
 [ext_resource type="Texture2D" uid="uid://3bgxj6wkqsky" path="res://assets/ui/logo_console.png" id="3_r3fp8"]
 [ext_resource type="Texture2D" uid="uid://bbxkdxlg3k7gg" path="res://assets/icons/icon_user_w.png" id="5_9n4p5"]
 [ext_resource type="Texture2D" uid="uid://ci4sofrtxy8yh" path="res://assets/icons/icon_lock_w.png" id="6_1q7r6"]
-[ext_resource type="Script" uid="uid://cj0po26iwrxjq" path="res://scripts/lang_dropdown.gd" id="6_r3fp8"]
 [ext_resource type="Texture2D" uid="uid://hch8r3v4l8qs" path="res://assets/icons/icon_globe_small.png" id="7_globe"]
+[ext_resource type="PackedScene" uid="uid://dnjel6ww0h46h" path="res://scenes/lang_dropdown.tscn" id="8_dd"]
 
 [sub_resource type="StyleBoxFlat" id="card"]
 bg_color = Color(0.114, 0.231, 0.545, 1)
@@ -288,13 +288,12 @@ theme_override_styles/hover = SubResource("lang_hover")
 text = "English"
 icon = ExtResource("7_globe")
 
-[node name="LangDropdown" type="VBoxContainer" parent="LangButton" unique_id=291513591]
+[node name="LangDropdown" parent="LangButton" unique_id=1111559506 instance=ExtResource("8_dd")]
 visible = false
 layout_mode = 0
 offset_top = 36.0
-offset_right = 140.0
-offset_bottom = 36.0
-script = ExtResource("6_r3fp8")
+offset_right = 120.0
+offset_bottom = 92.0
 
 [connection signal="pressed" from="LoginButton" to="." method="_on_login_pressed"]
 [connection signal="pressed" from="LangButton" to="." method="_on_lang_pressed"]

@@ -1,12 +1,29 @@
 [gd_scene format=3 uid="uid://dhbfm1eys5c3d"]
 
 [ext_resource type="PackedScene" uid="uid://dnjel6ww0h46h" path="res://scenes/lang_dropdown.tscn" id="1_0sjtm"]
+[ext_resource type="Texture2D" uid="uid://hch8r3v4l8qs" path="res://assets/icons/icon_globe_small.png" id="2_globe"]
+
+[sub_resource type="StyleBoxFlat" id="lang_transparent"]
+bg_color = Color(0, 0, 0, 0)
+
+[sub_resource type="StyleBoxFlat" id="lang_hover"]
+bg_color = Color(1, 1, 1, 0.15)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
 
 [node name="LangButton" type="Button" unique_id=1238473430]
+theme_override_colors/font_color = Color(1, 1, 1, 0.9)
+theme_override_colors/font_hover_color = Color(1, 1, 1, 1)
+theme_override_styles/normal = SubResource("lang_transparent")
+theme_override_styles/pressed = SubResource("lang_transparent")
+theme_override_styles/hover = SubResource("lang_hover")
+icon = ExtResource("2_globe")
 
 [node name="LangDropdown" parent="." unique_id=586458441 instance=ExtResource("1_0sjtm")]
-visible = false
 layout_mode = 0
-offset_top = 40.0
-offset_right = 100.0
-offset_bottom = 120.0
+offset_left = -67.0
+offset_top = 26.0
+offset_right = 38.0
+offset_bottom = 106.0

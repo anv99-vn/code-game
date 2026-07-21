@@ -14,11 +14,6 @@ signal login_requested(username: String)
 func _ready() -> void:
 	add_to_group("login_screen")
 	forgot_password.pressed.connect(_on_forgot_password_pressed)
-	var langs: Array[Dictionary] = [
-		{"locale": "en", "label": tr("LANG_EN")},
-		{"locale": "vi", "label": tr("LANG_VI")},
-	]
-	lang_dropdown.options = langs
 	lang_dropdown.language_selected.connect(_on_language_selected)
 	_update_lang_button_text()
 
@@ -67,7 +62,7 @@ func _on_lang_pressed() -> void:
 	if lang_dropdown.visible:
 		lang_dropdown.close()
 	else:
-		lang_dropdown.open(TranslationServer.get_locale().left(2))
+		lang_dropdown.open()
 
 
 func _on_language_selected(locale: String) -> void:
@@ -76,21 +71,16 @@ func _on_language_selected(locale: String) -> void:
 	forgot_password.text = tr("FORGOT_PASSWORD")
 	username_input.placeholder_text = tr("USERNAME")
 	password_input.placeholder_text = tr("PASSWORD")
-	var langs: Array[Dictionary] = [
-		{"locale": "en", "label": tr("LANG_EN")},
-		{"locale": "vi", "label": tr("LANG_VI")},
-	]
-	lang_dropdown.options = langs
 	_update_lang_button_text()
 
 
 func _update_lang_button_text() -> void:
 	var current := TranslationServer.get_locale().left(2)
-	for opt in lang_dropdown.options:
-		if opt.get("locale") == current:
-			lang_button.text = opt.get("label", "")
-			return
-	lang_button.text = tr("LANG_EN")
+	var key: String = lang_dropdown.get_current_label(current)
+	if key.is_empty():
+		lang_button.text = tr("LANG_EN")
+	else:
+		lang_button.text = tr(key)
 
 
 func _on_forgot_password_pressed() -> void:

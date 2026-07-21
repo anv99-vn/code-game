@@ -1,7 +1,10 @@
 [gd_scene format=3 uid="uid://cnu3s5uf4pavh"]
 
 [ext_resource type="Script" uid="uid://yys1ewii8s60" path="res://scripts/settings_dropdown.gd" id="1_jxe1r"]
-[ext_resource type="Texture2D" path="res://assets/icons/icon_gear.png" id="2_gear"]
+[ext_resource type="Texture2D" uid="uid://ek8d66x00q75" path="res://assets/icons/icon_gear.png" id="2_gear"]
+[ext_resource type="Texture2D" uid="uid://clfdcvq4mtia4" path="res://assets/generated/icon_click.png" id="3_click"]
+[ext_resource type="Texture2D" uid="uid://cfednsdv0e3sv" path="res://assets/icons/icon_resource.png" id="4_resource"]
+[ext_resource type="Texture2D" uid="uid://c0e824vb3d4ex" path="res://assets/icons/icon_logout.png" id="5_logout"]
 
 [sub_resource type="StyleBoxFlat" id="settings_transparent"]
 bg_color = Color(0, 0, 0, 0)
@@ -14,17 +17,42 @@ corner_radius_bottom_right = 8
 corner_radius_bottom_left = 8
 
 [node name="SettingsButton" type="Button" unique_id=1589812112]
-text = ""
-icon = ExtResource("2_gear")
 theme_override_styles/normal = SubResource("settings_transparent")
 theme_override_styles/pressed = SubResource("settings_transparent")
 theme_override_styles/hover = SubResource("settings_hover")
+text = "Setting"
+icon = ExtResource("2_gear")
 
 [node name="SettingsDropdown" type="VBoxContainer" parent="." unique_id=631257256]
 visible = false
 layout_mode = 0
-offset_left = -170.0
+offset_left = -84.0
 offset_top = 40.0
-offset_right = 120.0
-offset_bottom = 140.0
+offset_right = 107.0
+offset_bottom = 172.0
 script = ExtResource("1_jxe1r")
+
+[node name="ClickToMoveBtn" type="Button" parent="SettingsDropdown" unique_id=1154561536]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Click to Move: ON"
+icon = ExtResource("3_click")
+metadata/action = "click_to_move"
+metadata/label = "Click to Move"
+metadata/toggle = true
+
+[node name="ResourcesBtn" type="Button" parent="SettingsDropdown" unique_id=8452979]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Resources"
+icon = ExtResource("4_resource")
+metadata/action = "resources"
+metadata/label = "Resources"
+
+[node name="LogoutBtn" type="Button" parent="SettingsDropdown" unique_id=1923139812]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Log Out"
+icon = ExtResource("5_logout")
+metadata/action = "logout"
+metadata/label = "Log Out"
