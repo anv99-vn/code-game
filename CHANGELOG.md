@@ -1,5 +1,13 @@
 # Release Notes
 
+## v2.4.0
+
+Add `AssetRegistry` class to centralize all asset paths as typed constants.
+
+- New `scripts/asset_registry.gd` with 39 constants (icons, scenes, shaders, data, translations)
+- New `scripts/tools/generate_asset_registry.gd` editor tool to regenerate after adding assets
+- Replace all hardcoded `res://` paths across `game_ui`, `game`, `login`, `main`, `player`, `harvestable_resource`
+
 ## v2.3.1
 
 Fix Windows matrix renderer patching so each variant actually uses its intended rendering backend.
