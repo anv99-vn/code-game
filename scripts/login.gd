@@ -20,7 +20,7 @@ func _ready() -> void:
 
 func on_login_changed(is_logged_in: bool) -> void:
 	if is_logged_in:
-		get_tree().change_scene_to_file("res://scenes/game.tscn")
+		get_tree().change_scene_to_file(AssetRegistry.SCENES_GAME)
 
 
 func on_credentials_loaded(saved: bool) -> void:

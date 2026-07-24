@@ -42,7 +42,7 @@ var _health_bar: ProgressBar
 var _cooldown_label: Label
 var _respawn_bar: ProgressBar
 
-const GLOW_SHADER := preload("res://shaders/reborn_glow.gdshader")
+const GLOW_SHADER := preload(AssetRegistry.SHADERS_REBORN_GLOW)
 
 
 func _ready() -> void:
@@ -79,7 +79,7 @@ func _ready() -> void:
 func _load_config() -> void:
 	if config_key.is_empty():
 		return
-	var config := YAMLParser.load_file("res://data/resources.yml")
+	var config := YAMLParser.load_file(AssetRegistry.DATA_RESOURCES)
 	if not config.has(config_key):
 		return
 	var data: Dictionary = config[config_key]

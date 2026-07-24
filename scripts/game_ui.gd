@@ -9,7 +9,7 @@ signal logout_requested
 var resource_game_ui: Control = null
 var _current_action: String = ""
 var _focused_resource: Node2D = null
-const RESOURCE_GAME_SCENE := preload("res://scenes/resource_game.tscn")
+const RESOURCE_GAME_SCENE := preload(AssetRegistry.SCENES_RESOURCE_GAME)
 
 
 func _ready() -> void:
@@ -62,11 +62,11 @@ func _on_depleted_changed(is_depleted: bool) -> void:
 
 func _show_action_for_resource(resource: Node2D) -> void:
 	if resource.is_in_group("trees"):
-		_set_action("chop", "res://assets/icons/icon_chop.png")
+		_set_action("chop", AssetRegistry.ICONS_ICON_CHOP)
 	elif resource.is_in_group("stones"):
-		_set_action("mine", "res://assets/icons/icon_mine.png")
+		_set_action("mine", AssetRegistry.ICONS_ICON_MINE)
 	elif resource.is_in_group("gold_sources"):
-		_set_action("pan", "res://assets/icons/icon_pan.png")
+		_set_action("pan", AssetRegistry.ICONS_ICON_PAN)
 
 
 func _set_action(action: String, icon_path: String) -> void:
@@ -106,7 +106,7 @@ func on_login_changed(is_logged_in: bool) -> void:
 
 
 func _go_to_login() -> void:
-	get_tree().change_scene_to_file("res://scenes/login.tscn")
+	get_tree().change_scene_to_file(AssetRegistry.SCENES_LOGIN)
 
 
 func _on_settings_pressed() -> void:

@@ -7,7 +7,7 @@ extends CharacterBody2D
 @export var arrival_distance: float = 4.0
 
 var click_target: Vector2 = Vector2.INF
-var _click_effect_scene: PackedScene = preload("res://scenes/click_effect.tscn")
+var _click_effect_scene: PackedScene = preload(AssetRegistry.SCENES_CLICK_EFFECT)
 
 func _unhandled_input(event: InputEvent) -> void:
 	if SettingsManager.click_to_move and event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed:

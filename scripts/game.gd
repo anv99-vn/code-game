@@ -14,9 +14,9 @@ var _gold_source_scene: PackedScene = null
 
 
 func _ready() -> void:
-	_tree_scene = load("res://scenes/tree.tscn")
-	_stone_scene = load("res://scenes/stone.tscn")
-	_gold_source_scene = load("res://scenes/gold_source.tscn")
+	_tree_scene = load(AssetRegistry.SCENES_TREE)
+	_stone_scene = load(AssetRegistry.SCENES_STONE)
+	_gold_source_scene = load(AssetRegistry.SCENES_GOLD_SOURCE)
 	_generate_objects.call_deferred()
 
 
