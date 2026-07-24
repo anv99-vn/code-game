@@ -3,6 +3,8 @@ tree:
   per_hit: 2
   bonus_on_deplete: 5
   respawn_time: 8.0
+  health_per_respawn: 1
+  max_health_cap: 10
   action: chop
   group: trees
 
@@ -11,6 +13,8 @@ stone:
   per_hit: 2
   bonus_on_deplete: 5
   respawn_time: 10.0
+  health_per_respawn: 1
+  max_health_cap: 12
   action: mine
   group: stones
 
@@ -19,5 +23,7 @@ gold:
   per_hit: 1
   bonus_on_deplete: 3
   respawn_time: 12.0
+  health_per_respawn: 1
+  max_health_cap: 10
   action: pan
   group: gold_sources

@@ -21,6 +21,8 @@ signal depleted_changed(is_depleted: bool)
 @export var per_hit: int = 1
 @export var bonus_on_deplete: int = 3
 @export var respawn_time: float = 10.0
+@export var health_per_respawn: int = 0
+@export var max_health_cap: int = 0
 @export var shake_amount: float = 3.0
 @export var flash_color: Color = Color(1, 0.3, 0.3)
 
@@ -29,6 +31,8 @@ var _player_nearby: bool = false
 var _focused: bool = false
 var _depleted: bool = false
 var _respawn_at: float = 0.0
+var _respawn_count: int = 0
+var _base_max_health: int = 0
 
 var _main_sprite: Sprite2D
 var _depleted_sprite: Sprite2D
@@ -56,6 +60,7 @@ func _ready() -> void:
 	assert(_health_bar != null, "HarvestableResource: health_bar_path not set or not a ProgressBar on %s" % name)
 	assert(_cooldown_label != null, "HarvestableResource: cooldown_label_path not set or not a Label on %s" % name)
 	_load_config()
+	_base_max_health = max_health
 	_health = max_health
 	_health_bar.max_value = max_health
 	_health_bar.value = max_health
@@ -82,6 +87,8 @@ func _load_config() -> void:
 	per_hit = int(data.get("per_hit", per_hit))
 	bonus_on_deplete = int(data.get("bonus_on_deplete", bonus_on_deplete))
 	respawn_time = float(data.get("respawn_time", respawn_time))
+	health_per_respawn = int(data.get("health_per_respawn", health_per_respawn))
+	max_health_cap = int(data.get("max_health_cap", max_health_cap))
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -152,11 +159,17 @@ func _process(_delta: float) -> void:
 
 
 func _respawn() -> void:
+	_respawn_count += 1
+	if health_per_respawn > 0:
+		max_health = _base_max_health + health_per_respawn * _respawn_count
+		if max_health_cap > 0:
+			max_health = min(max_health, max_health_cap)
 	_health = max_health
 	_depleted = false
 	depleted_changed.emit(false)
 	_main_sprite.visible = true
 	_depleted_sprite.visible = false
+	_health_bar.max_value = max_health
 	_health_bar.value = max_health
 	if _respawn_bar:
 		_respawn_bar.visible = false
