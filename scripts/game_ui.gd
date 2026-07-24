@@ -8,6 +8,7 @@ signal logout_requested
 @onready var action_button_bg: Panel = $"../UILayer/ActionButtonBackground"
 var resource_game_ui: Control = null
 var _current_action: String = ""
+var _focused_resource: Node2D = null
 const RESOURCE_GAME_SCENE := preload("res://scenes/resource_game.tscn")
 
 
@@ -31,6 +32,7 @@ func _setup_settings() -> void:
 
 
 func _on_focus_changed(focused: Node2D) -> void:
+	_focused_resource = focused
 	if focused == null:
 		_current_action = ""
 		action_button.visible = false
@@ -38,23 +40,33 @@ func _on_focus_changed(focused: Node2D) -> void:
 	elif focused.is_in_group("trees") or focused.is_in_group("stones") or focused.is_in_group("gold_sources"):
 		if focused.has_signal("depleted_changed"):
 			if focused._depleted:
+				_current_action = ""
 				action_button.visible = false
 				action_button_bg.visible = false
+				if not focused.depleted_changed.is_connected(_on_depleted_changed):
+					focused.depleted_changed.connect(_on_depleted_changed)
 				return
 			if not focused.depleted_changed.is_connected(_on_depleted_changed):
 				focused.depleted_changed.connect(_on_depleted_changed)
-		if focused.is_in_group("trees"):
-			_set_action("chop", "res://assets/icons/icon_chop.png")
-		elif focused.is_in_group("stones"):
-			_set_action("mine", "res://assets/icons/icon_mine.png")
-		elif focused.is_in_group("gold_sources"):
-			_set_action("pan", "res://assets/icons/icon_pan.png")
+		_show_action_for_resource(focused)
 
 
 func _on_depleted_changed(is_depleted: bool) -> void:
 	if is_depleted:
+		_current_action = ""
 		action_button.visible = false
 		action_button_bg.visible = false
+	elif _focused_resource and is_instance_valid(_focused_resource):
+		_show_action_for_resource(_focused_resource)
+
+
+func _show_action_for_resource(resource: Node2D) -> void:
+	if resource.is_in_group("trees"):
+		_set_action("chop", "res://assets/icons/icon_chop.png")
+	elif resource.is_in_group("stones"):
+		_set_action("mine", "res://assets/icons/icon_mine.png")
+	elif resource.is_in_group("gold_sources"):
+		_set_action("pan", "res://assets/icons/icon_pan.png")
 
 
 func _set_action(action: String, icon_path: String) -> void:
