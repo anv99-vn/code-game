@@ -10,4 +10,4 @@ func _ready() -> void:
 
 func show_welcome() -> void:
 	if _plugin_available:
-		Engine.get_singleton("WelcomePlugin").showToast("Welcome")
+		Engine.get_singleton("WelcomePlugin").showToast("Hello admin")
