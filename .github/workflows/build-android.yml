@@ -35,6 +35,7 @@ jobs:
           chmod 600 /tmp/keystore.keystore
 
       - name: Wait for Release workflow
+        if: github.event_name == 'push'
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
