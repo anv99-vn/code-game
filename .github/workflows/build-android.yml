@@ -29,6 +29,24 @@ jobs:
           distribution: temurin
           java-version: 17
 
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@v3
+
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v3
+        with:
+          gradle-version: 8.0
+
+      - name: Build Android Welcome Plugin
+        run: |
+          cd addons/android_welcome_plugin
+          mkdir -p libs
+          wget -q https://github.com/godotengine/godot/releases/download/4.7.1-stable/godot-lib.4.7.1.stable.release.aar -O libs/godot-lib.4.7.1.stable.release.aar
+          gradle assembleRelease
+          mkdir -p ../../android/plugins
+          cp build/outputs/aar/*-release.aar ../../android/plugins/AndroidWelcomePlugin.aar
+          cd ../../
+
       - name: Decode keystore
         run: |
           echo "${{ secrets.ANDROID_KEYSTORE_BASE64 }}" | base64 -d > /tmp/keystore.keystore
@@ -63,7 +81,6 @@ jobs:
           wget -q https://github.com/godotengine/godot/releases/download/4.7.1-stable/Godot_v4.7.1-stable_linux.x86_64.zip
           unzip Godot_v4.7.1-stable_linux.x86_64.zip
           chmod +x Godot_v4.7.1-stable_linux.x86_64
-          # With a warm cache this is a fast no-op; cold cache triggers a full reimport.
           ./Godot_v4.7.1-stable_linux.x86_64 --headless --import --quit
 
       - name: Configure Android keystore
@@ -80,6 +97,15 @@ jobs:
           relative_project_path: ./
           archive_output: false
           presets_to_export: "Android"
+
+      - name: Verify plugin embedded in APK
+        run: |
+          if unzip -l /home/runner/.local/share/godot/builds/Android/Code-Game.apk | grep -q "WelcomePlugin"; then
+            echo "WelcomePlugin classes bundled in APK"
+          else
+            echo "ERROR: WelcomePlugin not found in APK" >&2
+            exit 1
+          fi
 
       - name: Upload to release
         if: github.event_name == 'push'
