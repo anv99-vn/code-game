@@ -9,6 +9,7 @@ signal login_requested(username: String)
 @onready var forgot_password: Button = $ForgotPassword
 @onready var lang_button: Button = $LangButton
 @onready var lang_dropdown = $LangButton/LangDropdown
+@onready var render_engine_label: Label = $RenderEngineLabel
 
 
 func _ready() -> void:
@@ -16,6 +17,7 @@ func _ready() -> void:
 	forgot_password.pressed.connect(_on_forgot_password_pressed)
 	lang_dropdown.language_selected.connect(_on_language_selected)
 	_update_lang_button_text()
+	_update_render_engine_label()
 
 
 func on_login_changed(is_logged_in: bool) -> void:
@@ -72,6 +74,13 @@ func _on_language_selected(locale: String) -> void:
 	username_input.placeholder_text = tr("USERNAME")
 	password_input.placeholder_text = tr("PASSWORD")
 	_update_lang_button_text()
+
+
+func _update_render_engine_label() -> void:
+	var version := Engine.get_version_info()
+	var method: String = ProjectSettings.get_setting("rendering/renderer/rendering_method", "forward_plus")
+	var driver := RenderingServer.get_current_rendering_driver_name()
+	render_engine_label.text = "Godot %d.%d.%d - %s - %s" % [version.major, version.minor, version.patch, driver, method]
 
 
 func _update_lang_button_text() -> void:

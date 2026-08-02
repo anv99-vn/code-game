@@ -254,7 +254,7 @@ theme_override_colors/font_color = Color(1, 0.6, 0.6, 1)
 theme_override_font_sizes/font_size = 12
 horizontal_alignment = 1
 
-[node name="LangButton" parent="." instance=ExtResource("8_lb")]
+[node name="LangButton" parent="." unique_id=1304760667 instance=ExtResource("8_lb")]
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
@@ -267,11 +267,20 @@ grow_horizontal = 0
 theme_override_font_sizes/font_size = 12
 text = "English"
 
-[node name="LangDropdown" parent="LangButton" visible=false]
-layout_mode = 0
-offset_top = 36.0
-offset_right = 120.0
-offset_bottom = 92.0
+[node name="RenderEngineLabel" type="Label" parent="." unique_id=1486149929]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -350.0
+offset_top = -30.0
+offset_right = -10.0
+offset_bottom = -10.0
+grow_horizontal = 0
+grow_vertical = 0
+horizontal_alignment = 2
 
 [connection signal="pressed" from="LoginButton" to="." method="_on_login_pressed"]
 [connection signal="pressed" from="LangButton" to="." method="_on_lang_pressed"]
