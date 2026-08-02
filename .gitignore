@@ -26,6 +26,7 @@ build/
 # Android plugin build artifacts (fetched/built in CI)
 addons/android_welcome_plugin/libs/
 addons/android_welcome_plugin/build/
-android/plugins/*.aar
+addons/android_welcome_plugin/bin/
+android/build/
 *.zip
 *.keystore

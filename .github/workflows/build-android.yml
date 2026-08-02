@@ -43,8 +43,8 @@ jobs:
           mkdir -p libs
           wget -q https://github.com/godotengine/godot/releases/download/4.7.1-stable/godot-lib.4.7.1.stable.template_release.aar -O libs/godot-lib.4.7.1.stable.template_release.aar
           gradle assembleRelease
-          mkdir -p ../../android/plugins
-          cp build/outputs/aar/*-release.aar ../../android/plugins/AndroidWelcomePlugin.aar
+          mkdir -p bin/release
+          cp build/outputs/aar/welcomeplugin-release.aar bin/release/welcomeplugin-release.aar
           cd ../../
 
       - name: Decode keystore
@@ -83,11 +83,32 @@ jobs:
           chmod +x Godot_v4.7.1-stable_linux.x86_64
           ./Godot_v4.7.1-stable_linux.x86_64 --headless --import --quit
 
+      - name: Install Android build template
+        run: |
+          wget -q https://github.com/godotengine/godot/releases/download/4.7.1-stable/Godot_v4.7.1-stable_export_templates.tpz
+          unzip -p Godot_v4.7.1-stable_export_templates.tpz templates/android_source.zip > /tmp/android_source.zip
+          mkdir -p android/build
+          unzip -q /tmp/android_source.zip -d android/build
+          test -f android/build/build.gradle
+          echo "Android build template installed at res://android/build"
+
       - name: Configure Android keystore
         run: |
           sed -i 's|keystore/release=""|keystore/release="/tmp/keystore.keystore"|' export_presets.cfg
           sed -i 's|keystore/release_user=""|keystore/release_user="${{ secrets.ANDROID_KEYSTORE_USER }}"|' export_presets.cfg
           sed -i 's|keystore/release_password=""|keystore/release_password="${{ secrets.ANDROID_KEYSTORE_PASSWORD }}"|' export_presets.cfg
+
+      - name: Configure Godot editor settings
+        run: |
+          mkdir -p ~/.config/godot
+          cat > ~/.config/godot/editor_settings-4.tres <<EOF
+          [gd_resource type="EditorSettings" format=3]
+
+          [resource]
+          export/android/android_sdk_path = "$ANDROID_HOME"
+          export/android/java_sdk_path = "$JAVA_HOME"
+          EOF
+          cat ~/.config/godot/editor_settings-4.tres
 
       - name: Export game
         uses: firebelley/godot-export@v7.0.0
@@ -100,10 +121,10 @@ jobs:
 
       - name: Verify plugin embedded in APK
         run: |
-          if unzip -l /home/runner/.local/share/godot/builds/Android/Code-Game.apk | grep -q "WelcomePlugin"; then
-            echo "WelcomePlugin classes bundled in APK"
+          if unzip -p /home/runner/.local/share/godot/builds/Android/Code-Game.apk AndroidManifest.xml | strings | grep -q "org.godotengine.plugin.v2.WelcomePlugin"; then
+            echo "WelcomePlugin metadata present in APK manifest"
           else
-            echo "ERROR: WelcomePlugin not found in APK" >&2
+            echo "ERROR: WelcomePlugin metadata not found in APK manifest" >&2
             exit 1
           fi
 

@@ -24,6 +24,7 @@ android {
     defaultConfig {
         minSdkVersion 21
         targetSdkVersion 33
+        archivesBaseName = 'welcomeplugin'
     }
 
     compileOptions {

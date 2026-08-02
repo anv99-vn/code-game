@@ -1,5 +1,0 @@
-[gd_plugin]
-
-name="WelcomePlugin"
-binary_type="local"
-binary_path="AndroidWelcomePlugin.aar"
