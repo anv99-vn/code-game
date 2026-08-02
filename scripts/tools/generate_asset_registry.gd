@@ -14,13 +14,13 @@ func _run() -> void:
 		var full_path := ProjectSettings.globalize_path(dir_name)
 		if not DirAccess.dir_exists_absolute(full_path):
 			continue
-		_scan_dir(full_path, dir_name, entries)
+		_scan_dir(full_path, dir_name, entries, 0)
 	var code := _generate_code(entries)
 	_write_file(code)
 	print("AssetRegistry generated: %s  (%d constants)" % [OUTPUT_PATH, _count_constants(entries)])
 
 
-func _scan_dir(abs_path: String, rel_path: String, entries: Dictionary) -> void:
+func _scan_dir(abs_path: String, rel_path: String, entries: Dictionary, depth: int) -> void:
 	var dir := DirAccess.open(abs_path)
 	if dir == null:
 		return
@@ -34,26 +34,31 @@ func _scan_dir(abs_path: String, rel_path: String, entries: Dictionary) -> void:
 		var child_rel := rel_path.path_join(file_name)
 		if dir.current_is_dir():
 			if file_name not in EXCLUDE_DIRS:
-				_scan_dir(child_abs, child_rel, entries)
+				_scan_dir(child_abs, child_rel, entries, depth + 1)
 		else:
 			var ext := file_name.get_extension().to_lower()
 			if ext in EXCLUDE_EXTENSIONS:
 				file_name = dir.get_next()
 				continue
-			var folder := rel_path.get_base_dir().replace("/", "_").to_upper()
-			if folder.is_empty():
+			var folder: String
+			if depth <= 1:
 				folder = "ROOT"
+			else:
+				folder = rel_path.get_file().to_upper()
 			if not entries.has(folder):
 				entries[folder] = {}
-			entries[folder][_make_const_name(file_name)] = "res://%s" % child_rel
+			entries[folder][_make_const_name(file_name, folder)] = "res://%s" % child_rel
 		file_name = dir.get_next()
 	dir.list_dir_end()
 
 
-func _make_const_name(file_name: String) -> String:
+func _make_const_name(file_name: String, folder: String) -> String:
 	var name := file_name.get_basename()
 	name = name.replace("-", "_").replace(" ", "_").replace(".", "_")
-	return name.to_upper()
+	name = name.to_upper()
+	if folder != "ROOT":
+		name = folder + "_" + name
+	return name
 
 
 func _generate_code(entries: Dictionary) -> String:
