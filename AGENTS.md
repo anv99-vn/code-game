@@ -4,6 +4,8 @@
 
 Only commit changes made during the current session. Do not commit pre-existing uncommitted changes.
 
+After pushing, check the CI action status. If it fails, investigate and fix the issues before proceeding.
+
 When merging a pull request:
 1. Rebase the branch onto main before merging.
 2. Delete the branch locally and remotely after successful merge.
