@@ -39,5 +39,5 @@ android {
 }
 
 dependencies {
-    implementation files('libs/godot-lib.4.7.1.stable.template_release.aar')
+    compileOnly files('libs/godot-lib.4.7.1.stable.template_release.aar')
 }
