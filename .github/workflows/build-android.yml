@@ -41,7 +41,7 @@ jobs:
         run: |
           cd addons/android_welcome_plugin
           mkdir -p libs
-          wget -q https://github.com/godotengine/godot/releases/download/4.7.1-stable/godot-lib.4.7.1.stable.release.aar -O libs/godot-lib.4.7.1.stable.release.aar
+          wget -q https://github.com/godotengine/godot/releases/download/4.7.1-stable/godot-lib.4.7.1.stable.template_release.aar -O libs/godot-lib.4.7.1.stable.template_release.aar
           gradle assembleRelease
           mkdir -p ../../android/plugins
           cp build/outputs/aar/*-release.aar ../../android/plugins/AndroidWelcomePlugin.aar
