@@ -3,6 +3,7 @@ package com.codegame.welcomeplugin;
 import android.app.Activity;
 import android.os.Handler;
 import android.os.Looper;
+import android.view.Gravity;
 import android.widget.Toast;
 import org.godotengine.godot.Godot;
 import org.godotengine.godot.plugin.GodotPlugin;
@@ -25,7 +26,9 @@ public class WelcomePlugin extends GodotPlugin {
     @UsedByGodot
     public void showToast(final String message) {
         new Handler(Looper.getMainLooper()).post(() -> {
-            Toast.makeText(activity, message, Toast.LENGTH_LONG).show();
+            Toast toast = Toast.makeText(activity, message, Toast.LENGTH_LONG);
+            toast.setGravity(Gravity.TOP | Gravity.CENTER_HORIZONTAL, 0, 0);
+            toast.show();
         });
     }
 }
