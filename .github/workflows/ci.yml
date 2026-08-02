@@ -1,0 +1,60 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  test-game:
+    runs-on: ubuntu-latest
+    name: Test Game
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Remove MCP addon
+        run: |
+          sed -i '/MCPRuntime=/d' project.godot
+          sed -i '/godot_mcp/d' project.godot
+          rm -rf addons/godot_mcp
+
+      - name: Restore .godot import cache
+        uses: actions/cache@v4
+        with:
+          path: .godot
+          key: godot-imports-4.7.1-${{ hashFiles('project.godot', 'export_presets.cfg', '**/*.png', '**/*.svg', '**/*.tres', '**/*.res', '**/*.tscn', '**/*.gd', '**/*.ttf', '**/*.otf', '**/*.ogg', '**/*.wav', '**/*.mp3', '**/*.glb', '**/*.gltf', '**/*.obj', '**/*.shader', '**/*.godot') }}
+          restore-keys: |
+            godot-imports-4.7.1-
+
+      - name: Download Godot
+        run: |
+          wget -q https://github.com/godotengine/godot/releases/download/4.7.1-stable/Godot_v4.7.1-stable_linux.x86_64.zip
+          unzip Godot_v4.7.1-stable_linux.x86_64.zip
+          chmod +x Godot_v4.7.1-stable_linux.x86_64
+
+      - name: Import project
+        run: |
+          ./Godot_v4.7.1-stable_linux.x86_64 --headless --import --quit
+
+      - name: Run game for 30 seconds
+        run: |
+          timeout 30 ./Godot_v4.7.1-stable_linux.x86_64 --headless --path . || EXIT_CODE=$?
+          if [ "$EXIT_CODE" = "124" ]; then
+            echo "Game ran successfully for 30 seconds (timeout reached as expected)"
+            exit 0
+          elif [ "$EXIT_CODE" = "0" ]; then
+            echo "Game exited cleanly before 30 seconds"
+            exit 0
+          else
+            echo "Game crashed with exit code $EXIT_CODE"
+            exit 1
+          fi
+
+      - name: Check for errors
+        if: failure()
+        run: |
+          echo "Game failed to run properly. Check logs above for details."
