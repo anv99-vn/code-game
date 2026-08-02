@@ -9,27 +9,9 @@ on:
 jobs:
   build-windows:
     runs-on: ubuntu-latest
-    name: Build Windows (${{ matrix.variant.name }})
+    name: Build Windows
     permissions:
       contents: write
-    strategy:
-      fail-fast: false
-      matrix:
-        variant:
-          # Keys use the INI-relative form (the [rendering] section header
-          # prepends "rendering/" to each key in project.godot).
-          - name: opengl
-            rendering_method: gl_compatibility
-            driver_key: gl_compatibility/driver.windows
-            driver: opengl3_angle
-          - name: vulkan
-            rendering_method: forward_plus
-            driver_key: rendering_device/driver.windows
-            driver: vulkan
-          - name: directx
-            rendering_method: forward_plus
-            driver_key: rendering_device/driver.windows
-            driver: d3d12
 
     steps:
       - name: Checkout
@@ -40,29 +22,6 @@ jobs:
           sed -i '/MCPRuntime=/d' project.godot
           sed -i '/godot_mcp/d' project.godot
           rm -rf addons/godot_mcp
-
-      - name: Configure renderer for ${{ matrix.variant.name }}
-        run: |
-          set -e
-          # Drop any pre-existing renderer/driver lines under [rendering].
-          # Keys in project.godot appear without the "rendering/" prefix
-          # (that prefix comes from the [rendering] section header).
-          sed -i '/^renderer\/rendering_method=/d' project.godot
-          sed -i '/^rendering_device\/driver\./d' project.godot
-          sed -i '/^gl_compatibility\/driver\./d' project.godot
-          # Insert the desired method + driver right after the [rendering] header
-          awk -v method="renderer/rendering_method=\"${{ matrix.variant.rendering_method }}\"" \
-              -v driver="${{ matrix.variant.driver_key }}=\"${{ matrix.variant.driver }}\"" \
-              '
-                $0 == "[rendering]" { print; print method; print driver; next }
-                { print }
-              ' project.godot > project.godot.tmp && mv project.godot.tmp project.godot
-          # Rename the exported binary per variant
-          sed -i "s|^export_path=\"build/windows/Code-Game.exe\"|export_path=\"build/windows/Code-Game-${{ matrix.variant.name }}.exe\"|" export_presets.cfg
-          echo "=== project.godot [rendering] ==="
-          grep -A6 '^\[rendering\]' project.godot
-          echo "=== export_path ==="
-          grep export_path export_presets.cfg
 
       - name: Wait for Release workflow
         if: github.event_name == 'push'
@@ -84,9 +43,9 @@ jobs:
         uses: actions/cache@v4
         with:
           path: .godot
-          key: godot-imports-${{ matrix.variant.name }}-4.7.1-${{ hashFiles('project.godot', 'export_presets.cfg', '**/*.png', '**/*.svg', '**/*.tres', '**/*.res', '**/*.tscn', '**/*.gd', '**/*.ttf', '**/*.otf', '**/*.ogg', '**/*.wav', '**/*.mp3', '**/*.glb', '**/*.gltf', '**/*.obj', '**/*.shader', '**/*.godot') }}
+          key: godot-imports-4.7.1-${{ hashFiles('project.godot', 'export_presets.cfg', '**/*.png', '**/*.svg', '**/*.tres', '**/*.res', '**/*.tscn', '**/*.gd', '**/*.ttf', '**/*.otf', '**/*.ogg', '**/*.wav', '**/*.mp3', '**/*.glb', '**/*.gltf', '**/*.obj', '**/*.shader', '**/*.godot') }}
           restore-keys: |
-            godot-imports-${{ matrix.variant.name }}-4.7.1-
+            godot-imports-4.7.1-
 
       - name: Reimport project
         run: |
@@ -109,12 +68,12 @@ jobs:
         if: github.event_name == 'push'
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: gh release upload ${{ github.ref_name }} "/home/runner/.local/share/godot/builds/Windows Desktop/Code-Game-${{ matrix.variant.name }}.exe" --clobber
+        run: gh release upload ${{ github.ref_name }} "/home/runner/.local/share/godot/builds/Windows Desktop/Code-Game.exe" --clobber
 
       - name: Upload build artifact
         if: github.event_name == 'workflow_dispatch'
         uses: actions/upload-artifact@v4
         with:
-          name: Code-Game-${{ matrix.variant.name }}
-          path: "/home/runner/.local/share/godot/builds/Windows Desktop/Code-Game-${{ matrix.variant.name }}.exe"
+          name: Code-Game
+          path: "/home/runner/.local/share/godot/builds/Windows Desktop/Code-Game.exe"
           if-no-files-found: error
