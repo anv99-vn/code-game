@@ -1,0 +1,86 @@
+name: Build Android
+
+on:
+  push:
+    tags:
+      - "v*"
+  workflow_dispatch:
+
+jobs:
+  build-android:
+    runs-on: ubuntu-latest
+    name: Build Android APK
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Remove MCP addon
+        run: |
+          sed -i '/MCPRuntime=/d' project.godot
+          sed -i '/godot_mcp/d' project.godot
+          rm -rf addons/godot_mcp
+
+      - name: Setup Java JDK
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+
+      - name: Decode keystore
+        run: |
+          echo "${{ secrets.ANDROID_KEYSTORE_BASE64 }}" | base64 -d > /tmp/keystore.keystore
+          chmod 600 /tmp/keystore.keystore
+
+      - name: Wait for Release workflow
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          for i in $(seq 1 30); do
+            if gh release view "${{ github.ref_name }}" --repo "${{ github.repository }}" >/dev/null 2>&1; then
+              echo "Release ${{ github.ref_name }} is ready"
+              exit 0
+            fi
+            echo "Release ${{ github.ref_name }} not ready yet, retrying in 10s (attempt $i/30)..."
+            sleep 10
+          done
+          echo "Release ${{ github.ref_name }} was not created in time" >&2
+          exit 1
+
+      - name: Restore .godot import cache
+        uses: actions/cache@v4
+        with:
+          path: .godot
+          key: godot-imports-android-4.7.1-${{ hashFiles('project.godot', 'export_presets.cfg', '**/*.png', '**/*.svg', '**/*.tres', '**/*.res', '**/*.tscn', '**/*.gd', '**/*.ttf', '**/*.otf', '**/*.ogg', '**/*.wav', '**/*.mp3', '**/*.glb', '**/*.gltf', '**/*.obj', '**/*.shader', '**/*.godot') }}
+          restore-keys: |
+            godot-imports-android-4.7.1-
+
+      - name: Reimport project
+        run: |
+          wget -q https://github.com/godotengine/godot/releases/download/4.7.1-stable/Godot_v4.7.1-stable_linux.x86_64.zip
+          unzip Godot_v4.7.1-stable_linux.x86_64.zip
+          chmod +x Godot_v4.7.1-stable_linux.x86_64
+          # With a warm cache this is a fast no-op; cold cache triggers a full reimport.
+          ./Godot_v4.7.1-stable_linux.x86_64 --headless --import --quit
+
+      - name: Configure Android keystore
+        run: |
+          sed -i 's|keystore/release=""|keystore/release="/tmp/keystore.keystore"|' export_presets.cfg
+          sed -i 's|keystore/release_user=""|keystore/release_user="${{ secrets.ANDROID_KEYSTORE_USER }}"|' export_presets.cfg
+          sed -i 's|keystore/release_password=""|keystore/release_password="${{ secrets.ANDROID_KEYSTORE_PASSWORD }}"|' export_presets.cfg
+
+      - name: Export game
+        uses: firebelley/godot-export@v7.0.0
+        with:
+          godot_executable_download_url: https://github.com/godotengine/godot/releases/download/4.7.1-stable/Godot_v4.7.1-stable_linux.x86_64.zip
+          godot_export_templates_download_url: https://github.com/godotengine/godot/releases/download/4.7.1-stable/Godot_v4.7.1-stable_export_templates.tpz
+          relative_project_path: ./
+          archive_output: false
+          presets_to_export: "Android"
+
+      - name: Upload to release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: gh release upload ${{ github.ref_name }} /home/runner/.local/share/godot/builds/Android/Code-Game.apk --clobber
