@@ -1,5 +1,14 @@
 # Release Notes
 
+## v2.5.0 (2026-08-03)
+
+Simplify Windows CI to a single build with manual dispatch support.
+
+- Split monolithic build workflow into separate `release`, `build-windows`, and `build-android` workflows
+- Cache `.godot` import directory across runs to speed up reimports
+- Support `workflow_dispatch` on `build-windows` — artifacts download instead of attaching to a release
+- Remove the 3-variant renderer matrix (opengl/vulkan/directx); CI now builds a single `Code-Game.exe`
+
 ## v2.4.0
 
 Add `AssetRegistry` class to centralize all asset paths as typed constants.
