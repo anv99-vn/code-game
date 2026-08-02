@@ -20,8 +20,12 @@ jobs:
       - name: Remove MCP addon
         run: |
           sed -i '/MCPRuntime=/d' project.godot
-          sed -i '/godot_mcp/d' project.godot
+          # Strip the godot_mcp plugin entry from the editor_plugins enabled list
+          # without deleting the whole line (which would also drop other plugins).
+          sed -i 's|"res://addons/godot_mcp/plugin.cfg", ||g' project.godot
+          sed -i 's|"res://addons/godot_mcp/plugin.cfg"||g' project.godot
           rm -rf addons/godot_mcp
+          grep -q "android_welcome_plugin/plugin.cfg" project.godot && echo "Welcome plugin still enabled"
 
       - name: Setup Java JDK
         uses: actions/setup-java@v4
