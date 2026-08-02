@@ -98,10 +98,6 @@ jobs:
           # identifying the template (GODOT_VERSION_FULL_CONFIG for the default 4.7.1 template).
           echo "4.7.1.stable" > android/.build_version
           echo "Android build template installed at res://android/build"
-          # Enable native library compression so AGP deflates .so files inside the APK
-          # (Godot 4.7.1's shouldUseLegacyPackaging() defaults to false = uncompressed .so).
-          # Without this, libgodot_android.so (~69 MB) is stored raw, bloating the APK ~3x.
-          echo "compress_native_libraries=true" >> android/build/gradle.properties
 
       - name: Configure Android keystore
         run: |
