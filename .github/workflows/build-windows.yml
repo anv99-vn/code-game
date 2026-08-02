@@ -65,6 +65,7 @@ jobs:
           grep export_path export_presets.cfg
 
       - name: Wait for Release workflow
+        if: github.event_name == 'push'
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
@@ -105,6 +106,15 @@ jobs:
           presets_to_export: "Windows Desktop"
 
       - name: Upload to release
+        if: github.event_name == 'push'
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: gh release upload ${{ github.ref_name }} "/home/runner/.local/share/godot/builds/Windows Desktop/Code-Game-${{ matrix.variant.name }}.exe" --clobber
+
+      - name: Upload build artifact
+        if: github.event_name == 'workflow_dispatch'
+        uses: actions/upload-artifact@v4
+        with:
+          name: Code-Game-${{ matrix.variant.name }}
+          path: "/home/runner/.local/share/godot/builds/Windows Desktop/Code-Game-${{ matrix.variant.name }}.exe"
+          if-no-files-found: error
