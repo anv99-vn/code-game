@@ -29,6 +29,12 @@ jobs:
           distribution: temurin
           java-version: 17
 
+      - name: Build Android Welcome Plugin
+        run: |
+          cd addons/android_welcome_plugin
+          gradle assembleRelease
+          cd ../../
+
       - name: Decode keystore
         run: |
           echo "${{ secrets.ANDROID_KEYSTORE_BASE64 }}" | base64 -d > /tmp/keystore.keystore
