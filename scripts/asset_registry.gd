@@ -2,83 +2,51 @@
 class_name AssetRegistry
 
 
-## ROOT
-const PLAYER := "res://assets/player.png"
-const PLAYER_PNG := "res://assets/player.png.import"
-
 ## GENERATED
 const GENERATED_ICON_CLICK := "res://assets/generated/icon_click.png"
-const GENERATED_ICON_CLICK_PNG := "res://assets/generated/icon_click.png.import"
 
 ## ICONS
 const ICONS_ICON_CHOP := "res://assets/icons/icon_chop.png"
-const ICONS_ICON_CHOP_PNG := "res://assets/icons/icon_chop.png.import"
 const ICONS_ICON_GEAR := "res://assets/icons/icon_gear.png"
-const ICONS_ICON_GEAR_PNG := "res://assets/icons/icon_gear.png.import"
 const ICONS_ICON_GLOBE := "res://assets/icons/icon_globe.png"
-const ICONS_ICON_GLOBE_PNG := "res://assets/icons/icon_globe.png.import"
 const ICONS_ICON_GLOBE_SMALL := "res://assets/icons/icon_globe_small.png"
-const ICONS_ICON_GLOBE_SMALL_PNG := "res://assets/icons/icon_globe_small.png.import"
 const ICONS_ICON_GLOBE_W := "res://assets/icons/icon_globe_w.png"
-const ICONS_ICON_GLOBE_W_PNG := "res://assets/icons/icon_globe_w.png.import"
 const ICONS_ICON_LOCK := "res://assets/icons/icon_lock.png"
-const ICONS_ICON_LOCK_PNG := "res://assets/icons/icon_lock.png.import"
 const ICONS_ICON_LOCK_W := "res://assets/icons/icon_lock_w.png"
-const ICONS_ICON_LOCK_W_PNG := "res://assets/icons/icon_lock_w.png.import"
 const ICONS_ICON_LOGIN := "res://assets/icons/icon_login.png"
-const ICONS_ICON_LOGIN_PNG := "res://assets/icons/icon_login.png.import"
 const ICONS_ICON_LOGOUT := "res://assets/icons/icon_logout.png"
-const ICONS_ICON_LOGOUT_PNG := "res://assets/icons/icon_logout.png.import"
+const ICONS_ICON_MINE := "res://assets/icons/icon_mine.png"
 const ICONS_ICON_PAN := "res://assets/icons/icon_pan.png"
-const ICONS_ICON_PAN_PNG := "res://assets/icons/icon_pan.png.import"
 const ICONS_ICON_RESOURCE := "res://assets/icons/icon_resource.png"
-const ICONS_ICON_RESOURCE_PNG := "res://assets/icons/icon_resource.png.import"
 const ICONS_ICON_USER := "res://assets/icons/icon_user.png"
-const ICONS_ICON_USER_PNG := "res://assets/icons/icon_user.png.import"
 const ICONS_ICON_USER_W := "res://assets/icons/icon_user_w.png"
-const ICONS_ICON_USER_W_PNG := "res://assets/icons/icon_user_w.png.import"
+
+## ROOT
+const PLAYER := "res://assets/player.png"
 
 ## RESOURCES
 const RESOURCES_GOLD_DEPLETED := "res://assets/resources/gold_depleted.png"
-const RESOURCES_GOLD_DEPLETED_PNG := "res://assets/resources/gold_depleted.png.import"
 const RESOURCES_GOLD_NUGGET := "res://assets/resources/gold_nugget.png"
-const RESOURCES_GOLD_NUGGET_PNG := "res://assets/resources/gold_nugget.png.import"
 const RESOURCES_ICON_FARM := "res://assets/resources/icon_farm.png"
-const RESOURCES_ICON_FARM_PNG := "res://assets/resources/icon_farm.png.import"
 const RESOURCES_ICON_FOOD := "res://assets/resources/icon_food.png"
-const RESOURCES_ICON_FOOD_PNG := "res://assets/resources/icon_food.png.import"
 const RESOURCES_ICON_GOLD := "res://assets/resources/icon_gold.png"
-const RESOURCES_ICON_GOLD_PNG := "res://assets/resources/icon_gold.png.import"
 const RESOURCES_ICON_LUMBER_CAMP := "res://assets/resources/icon_lumber_camp.png"
-const RESOURCES_ICON_LUMBER_CAMP_PNG := "res://assets/resources/icon_lumber_camp.png.import"
 const RESOURCES_ICON_MINE := "res://assets/resources/icon_mine.png"
-const RESOURCES_ICON_MINE_PNG := "res://assets/resources/icon_mine.png.import"
 const RESOURCES_ICON_QUARRY := "res://assets/resources/icon_quarry.png"
-const RESOURCES_ICON_QUARRY_PNG := "res://assets/resources/icon_quarry.png.import"
 const RESOURCES_ICON_STONE := "res://assets/resources/icon_stone.png"
-const RESOURCES_ICON_STONE_PNG := "res://assets/resources/icon_stone.png.import"
 const RESOURCES_ICON_UPGRADE := "res://assets/resources/icon_upgrade.png"
-const RESOURCES_ICON_UPGRADE_PNG := "res://assets/resources/icon_upgrade.png.import"
 const RESOURCES_ICON_WOOD := "res://assets/resources/icon_wood.png"
-const RESOURCES_ICON_WOOD_PNG := "res://assets/resources/icon_wood.png.import"
 const RESOURCES_STONE := "res://assets/resources/stone.png"
-const RESOURCES_STONE_PNG := "res://assets/resources/stone.png.import"
 const RESOURCES_STONE_DEPLETED := "res://assets/resources/stone_depleted.png"
-const RESOURCES_STONE_DEPLETED_PNG := "res://assets/resources/stone_depleted.png.import"
 
 ## TREES
 const TREES_TREE := "res://assets/trees/tree.png"
-const TREES_TREE_PNG := "res://assets/trees/tree.png.import"
 const TREES_TREE_STUMP := "res://assets/trees/tree_stump.png"
-const TREES_TREE_STUMP_PNG := "res://assets/trees/tree_stump.png.import"
 
 ## UI
 const UI_BG_LOGIN := "res://assets/ui/bg_login.png"
-const UI_BG_LOGIN_PNG := "res://assets/ui/bg_login.png.import"
 const UI_LOGO_CART := "res://assets/ui/logo_cart.png"
-const UI_LOGO_CART_PNG := "res://assets/ui/logo_cart.png.import"
 const UI_LOGO_CONSOLE := "res://assets/ui/logo_console.png"
-const UI_LOGO_CONSOLE_PNG := "res://assets/ui/logo_console.png.import"
 
 ## SCENES
 const SCENES_CLICK_EFFECT := "res://scenes/click_effect.tscn"
@@ -95,11 +63,9 @@ const SCENES_TREE := "res://scenes/tree.tscn"
 
 ## SHADERS
 const SHADERS_REBORN_GLOW := "res://shaders/reborn_glow.gdshader"
-const SHADERS_REBORN_GLOW_GDSHADER := "res://shaders/reborn_glow.gdshader.uid"
 
 ## TRANSLATIONS
 const TRANSLATIONS_TRANSLATIONS := "res://translations/translations.csv"
-const TRANSLATIONS_TRANSLATIONS_CSV := "res://translations/translations.csv.import"
 const TRANSLATIONS_TRANSLATIONS_EN := "res://translations/translations.en.translation"
 const TRANSLATIONS_TRANSLATIONS_VI := "res://translations/translations.vi.translation"
 
