@@ -124,10 +124,21 @@ jobs:
 
       - name: Verify plugin embedded in APK
         run: |
-          if unzip -p /home/runner/.local/share/godot/builds/Android/Code-Game.apk AndroidManifest.xml | strings | grep -q "org.godotengine.plugin.v2.WelcomePlugin"; then
-            echo "WelcomePlugin metadata present in APK manifest"
+          APK=/home/runner/.local/share/godot/builds/Android/Code-Game.apk
+          echo "=== APK contents ==="
+          unzip -l "$APK" | head -50
+          echo "=== Checking for WelcomePlugin class in dex files ==="
+          FOUND=0
+          for dex in $(unzip -l "$APK" | awk '/classes[0-9]*\.dex/ {print $4}'); do
+            if unzip -p "$APK" "$dex" | strings | grep -q "com/codegame/welcomeplugin/WelcomePlugin"; then
+              echo "WelcomePlugin class found in $dex"
+              FOUND=1
+            fi
+          done
+          if [ "$FOUND" = "1" ]; then
+            echo "WelcomePlugin embedded in APK"
           else
-            echo "ERROR: WelcomePlugin metadata not found in APK manifest" >&2
+            echo "ERROR: WelcomePlugin not embedded in APK" >&2
             exit 1
           fi
 
