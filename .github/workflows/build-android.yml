@@ -90,6 +90,9 @@ jobs:
           mkdir -p android/build
           unzip -q /tmp/android_source.zip -d android/build
           test -f android/build/build.gradle
+          # Godot's gradle build requires a .build_version marker at res://android/.build_version
+          # identifying the template (GODOT_VERSION_FULL_CONFIG for the default 4.7.1 template).
+          echo "4.7.1.stable" > android/.build_version
           echo "Android build template installed at res://android/build"
 
       - name: Configure Android keystore
