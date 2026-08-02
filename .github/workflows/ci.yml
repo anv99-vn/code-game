@@ -42,19 +42,32 @@ jobs:
 
       - name: Run game for 30 seconds
         run: |
-          timeout 30 ./Godot_v4.7.1-stable_linux.x86_64 --headless --path . || EXIT_CODE=$?
+          timeout 30 ./Godot_v4.7.1-stable_linux.x86_64 --headless --path . > game.log 2>&1 || EXIT_CODE=$?
+          echo "Exit code: $EXIT_CODE"
           if [ "$EXIT_CODE" = "124" ]; then
             echo "Game ran successfully for 30 seconds (timeout reached as expected)"
-            exit 0
           elif [ "$EXIT_CODE" = "0" ]; then
             echo "Game exited cleanly before 30 seconds"
-            exit 0
           else
             echo "Game crashed with exit code $EXIT_CODE"
+          fi
+          echo "--- Game Log ---"
+          cat game.log
+          echo "--- End Log ---"
+          if [ "$EXIT_CODE" != "124" ] && [ "$EXIT_CODE" != "0" ]; then
             exit 1
           fi
 
       - name: Check for errors
-        if: failure()
+        if: always()
         run: |
-          echo "Game failed to run properly. Check logs above for details."
+          if [ ! -f game.log ]; then
+            echo "No game log found"
+            exit 0
+          fi
+          if grep -qiE "ERROR|FATAL|CRASH|SCRIPT ERROR|stack Trace|Call Stack" game.log; then
+            echo "Errors found in game log:"
+            grep -iE "ERROR|FATAL|CRASH|SCRIPT ERROR|stack Trace|Call Stack" game.log
+            exit 1
+          fi
+          echo "No errors found in game log"
