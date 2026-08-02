@@ -78,7 +78,10 @@ func _on_language_selected(locale: String) -> void:
 
 func _update_render_engine_label() -> void:
 	var version := Engine.get_version_info()
-	var method: String = ProjectSettings.get_setting("rendering/renderer/rendering_method", "forward_plus")
+	var setting_key := "rendering/renderer/rendering_method"
+	if OS.get_name() == "Android":
+		setting_key = "rendering/renderer/rendering_method.mobile"
+	var method: String = ProjectSettings.get_setting(setting_key, "forward_plus")
 	var driver := RenderingServer.get_current_rendering_driver_name()
 	render_engine_label.text = "Godot %d.%d.%d - %s - %s" % [version.major, version.minor, version.patch, driver, method]
 
