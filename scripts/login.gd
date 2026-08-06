@@ -41,7 +41,7 @@ func _on_login_pressed() -> void:
 	if username == "admin" and password == "admin":
 		_save_credentials(username, password)
 		if WelcomeToast:
-			WelcomeToast.show_welcome()
+			WelcomeToast.show_welcome(username)
 		login_requested.emit(username)
 	else:
 		error_label.text = tr("ERROR_INVALID")

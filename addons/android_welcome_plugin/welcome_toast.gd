@@ -1,6 +1,7 @@
 extends Node
 
 var _plugin_available: bool = false
+var default_duration: int = 1
 
 
 func _ready() -> void:
@@ -8,6 +9,10 @@ func _ready() -> void:
 		_plugin_available = true
 
 
-func show_welcome() -> void:
+func show_welcome(username: String, duration: int = -1) -> void:
 	if _plugin_available:
-		Engine.get_singleton("ToastPlugin").showToast("Hello admin")
+		if duration == -1:
+			duration = default_duration
+		var time = Time.get_time_string_from_system()
+		var msg = "Welcome %s in %s" % [username, time]
+		Engine.get_singleton("ToastPlugin").showToast(msg, duration)

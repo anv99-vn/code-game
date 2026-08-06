@@ -25,8 +25,13 @@ public class ToastPlugin extends GodotPlugin {
 
     @UsedByGodot
     public void showToast(final String message) {
+        showToast(message, 1);
+    }
+
+    @UsedByGodot
+    public void showToast(final String message, final int duration) {
         new Handler(Looper.getMainLooper()).post(() -> {
-            Toast toast = Toast.makeText(activity, message, Toast.LENGTH_LONG);
+            Toast toast = Toast.makeText(activity, message, duration);
             toast.setGravity(Gravity.TOP | Gravity.CENTER_HORIZONTAL, 0, 0);
             toast.show();
         });
