@@ -30,3 +30,6 @@ addons/android_welcome_plugin/bin/
 android/build/
 *.zip
 *.keystore
+
+# OpenCode
+.opencode/
