@@ -1,0 +1,93 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="980" height="860" viewBox="0 0 980 860" font-family="Segoe UI, Arial, sans-serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#3b82f6"/>
+    </marker>
+    <marker id="arrowRed" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#ef4444"/>
+    </marker>
+    <marker id="arrowGray" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#9ca3af"/>
+    </marker>
+  </defs>
+
+  <rect width="980" height="860" fill="#f8fafc"/>
+
+  <text x="490" y="38" text-anchor="middle" font-size="22" font-weight="bold" fill="#1e293b">Client–Server Auth Flow (TCP)</text>
+  <text x="490" y="60" text-anchor="middle" font-size="13" fill="#64748b">Godot client ↔ Go TCP server :8080 ↔ SQLite — length-prefixed JSON frames</text>
+
+  <g>
+    <rect x="50" y="84" width="200" height="44" rx="8" fill="#3b82f6"/>
+    <text x="150" y="111" text-anchor="middle" font-size="14" font-weight="bold" fill="#ffffff">GODOT CLIENT</text>
+
+    <rect x="390" y="84" width="200" height="44" rx="8" fill="#f59e0b"/>
+    <text x="490" y="111" text-anchor="middle" font-size="14" font-weight="bold" fill="#ffffff">GO SERVER :8080</text>
+
+    <rect x="730" y="84" width="200" height="44" rx="8" fill="#10b981"/>
+    <text x="830" y="111" text-anchor="middle" font-size="14" font-weight="bold" fill="#ffffff">SQLITE</text>
+  </g>
+
+  <line x1="150" y1="128" x2="150" y2="828" stroke="#cbd5e1" stroke-dasharray="6 4" stroke-width="1.5"/>
+  <line x1="490" y1="128" x2="490" y2="828" stroke="#cbd5e1" stroke-dasharray="6 4" stroke-width="1.5"/>
+  <line x1="830" y1="128" x2="830" y2="828" stroke="#cbd5e1" stroke-dasharray="6 4" stroke-width="1.5"/>
+
+  <!-- ============ REGISTER ============ -->
+
+  <line x1="150" y1="158" x2="480" y2="158" stroke="#3b82f6" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="315" y="150" text-anchor="middle" font-size="13" fill="#1e293b"><tspan font-weight="bold" fill="#2563eb">① REGISTER</tspan></text>
+  <text x="315" y="174" text-anchor="middle" font-size="12" fill="#475569" font-family="Consolas, monospace">send "register"</text>
+  <text x="315" y="192" text-anchor="middle" font-size="12" fill="#475569" font-family="Consolas, monospace">{username, password}</text>
+
+  <line x1="500" y1="216" x2="820" y2="216" stroke="#9ca3af" stroke-width="2" marker-end="url(#arrowGray)"/>
+  <text x="660" y="208" text-anchor="middle" font-size="12" fill="#64748b">INSERT user</text>
+
+  <rect x="340" y="228" width="300" height="56" rx="6" fill="#fffbeb" stroke="#f59e0b"/>
+  <text x="490" y="250" text-anchor="middle" font-size="12" fill="#92400e">validate username 3–32 / password ≥ 8</text>
+  <text x="490" y="268" text-anchor="middle" font-size="12" fill="#92400e">bcrypt hash → save</text>
+
+  <line x1="490" y1="306" x2="160" y2="306" stroke="#ef4444" stroke-width="2" marker-end="url(#arrowRed)"/>
+  <text x="315" y="298" text-anchor="middle" font-size="13" fill="#1e293b"><tspan font-weight="bold" fill="#dc2626">② RESPONSE</tspan></text>
+  <text x="315" y="322" text-anchor="middle" font-size="12" fill="#475569" font-family="Consolas, monospace">"register_ok"</text>
+  <text x="315" y="340" text-anchor="middle" font-size="12" fill="#475569" font-family="Consolas, monospace">{token, username}</text>
+  <text x="315" y="356" text-anchor="middle" font-size="11" fill="#94a3b8">error: user_exists / invalid</text>
+
+  <rect x="30" y="370" width="240" height="40" rx="6" fill="#eff6ff" stroke="#3b82f6"/>
+  <text x="150" y="390" text-anchor="middle" font-size="12" fill="#1d4ed8">save token + username</text>
+  <text x="150" y="406" text-anchor="middle" font-size="12" fill="#1d4ed8">SessionManager.login()</text>
+
+  <!-- ============ LOGIN ============ -->
+
+  <line x1="150" y1="446" x2="480" y2="446" stroke="#3b82f6" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="315" y="438" text-anchor="middle" font-size="13" fill="#1e293b"><tspan font-weight="bold" fill="#2563eb">③ LOGIN</tspan></text>
+  <text x="315" y="462" text-anchor="middle" font-size="12" fill="#475569" font-family="Consolas, monospace">send "login"</text>
+  <text x="315" y="480" text-anchor="middle" font-size="12" fill="#475569" font-family="Consolas, monospace">{username, password}</text>
+
+  <line x1="500" y1="504" x2="820" y2="504" stroke="#9ca3af" stroke-width="2" marker-end="url(#arrowGray)"/>
+  <text x="660" y="496" text-anchor="middle" font-size="12" fill="#64748b">SELECT user</text>
+
+  <rect x="340" y="516" width="300" height="56" rx="6" fill="#fffbeb" stroke="#f59e0b"/>
+  <text x="490" y="538" text-anchor="middle" font-size="12" fill="#92400e">bcrypt compare password</text>
+  <text x="490" y="556" text-anchor="middle" font-size="12" fill="#92400e">sign JWT (HS256, exp 24h)</text>
+
+  <line x1="490" y1="594" x2="160" y2="594" stroke="#ef4444" stroke-width="2" marker-end="url(#arrowRed)"/>
+  <text x="315" y="586" text-anchor="middle" font-size="13" fill="#1e293b"><tspan font-weight="bold" fill="#dc2626">④ RESPONSE</tspan></text>
+  <text x="315" y="610" text-anchor="middle" font-size="12" fill="#475569" font-family="Consolas, monospace">"login_ok"</text>
+  <text x="315" y="628" text-anchor="middle" font-size="12" fill="#475569" font-family="Consolas, monospace">{token, username}</text>
+  <text x="315" y="644" text-anchor="middle" font-size="11" fill="#94a3b8">error: invalid_credentials</text>
+
+  <rect x="30" y="658" width="240" height="40" rx="6" fill="#eff6ff" stroke="#3b82f6"/>
+  <text x="150" y="678" text-anchor="middle" font-size="12" fill="#1d4ed8">save token + username</text>
+  <text x="150" y="694" text-anchor="middle" font-size="12" fill="#1d4ed8">change_scene → game</text>
+
+  <!-- ============ AUTHENTICATED ============ -->
+
+  <line x1="150" y1="726" x2="480" y2="726" stroke="#3b82f6" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="315" y="718" text-anchor="middle" font-size="13" fill="#1e293b"><tspan font-weight="bold" fill="#2563eb">⑤ AUTHENTICATED REQUEST</tspan></text>
+  <text x="315" y="742" text-anchor="middle" font-size="12" fill="#475569" font-family="Consolas, monospace">send "me"</text>
+  <text x="315" y="760" text-anchor="middle" font-size="12" fill="#475569" font-family="Consolas, monospace">{token}</text>
+
+  <line x1="490" y1="786" x2="160" y2="786" stroke="#ef4444" stroke-width="2" marker-end="url(#arrowRed)"/>
+  <text x="315" y="778" text-anchor="middle" font-size="13" fill="#1e293b"><tspan font-weight="bold" fill="#dc2626">⑥ RESPONSE</tspan></text>
+  <text x="315" y="802" text-anchor="middle" font-size="12" fill="#475569" font-family="Consolas, monospace">"me_ok" → {username}</text>
+  <text x="315" y="820" text-anchor="middle" font-size="11" fill="#94a3b8">error: invalid_token — JWT verified statelessly, no DB</text>
+</svg>

@@ -33,3 +33,17 @@ When running only a test scene, update autoloads to update data as needed for th
 ## GDScript
 
 Use the method call syntax for deferred calls: `my_func.call_deferred()` instead of `call_deferred("my_func")`.
+
+## Server
+
+Go TCP auth server in `server/` (login + register with JWT).
+
+- Build: `go build -o server.exe .` (run from `server/`)
+- Test: `go test -race ./...` (run from `server/`)
+- Run: `server.exe` — listens on `PORT` (default 8080)
+- Env config: `PORT`, `JWT_SECRET`, `DB_PATH` (SQLite, default `server.db`)
+- Protocol: length-prefixed JSON over TCP. Each frame is a 4-byte big-endian length followed by a JSON payload.
+- Request: `{"type": "<type>", "id": <int>, "data": {...}}`
+- Messages: `health`, `register` {username,password}, `login` {username,password}, `me` {token}
+- Response: `{"type": "<type>_ok"|"error", "id": <echoed>, "data": {...}}`. Errors carry `{code, message}` (e.g. `user_exists`, `invalid_credentials`, `invalid_token`, `invalid`, `unknown_type`).
+- Tests are manual via a TCP client (e.g. PowerShell `TcpClient` or a small Go program) against a running instance.

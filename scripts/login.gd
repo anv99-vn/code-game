@@ -27,6 +27,7 @@ const ENGINE_SETTINGS := {
 @onready var error_label: Label = %ErrorLabel
 @onready var login_button: Button = %LoginButton
 @onready var forgot_password: Button = $ForgotPassword
+@onready var register_button: Button = $RegisterButton
 @onready var lang_button: Button = $LangButton
 @onready var lang_dropdown = $LangButton/LangDropdown
 @onready var engine_button: Button = $EngineButton
@@ -72,19 +73,23 @@ func _on_login_pressed() -> void:
 		error_label.text = tr("ERROR_EMPTY")
 		return
 
-	if username == "admin" and password == "admin":
-		_save_credentials(username, password)
+	login_button.disabled = true
+	error_label.text = ""
+
+	var success: bool = await SessionManager.authenticate(username, password)
+	if success:
+		_save_credentials(username)
 		if WelcomeToast:
 			WelcomeToast.show_welcome(username)
 		login_requested.emit(username)
 	else:
 		error_label.text = tr("ERROR_INVALID")
+		login_button.disabled = false
 
 
-func _save_credentials(username: String, password: String) -> void:
+func _save_credentials(username: String) -> void:
 	var config := ConfigFile.new()
 	config.set_value("login", "username", username)
-	config.set_value("login", "password", password)
 	config.save("user://login.cfg")
 
 
@@ -93,7 +98,6 @@ func _load_credentials() -> void:
 	if config.load("user://login.cfg") != OK:
 		return
 	username_input.text = config.get_value("login", "username", "")
-	password_input.text = config.get_value("login", "password", "")
 
 
 func _on_lang_pressed() -> void:
@@ -192,6 +196,7 @@ func _on_language_selected(locale: String) -> void:
 	TranslationServer.set_locale(locale)
 	login_button.text = tr("LOGIN_BUTTON")
 	forgot_password.text = tr("FORGOT_PASSWORD")
+	register_button.text = tr("REGISTER_BUTTON")
 	username_input.placeholder_text = tr("USERNAME")
 	password_input.placeholder_text = tr("PASSWORD")
 	_update_lang_button_text()
@@ -222,6 +227,10 @@ func _update_lang_button_text() -> void:
 
 func _on_forgot_password_pressed() -> void:
 	error_label.text = tr("FORGOT_PASSWORD_MSG")
+
+
+func _on_register_pressed() -> void:
+	get_tree().change_scene_to_file(AssetRegistry.SCENES_REGISTER)
 
 
 func _unhandled_input(event: InputEvent) -> void:

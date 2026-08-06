@@ -92,4 +92,6 @@ locale/translations=["res://translations/translations.en.translation", "res://tr
 [rendering]
 
 rendering_device/driver.windows="d3d12"
+rendering_device/driver.android="opengl3"
+renderer/rendering_method.mobile="gl_compatibility"
 textures/vram_compression/import_etc2_astc=true

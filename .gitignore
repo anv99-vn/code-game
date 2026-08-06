@@ -33,3 +33,10 @@ android/build/
 
 # OpenCode
 .opencode/
+
+# Server
+server/server.exe
+server/server.db
+
+# CI artifacts
+download/

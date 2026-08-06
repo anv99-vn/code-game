@@ -48,3 +48,13 @@ RENDER_OPENGL,OpenGL,OpenGL
 RENDER_DIRECTX,DirectX 12,DirectX 12
 RENDER_RESTART_MSG,Render engine change applies after the game restarts.,Thay đổi động cơ đồ họa có hiệu lực sau khi khởi động lại game.
 RESTART_BUTTON,Restart,Khởi động lại
+REGISTER_TITLE,Register,Đăng ký
+REGISTER_BUTTON,Register,Đăng ký
+CONFIRM_PASSWORD,Confirm password,Xác nhận mật khẩu
+BACK_TO_LOGIN,Back to login,Quay lại đăng nhập
+ERROR_PASSWORD_MISMATCH,Passwords do not match.,Mật khẩu không khớp.
+ERROR_USERNAME_TAKEN,Username is already taken.,Tên đăng nhập đã được sử dụng.
+ERROR_TOO_SHORT,Password must be between %d and %d characters.,Mật khẩu phải từ %d đến %d ký tự.
+ERROR_USERNAME_INVALID,Username must be 3-32 characters (letters, digits, underscore).,Tên đăng nhập phải 3-32 ký tự (chữ, số, gạch dưới).
+ERROR_SAVE_FAILED,Could not save data. Please try again.,Không thể lưu dữ liệu. Vui lòng thử lại.
+ERROR_SERVER,Connection failed. Please try again.,Không thể kết nối. Vui lòng thử lại.

@@ -1,11 +1,10 @@
-[gd_scene format=3 uid="uid://fsva1jchsulb"]
+[gd_scene format=3 uid="uid://d3m4r8g1st3r0"]
 
-[ext_resource type="Script" uid="uid://rhel3jxp88bx" path="res://scripts/login.gd" id="1_5cd0j"]
+[ext_resource type="Script" uid="uid://c74gslwse8kgw" path="res://scripts/register.gd" id="1_m6wqx"]
 [ext_resource type="Texture2D" uid="uid://bhilfpsc3f704" path="res://assets/ui/bg_login.png" id="3_7j4f1"]
 [ext_resource type="Texture2D" uid="uid://3bgxj6wkqsky" path="res://assets/ui/logo_console.png" id="3_r3fp8"]
 [ext_resource type="Texture2D" uid="uid://bbxkdxlg3k7gg" path="res://assets/icons/icon_user_w.png" id="5_9n4p5"]
 [ext_resource type="Texture2D" uid="uid://ci4sofrtxy8yh" path="res://assets/icons/icon_lock_w.png" id="6_1q7r6"]
-[ext_resource type="PackedScene" uid="uid://csgigueinfsdr" path="res://scenes/engine_button.tscn" id="7_bw5rt"]
 [ext_resource type="PackedScene" uid="uid://dhbfm1eys5c3d" path="res://scenes/lang_button.tscn" id="8_lb"]
 
 [sub_resource type="StyleBoxFlat" id="card"]
@@ -68,7 +67,7 @@ corner_radius_top_right = 8
 corner_radius_bottom_right = 8
 corner_radius_bottom_left = 8
 
-[node name="Login" type="Control" unique_id=1955053360 groups=["login_screen"]]
+[node name="Register" type="Control" unique_id=1955053360]
 auto_translate_mode = 1
 layout_mode = 3
 anchors_preset = 15
@@ -76,7 +75,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_5cd0j")
+script = ExtResource("1_m6wqx")
 
 [node name="Background" type="TextureRect" parent="." unique_id=1541379477]
 layout_mode = 1
@@ -111,9 +110,9 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -40.0
-offset_top = -180.0
+offset_top = -190.0
 offset_right = 40.0
-offset_bottom = -100.0
+offset_bottom = -110.0
 grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("3_r3fp8")
@@ -128,9 +127,9 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -160.0
-offset_top = -40.0
+offset_top = -70.0
 offset_right = 160.0
-offset_bottom = 4.0
+offset_bottom = -26.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_colors/font_color = Color(1, 1, 1, 1)
@@ -148,9 +147,9 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -150.0
-offset_top = -30.0
+offset_top = -60.0
 offset_right = -126.0
-offset_bottom = -6.0
+offset_bottom = -36.0
 grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("5_9n4p5")
@@ -165,9 +164,9 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -160.0
-offset_top = 24.0
+offset_top = -18.0
 offset_right = 160.0
-offset_bottom = 68.0
+offset_bottom = 26.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_colors/font_color = Color(1, 1, 1, 1)
@@ -186,15 +185,15 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -150.0
-offset_top = 34.0
+offset_top = -8.0
 offset_right = -126.0
-offset_bottom = 58.0
+offset_bottom = 16.0
 grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("6_1q7r6")
 expand_mode = 5
 
-[node name="LoginButton" type="Button" parent="." unique_id=2050003046]
+[node name="RegisterButton" type="Button" parent="." unique_id=2050003046]
 unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 8
@@ -203,7 +202,7 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -160.0
-offset_top = 100.0
+offset_top = 104.0
 offset_right = 160.0
 offset_bottom = 148.0
 grow_horizontal = 2
@@ -215,9 +214,9 @@ theme_override_font_sizes/font_size = 16
 theme_override_styles/normal = SubResource("btn_normal")
 theme_override_styles/pressed = SubResource("btn_pressed")
 theme_override_styles/hover = SubResource("btn_hover")
-text = "LOGIN_BUTTON"
+text = "REGISTER_BUTTON"
 
-[node name="ForgotPassword" type="Button" parent="." unique_id=1966058448]
+[node name="BackToLogin" type="Button" parent="." unique_id=1966058448]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -225,17 +224,17 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -160.0
-offset_top = 155.0
-offset_right = -10.0
-offset_bottom = 178.0
+offset_top = 159.0
+offset_right = 160.0
+offset_bottom = 182.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_colors/font_color = Color(1, 1, 1, 0.7)
 theme_override_colors/font_hover_color = Color(1, 1, 1, 1)
 theme_override_font_sizes/font_size = 12
-text = "FORGOT_PASSWORD"
+text = "BACK_TO_LOGIN"
 flat = true
-alignment = 0
+alignment = 2
 
 [node name="ErrorLabel" type="Label" parent="." unique_id=1824728417]
 unique_name_in_owner = true
@@ -246,9 +245,9 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -160.0
-offset_top = 190.0
+offset_top = 188.0
 offset_right = 160.0
-offset_bottom = 210.0
+offset_bottom = 208.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_colors/font_color = Color(1, 0.6, 0.6, 1)
@@ -268,53 +267,7 @@ grow_horizontal = 0
 theme_override_font_sizes/font_size = 12
 text = "English"
 
-[node name="RenderEngineLabel" type="Label" parent="." unique_id=1486149929]
-layout_mode = 1
-anchors_preset = 3
-anchor_left = 1.0
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -350.0
-offset_top = -30.0
-offset_right = -10.0
-offset_bottom = -10.0
-grow_horizontal = 0
-grow_vertical = 0
-horizontal_alignment = 2
-
-[node name="EngineButton" parent="." unique_id=570755884 instance=ExtResource("7_bw5rt")]
-layout_mode = 0
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = -140.0
-offset_top = 58.0
-offset_right = -16.0
-offset_bottom = 94.0
-grow_horizontal = 0
-theme_override_font_sizes/font_size = 12
-text = "RENDER_ENGINE"
-
-[node name="RestartButton" type="Button" parent="." unique_id=815264226]
-visible = false
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -160.0
-offset_top = 215.0
-offset_right = 160.0
-offset_bottom = 247.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_colors/font_color = Color(1, 1, 1, 0.9)
-theme_override_colors/font_hover_color = Color(1, 1, 1, 1)
-theme_override_font_sizes/font_size = 14
-text = "RESTART_BUTTON"
-
-[node name="RegisterButton" type="Button" parent="." unique_id=2004204191]
+[node name="ConfirmPasswordInput" type="LineEdit" parent="." unique_id=1088557867]
 unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 8
@@ -322,20 +275,31 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = 10.0
-offset_top = 155.0
+offset_left = -160.0
+offset_top = 34.0
 offset_right = 160.0
-offset_bottom = 178.0
+offset_bottom = 78.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_colors/font_color = Color(1, 1, 1, 0.7)
-theme_override_colors/font_hover_color = Color(1, 1, 1, 1)
-theme_override_font_sizes/font_size = 12
-text = "REGISTER_BUTTON"
-flat = true
+placeholder_text = "CONFIRM_PASSWORD"
+secret = true
+
+[node name="LockIcon2" type="TextureRect" parent="." unique_id=645788833]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -150.0
+offset_top = 44.0
+offset_right = -126.0
+offset_bottom = 68.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("6_1q7r6")
+expand_mode = 5
 
 [connection signal="pressed" from="RegisterButton" to="." method="_on_register_pressed"]
-[connection signal="pressed" from="LoginButton" to="." method="_on_login_pressed"]
+[connection signal="pressed" from="BackToLogin" to="." method="_on_back_to_login_pressed"]
 [connection signal="pressed" from="LangButton" to="." method="_on_lang_pressed"]
-[connection signal="pressed" from="EngineButton" to="." method="_on_engine_pressed"]
-[connection signal="pressed" from="RestartButton" to="." method="_on_restart_pressed"]
