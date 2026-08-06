@@ -5,6 +5,14 @@ signal engine_selected(engine: String)
 var current_engine: String = ""
 
 
+func _ready() -> void:
+	super()
+	if OS.get_name() == "Android":
+		for child in get_children():
+			if child is Button and String(child.get_meta("engine", "")) == "d3d12":
+				child.visible = false
+
+
 func _get_meta_key() -> String:
 	return "engine"
 
