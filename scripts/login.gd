@@ -133,9 +133,12 @@ func _apply_render_engine(engine: String) -> void:
 		return
 	var info: Dictionary = ENGINE_SETTINGS[engine]
 	var platform := OS.get_name().to_lower()
-	ProjectSettings.set_setting("rendering/renderer/rendering_method", info.method)
+	var method_key := "renderer/rendering_method"
+	if platform == "android":
+		method_key = "renderer/rendering_method.mobile"
+	ProjectSettings.set_setting("rendering/%s" % method_key, info.method)
 	var config := ConfigFile.new()
-	config.set_value("rendering", "renderer/rendering_method", info.method)
+	config.set_value("rendering", method_key, info.method)
 	if info.use_gl_driver:
 		var key := "gl_compatibility/driver.%s" % platform
 		ProjectSettings.set_setting("rendering/%s" % key, info.driver)
@@ -158,10 +161,12 @@ func _get_saved_engine() -> String:
 	var config := ConfigFile.new()
 	if config.load(RENDER_OVERRIDE_PATH) != OK:
 		return ""
+	var platform := OS.get_name().to_lower()
 	var method: String = config.get_value("rendering", "renderer/rendering_method", "")
+	if method.is_empty() and platform == "android":
+		method = config.get_value("rendering", "renderer/rendering_method.mobile", "")
 	if method == "gl_compatibility":
 		return "opengl"
-	var platform := OS.get_name().to_lower()
 	var driver: String = config.get_value("rendering", "rendering_device/driver.%s" % platform, "vulkan")
 	return "d3d12" if driver == "d3d12" else "vulkan"
 
