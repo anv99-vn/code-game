@@ -17,11 +17,12 @@ func open() -> void:
 
 func _on_cancel() -> void:
 	get_tree().paused = false
-	visible = false
 	quit_cancelled.emit()
+	queue_free()
 
 
 func _on_quit() -> void:
 	get_tree().paused = false
 	quit_confirmed.emit()
+	queue_free()
 	get_tree().quit()
