@@ -106,8 +106,12 @@ func _on_engine_selected(engine: String) -> void:
 	_apply_render_engine(engine)
 	_update_engine_button_text()
 	_update_render_engine_label()
-	error_label.text = tr("RENDER_RESTART_MSG")
-	restart_button.show()
+	if engine == _detect_running_engine():
+		error_label.text = ""
+		restart_button.hide()
+	else:
+		error_label.text = tr("RENDER_RESTART_MSG")
+		restart_button.show()
 
 
 func _on_restart_pressed() -> void:
@@ -119,15 +123,18 @@ func _apply_render_engine(engine: String) -> void:
 	if not ENGINE_SETTINGS.has(engine):
 		return
 	var info: Dictionary = ENGINE_SETTINGS[engine]
+	var platform := OS.get_name().to_lower()
 	ProjectSettings.set_setting("rendering/renderer/rendering_method", info.method)
 	var config := ConfigFile.new()
 	config.set_value("rendering", "renderer/rendering_method", info.method)
 	if info.use_gl_driver:
-		ProjectSettings.set_setting("rendering/gl_compatibility/driver.windows", info.driver)
-		config.set_value("rendering", "gl_compatibility/driver.windows", info.driver)
+		var key := "gl_compatibility/driver.%s" % platform
+		ProjectSettings.set_setting("rendering/%s" % key, info.driver)
+		config.set_value("rendering", key, info.driver)
 	else:
-		ProjectSettings.set_setting("rendering/rendering_device/driver.windows", info.driver)
-		config.set_value("rendering", "rendering_device/driver.windows", info.driver)
+		var key := "rendering_device/driver.%s" % platform
+		ProjectSettings.set_setting("rendering/%s" % key, info.driver)
+		config.set_value("rendering", key, info.driver)
 	config.save(RENDER_OVERRIDE_PATH)
 
 
@@ -145,7 +152,8 @@ func _get_saved_engine() -> String:
 	var method: String = config.get_value("rendering", "renderer/rendering_method", "")
 	if method == "gl_compatibility":
 		return "opengl"
-	var driver: String = config.get_value("rendering", "rendering_device/driver.windows", "vulkan")
+	var platform := OS.get_name().to_lower()
+	var driver: String = config.get_value("rendering", "rendering_device/driver.%s" % platform, "vulkan")
 	return "d3d12" if driver == "d3d12" else "vulkan"
 
 
