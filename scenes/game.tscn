@@ -110,3 +110,6 @@ stretch_mode = 6
 
 [node name="InteractionManager" type="Node" parent="." unique_id=1678856969]
 script = ExtResource("8_gee14")
+
+[node name="PopupLayer" type="CanvasLayer" parent="." unique_id=679881129]
+layer = 100
