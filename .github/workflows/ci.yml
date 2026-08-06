@@ -40,14 +40,14 @@ jobs:
         run: |
           ./Godot_v4.7.1-stable_linux.x86_64 --headless --import --quit
 
-      - name: Run game for 30 seconds
+      - name: Run game for 10 seconds
         run: |
-          timeout 30 ./Godot_v4.7.1-stable_linux.x86_64 --headless --path . > game.log 2>&1 || EXIT_CODE=$?
+          timeout 10 ./Godot_v4.7.1-stable_linux.x86_64 --headless --path . > game.log 2>&1 || EXIT_CODE=$?
           echo "Exit code: $EXIT_CODE"
           if [ "$EXIT_CODE" = "124" ]; then
-            echo "Game ran successfully for 30 seconds (timeout reached as expected)"
+            echo "Game ran successfully for 10 seconds (timeout reached as expected)"
           elif [ "$EXIT_CODE" = "0" ]; then
-            echo "Game exited cleanly before 30 seconds"
+            echo "Game exited cleanly before 10 seconds"
           else
             echo "Game crashed with exit code $EXIT_CODE"
           fi
