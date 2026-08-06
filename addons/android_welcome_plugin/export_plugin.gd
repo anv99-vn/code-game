@@ -5,7 +5,7 @@ var _export_plugin: AndroidExportPlugin
 
 
 func _enter_tree() -> void:
-	print("[WelcomePlugin] _enter_tree - registering export plugin")
+	print("[ToastPlugin] _enter_tree - registering export plugin")
 	_export_plugin = AndroidExportPlugin.new()
 	add_export_plugin(_export_plugin)
 
@@ -22,12 +22,12 @@ class AndroidExportPlugin extends EditorExportPlugin:
 
 	func _supports_platform(platform: Object) -> bool:
 		var supported := platform is EditorExportPlatformAndroid
-		print("[WelcomePlugin] _supports_platform -> ", supported)
+		print("[ToastPlugin] _supports_platform -> ", supported)
 		return supported
 
 	func _get_android_libraries(_platform: Object, debug: bool) -> PackedStringArray:
 		var aar := _DEBUG_AAR if debug else _RELEASE_AAR
-		print("[WelcomePlugin] _get_android_libraries returning: ", aar)
+		print("[ToastPlugin] _get_android_libraries returning: ", aar)
 		return PackedStringArray([aar])
 
 	func _get_android_dependencies(_platform: Object, _debug: bool) -> PackedStringArray:

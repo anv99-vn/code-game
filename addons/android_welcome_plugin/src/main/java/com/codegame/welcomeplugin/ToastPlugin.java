@@ -9,18 +9,18 @@ import org.godotengine.godot.Godot;
 import org.godotengine.godot.plugin.GodotPlugin;
 import org.godotengine.godot.plugin.UsedByGodot;
 
-public class WelcomePlugin extends GodotPlugin {
+public class ToastPlugin extends GodotPlugin {
 
     private Activity activity;
 
-    public WelcomePlugin(Godot godot) {
+    public ToastPlugin(Godot godot) {
         super(godot);
         this.activity = godot.getActivity();
     }
 
     @Override
     public String getPluginName() {
-        return "WelcomePlugin";
+        return "ToastPlugin";
     }
 
     @UsedByGodot

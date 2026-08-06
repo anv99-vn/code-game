@@ -3,8 +3,8 @@
 
     <application>
         <meta-data
-            android:name="org.godotengine.plugin.v2.WelcomePlugin"
-            android:value="com.codegame.welcomeplugin.WelcomePlugin" />
+            android:name="org.godotengine.plugin.v2.ToastPlugin"
+            android:value="com.codegame.welcomeplugin.ToastPlugin" />
     </application>
 
 </manifest>

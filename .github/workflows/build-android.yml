@@ -131,18 +131,18 @@ jobs:
           APK=/home/runner/.local/share/godot/builds/Android/Code-Game.apk
           echo "=== APK contents ==="
           unzip -l "$APK" | head -50
-          echo "=== Checking for WelcomePlugin class in dex files ==="
+          echo "=== Checking for ToastPlugin class in dex files ==="
           FOUND=0
           for dex in $(unzip -l "$APK" | awk '/classes[0-9]*\.dex/ {print $4}'); do
-            if unzip -p "$APK" "$dex" | strings | grep -q "com/codegame/welcomeplugin/WelcomePlugin"; then
-              echo "WelcomePlugin class found in $dex"
+            if unzip -p "$APK" "$dex" | strings | grep -q "com/codegame/welcomeplugin/ToastPlugin"; then
+              echo "ToastPlugin class found in $dex"
               FOUND=1
             fi
           done
           if [ "$FOUND" = "1" ]; then
-            echo "WelcomePlugin embedded in APK"
+            echo "ToastPlugin embedded in APK"
           else
-            echo "ERROR: WelcomePlugin not embedded in APK" >&2
+            echo "ERROR: ToastPlugin not embedded in APK" >&2
             exit 1
           fi
 
