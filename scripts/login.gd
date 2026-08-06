@@ -32,6 +32,7 @@ const ENGINE_SETTINGS := {
 @onready var engine_button: Button = $EngineButton
 @onready var engine_dropdown = $EngineButton/EngineDropdown
 @onready var render_engine_label: Label = $RenderEngineLabel
+@onready var restart_button: Button = $RestartButton
 
 
 func _ready() -> void:
@@ -106,6 +107,12 @@ func _on_engine_selected(engine: String) -> void:
 	_update_engine_button_text()
 	_update_render_engine_label()
 	error_label.text = tr("RENDER_RESTART_MSG")
+	restart_button.show()
+
+
+func _on_restart_pressed() -> void:
+	OS.set_restart_on_exit(true)
+	get_tree().quit()
 
 
 func _apply_render_engine(engine: String) -> void:

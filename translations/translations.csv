@@ -47,3 +47,4 @@ RENDER_VULKAN,Vulkan,Vulkan
 RENDER_OPENGL,OpenGL,OpenGL
 RENDER_DIRECTX,DirectX 12,DirectX 12
 RENDER_RESTART_MSG,Render engine change applies after the game restarts.,Thay đổi động cơ đồ họa có hiệu lực sau khi khởi động lại game.
+RESTART_BUTTON,Restart,Khởi động lại

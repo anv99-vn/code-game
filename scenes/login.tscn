@@ -295,6 +295,26 @@ grow_horizontal = 0
 theme_override_font_sizes/font_size = 12
 text = "RENDER_ENGINE"
 
+[node name="RestartButton" type="Button" parent="." unique_id=815264226]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -160.0
+offset_top = 215.0
+offset_right = 160.0
+offset_bottom = 247.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 1, 1, 0.9)
+theme_override_colors/font_hover_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 14
+text = "RESTART_BUTTON"
+
 [connection signal="pressed" from="LoginButton" to="." method="_on_login_pressed"]
 [connection signal="pressed" from="LangButton" to="." method="_on_lang_pressed"]
 [connection signal="pressed" from="EngineButton" to="." method="_on_engine_pressed"]
+[connection signal="pressed" from="RestartButton" to="." method="_on_restart_pressed"]
