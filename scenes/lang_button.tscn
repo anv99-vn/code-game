@@ -24,7 +24,7 @@ icon = ExtResource("2_globe")
 [node name="LangDropdown" parent="." unique_id=586458441 instance=ExtResource("1_0sjtm")]
 visible = false
 layout_mode = 0
-offset_left = -67.0
-offset_top = 26.0
-offset_right = 38.0
-offset_bottom = 106.0
+offset_left = -115.0
+offset_top = 0.0
+offset_right = -10.0
+offset_bottom = 80.0
