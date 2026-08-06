@@ -43,6 +43,15 @@ func _ready() -> void:
 	_update_lang_button_text()
 	_update_engine_button_text()
 	_update_render_engine_label()
+	_log_render_engine_config()
+
+
+func _log_render_engine_config() -> void:
+	var file := FileAccess.open(RENDER_OVERRIDE_PATH, FileAccess.READ)
+	if file == null:
+		push_warning("render_engine.cfg not found at %s" % RENDER_OVERRIDE_PATH)
+		return
+	print("render_engine.cfg:\n%s" % file.get_as_text())
 
 
 func on_login_changed(is_logged_in: bool) -> void:
