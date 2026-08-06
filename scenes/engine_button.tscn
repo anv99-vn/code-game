@@ -1,0 +1,13 @@
+[gd_scene format=3 uid="uid://csgigueinfsdr"]
+
+[ext_resource type="PackedScene" uid="uid://b36jhjiigunex" path="res://scenes/render_engine_dropdown.tscn" id="1_4jwfu"]
+
+[node name="EngineButton" type="Button" unique_id=570755884]
+
+[node name="EngineDropdown" parent="." unique_id=1600802334 instance=ExtResource("1_4jwfu")]
+visible = false
+layout_mode = 0
+offset_left = -67.0
+offset_top = 26.0
+offset_right = 63.0
+offset_bottom = 127.0

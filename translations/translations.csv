@@ -42,3 +42,8 @@ QUIT_TITLE,Quit Game,Thoát game
 QUIT_MESSAGE,Do you want to quit the game?,Bạn có muốn thoát game không?
 QUIT_CONFIRM,Quit,Thoát
 QUIT_CANCEL,Cancel,Hủy
+RENDER_ENGINE,Render Engine,Động cơ đồ họa
+RENDER_VULKAN,Vulkan,Vulkan
+RENDER_OPENGL,OpenGL,OpenGL
+RENDER_DIRECTX,DirectX 12,DirectX 12
+RENDER_RESTART_MSG,Render engine change applies after the game restarts.,Thay đổi động cơ đồ họa có hiệu lực sau khi khởi động lại game.

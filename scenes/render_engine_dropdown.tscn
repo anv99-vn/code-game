@@ -1,0 +1,39 @@
+[gd_scene format=3 uid="uid://b36jhjiigunex"]
+
+[ext_resource type="Script" uid="uid://bl6lshivr4icc" path="res://scripts/render_engine_dropdown.gd" id="1_sda6u"]
+
+[node name="RenderEngineDropdown" type="VBoxContainer" unique_id=1600802334]
+script = ExtResource("1_sda6u")
+
+[node name="VulkanBtn" type="Button" parent="." unique_id=671424322]
+custom_minimum_size = Vector2(0, 28)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(1, 1, 1, 0.9)
+theme_override_colors/font_hover_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 11
+text = "  Vulkan"
+metadata/engine = "vulkan"
+metadata/label_key = "RENDER_VULKAN"
+
+[node name="OpenGLBtn" type="Button" parent="." unique_id=454989553]
+custom_minimum_size = Vector2(0, 28)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(1, 1, 1, 0.9)
+theme_override_colors/font_hover_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 11
+text = "  OpenGL"
+metadata/engine = "opengl"
+metadata/label_key = "RENDER_OPENGL"
+
+[node name="DirectXBtn" type="Button" parent="." unique_id=1574756662]
+custom_minimum_size = Vector2(0, 28)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(1, 1, 1, 0.9)
+theme_override_colors/font_hover_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 11
+text = "  DirectX 12"
+metadata/engine = "d3d12"
+metadata/label_key = "RENDER_DIRECTX"
