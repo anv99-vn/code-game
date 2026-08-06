@@ -1,5 +1,13 @@
 # Release Notes
 
+## v2.5.1 (2026-08-06)
+
+Fix Android render engine selector to use platform-specific settings.
+
+- Use `renderer/rendering_method.mobile` instead of `renderer/rendering_method` on Android
+- Fix `_get_saved_engine` to check `.mobile` key fallback for Android
+- Log `render_engine.cfg` contents on startup for debugging
+
 ## v2.5.0 (2026-08-03)
 
 Simplify Windows CI to a single build with manual dispatch support.
