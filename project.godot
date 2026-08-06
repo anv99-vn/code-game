@@ -26,6 +26,7 @@ ResourceManager="*res://scripts/autoloads/resource_manager.gd"
 SessionManager="*res://scripts/autoloads/session_manager.gd"
 SettingsManager="*res://scripts/autoloads/settings_manager.gd"
 WelcomeToast="*res://addons/android_welcome_plugin/welcome_toast.gd"
+QuitConfirmation="*res://scripts/autoloads/quit_confirmation.gd"
 
 [display]
 

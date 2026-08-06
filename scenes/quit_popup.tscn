@@ -1,0 +1,146 @@
+[gd_scene format=3 uid="uid://danvmnsfv0ehu"]
+
+[ext_resource type="Script" uid="uid://coloikjcv70r6" path="res://scripts/quit_popup.gd" id="1_0yhc6"]
+
+[sub_resource type="StyleBoxFlat" id="card"]
+bg_color = Color(0.114, 0.231, 0.545, 1)
+corner_radius_top_left = 24
+corner_radius_top_right = 24
+corner_radius_bottom_right = 24
+corner_radius_bottom_left = 24
+
+[sub_resource type="StyleBoxFlat" id="btn_normal"]
+bg_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="btn_pressed"]
+bg_color = Color(0.9, 0.91, 0.93, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="btn_hover"]
+bg_color = Color(0.95, 0.96, 0.98, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="btn_quit_normal"]
+bg_color = Color(1, 1, 1, 0.2)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="btn_quit_pressed"]
+bg_color = Color(1, 1, 1, 0.3)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="btn_quit_hover"]
+bg_color = Color(1, 1, 1, 0.25)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[node name="QuitPopup" type="Control" unique_id=1256581297]
+auto_translate_mode = 1
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_0yhc6")
+
+[node name="Overlay" type="ColorRect" parent="." unique_id=785672519]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.75)
+
+[node name="CardBg" type="Panel" parent="." unique_id=2042795440]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -200.0
+offset_top = -100.0
+offset_right = 200.0
+offset_bottom = 100.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("card")
+
+[node name="VBox" type="VBoxContainer" parent="CardBg"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 24.0
+offset_top = 24.0
+offset_right = -24.0
+offset_bottom = -24.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 16
+
+[node name="Title" type="Label" parent="CardBg/VBox" unique_id=905284019]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 20
+text = "QUIT_TITLE"
+horizontal_alignment = 1
+
+[node name="Message" type="Label" parent="CardBg/VBox" unique_id=1842954620]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 0.8)
+theme_override_font_sizes/font_size = 14
+text = "QUIT_MESSAGE"
+horizontal_alignment = 1
+
+[node name="Spacer" type="Control" parent="CardBg/VBox" unique_id=1259277731]
+custom_minimum_size = Vector2(0, 8)
+layout_mode = 2
+
+[node name="BtnRow" type="HBoxContainer" parent="CardBg/VBox" unique_id=921620870]
+layout_mode = 2
+theme_override_constants/separation = 12
+alignment = 1
+
+[node name="CancelBtn" type="Button" parent="CardBg/VBox/BtnRow" unique_id=1139860185]
+custom_minimum_size = Vector2(120, 40)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.114, 0.231, 0.545, 1)
+theme_override_colors/font_pressed_color = Color(0.1, 0.2, 0.5, 1)
+theme_override_colors/font_hover_color = Color(0.15, 0.3, 0.65, 1)
+theme_override_font_sizes/font_size = 14
+theme_override_styles/normal = SubResource("btn_normal")
+theme_override_styles/pressed = SubResource("btn_pressed")
+theme_override_styles/hover = SubResource("btn_hover")
+text = "QUIT_CANCEL"
+
+[node name="QuitBtn" type="Button" parent="CardBg/VBox/BtnRow" unique_id=879821863]
+custom_minimum_size = Vector2(120, 40)
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_pressed_color = Color(1, 1, 1, 0.8)
+theme_override_colors/font_hover_color = Color(1, 1, 1, 0.9)
+theme_override_font_sizes/font_size = 14
+theme_override_styles/normal = SubResource("btn_quit_normal")
+theme_override_styles/pressed = SubResource("btn_quit_pressed")
+theme_override_styles/hover = SubResource("btn_quit_hover")
+text = "QUIT_CONFIRM"

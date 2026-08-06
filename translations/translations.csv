@@ -38,3 +38,7 @@ LANG_EN,English,English
 LANG_VI,Tiếng Việt,Tiếng Việt
 CLICK_TO_MOVE,Click to Move,Nhấp để di chuyển
 SETTINGS,Settings,Cài đặt
+QUIT_TITLE,Quit Game,Thoát game
+QUIT_MESSAGE,Do you want to quit the game?,Bạn có muốn thoát game không?
+QUIT_CONFIRM,Quit,Thoát
+QUIT_CANCEL,Cancel,Hủy
