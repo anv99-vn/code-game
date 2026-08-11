@@ -22,6 +22,10 @@ Avoid generic names like `screenshot1.png` or `tmp.png`.
 
 Always save screenshots to `addons/godot_mcp/cache/screenshots/` (use `save_to: "res://addons/godot_mcp/cache/screenshots/<descriptive-name>.png"` with the take_screenshot tool). Do not save screenshots anywhere else.
 
+## Godot MCP
+
+The `godot-mcp/` submodule is the source of truth for the Godot add-on. After updating the submodule, run `node scripts/sync_godot_mcp.mjs` to materialize `addons/godot_mcp/`. The sync preserves `addons/godot_mcp/cache/`.
+
 ## Thread Attachments
 
 When a file is attached to a thread, only read that specific file. Do not read other files in the project unless explicitly asked.

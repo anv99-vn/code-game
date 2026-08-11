@@ -2,7 +2,8 @@
 .godot/
 
 # MCP cache
-addons/godot_mcp/cache/
+# The installed addon is generated from the godot-mcp submodule.
+addons/godot_mcp/
 
 # Imported translations
 *.translation
