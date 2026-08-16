@@ -1,6 +1,8 @@
 package com.codegame.welcomeplugin;
 
 import android.app.Activity;
+import android.content.Context;
+import android.os.BatteryManager;
 import android.os.Handler;
 import android.os.Looper;
 import android.view.Gravity;
@@ -35,5 +37,15 @@ public class ToastPlugin extends GodotPlugin {
             toast.setGravity(Gravity.TOP | Gravity.CENTER_HORIZONTAL, 0, 0);
             toast.show();
         });
+    }
+
+    @UsedByGodot
+    public int getBatteryPercent() {
+        BatteryManager batteryManager =
+                (BatteryManager) activity.getSystemService(Context.BATTERY_SERVICE);
+        if (batteryManager == null) {
+            return -1;
+        }
+        return batteryManager.getIntProperty(BatteryManager.BATTERY_PROPERTY_CAPACITY);
     }
 }

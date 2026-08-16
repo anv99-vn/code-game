@@ -16,3 +16,9 @@ func show_welcome(username: String, duration: int = -1) -> void:
 		var time = Time.get_time_string_from_system()
 		var msg = "Welcome %s in %s" % [username, time]
 		Engine.get_singleton("ToastPlugin").showToast(msg, duration)
+
+
+func get_battery_percent() -> int:
+	if not _plugin_available:
+		return -1
+	return Engine.get_singleton("ToastPlugin").getBatteryPercent()

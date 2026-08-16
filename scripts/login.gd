@@ -34,6 +34,7 @@ const ENGINE_SETTINGS := {
 @onready var engine_dropdown = $EngineButton/EngineDropdown
 @onready var render_engine_label: Label = $RenderEngineLabel
 @onready var restart_button: Button = $RestartButton
+@onready var battery_label: Label = %BatteryLabel
 
 
 func _ready() -> void:
@@ -44,7 +45,15 @@ func _ready() -> void:
 	_update_lang_button_text()
 	_update_engine_button_text()
 	_update_render_engine_label()
+	_update_battery_label()
 	_log_render_engine_config()
+
+
+func _update_battery_label() -> void:
+	var percent: int = WelcomeToast.get_battery_percent()
+	battery_label.visible = percent >= 0
+	if percent >= 0:
+		battery_label.text = "Battery: %d%%" % percent
 
 
 func _log_render_engine_config() -> void:
