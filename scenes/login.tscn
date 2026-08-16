@@ -268,6 +268,22 @@ grow_horizontal = 0
 theme_override_font_sizes/font_size = 12
 text = "English"
 
+[node name="BatteryLabel" type="Label" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 0
+offset_left = 16.0
+offset_top = 16.0
+offset_right = 156.0
+offset_bottom = 44.0
+theme_override_colors/font_color = Color(1, 1, 1, 0.9)
+theme_override_font_sizes/font_size = 14
+text = "Battery: 100%"
+
+[node name="BatteryTimer" type="Timer" parent="."]
+wait_time = 30.0
+autostart = true
+
 [node name="RenderEngineLabel" type="Label" parent="." unique_id=1486149929]
 layout_mode = 1
 anchors_preset = 3
@@ -339,3 +355,4 @@ flat = true
 [connection signal="pressed" from="LangButton" to="." method="_on_lang_pressed"]
 [connection signal="pressed" from="EngineButton" to="." method="_on_engine_pressed"]
 [connection signal="pressed" from="RestartButton" to="." method="_on_restart_pressed"]
+[connection signal="timeout" from="BatteryTimer" to="." method="_update_battery_label"]
