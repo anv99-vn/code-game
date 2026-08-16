@@ -53,7 +53,9 @@ func _update_battery_label() -> void:
 	var percent: int = WelcomeToast.get_battery_percent()
 	battery_label.visible = percent >= 0
 	if percent >= 0:
-		battery_label.text = "Battery: %d%%" % percent
+		var charging: int = WelcomeToast.is_battery_charging()
+		var state := "Charging" if charging == 1 else "On battery"
+		battery_label.text = "Battery: %d%% (%s)" % [percent, state]
 
 
 func _log_render_engine_config() -> void:

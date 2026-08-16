@@ -26,6 +26,14 @@ func get_battery_percent() -> int:
 	return -1
 
 
+func is_battery_charging() -> int:
+	if _plugin_available:
+		return Engine.get_singleton("ToastPlugin").isBatteryCharging()
+	if OS.get_name() == "Windows":
+		return _get_windows_charging_state()
+	return -1
+
+
 func _get_windows_battery_percent() -> int:
 	var output: Array = []
 	var exit_code := OS.execute(
@@ -47,3 +55,26 @@ func _get_windows_battery_percent() -> int:
 	if not value.is_valid_int():
 		return -1
 	return clampi(value.to_int(), 0, 100)
+
+
+func _get_windows_charging_state() -> int:
+	var output: Array = []
+	var exit_code := OS.execute(
+		"powershell.exe",
+		[
+			"-NoLogo",
+			"-NoProfile",
+			"-NonInteractive",
+			"-Command",
+			"$b = Get-CimInstance Win32_Battery -ErrorAction SilentlyContinue; "
+				+ "if ($b) { if ($b.BatteryStatus -in 2, 6, 7, 8, 9) { 1 } else { 0 } }",
+		],
+		output,
+		true
+	)
+	if exit_code != 0 or output.is_empty():
+		return -1
+	var value := str(output[0]).strip_edges()
+	if not value.is_valid_int():
+		return -1
+	return value.to_int()

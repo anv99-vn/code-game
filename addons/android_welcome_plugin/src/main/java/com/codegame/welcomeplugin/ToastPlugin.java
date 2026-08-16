@@ -2,6 +2,8 @@ package com.codegame.welcomeplugin;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.BatteryManager;
 import android.os.Handler;
 import android.os.Looper;
@@ -47,5 +49,20 @@ public class ToastPlugin extends GodotPlugin {
             return -1;
         }
         return batteryManager.getIntProperty(BatteryManager.BATTERY_PROPERTY_CAPACITY);
+    }
+
+    @UsedByGodot
+    public int isBatteryCharging() {
+        Intent batteryStatus = activity.registerReceiver(
+                null, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
+        if (batteryStatus == null) {
+            return -1;
+        }
+        int status = batteryStatus.getIntExtra(BatteryManager.EXTRA_STATUS, -1);
+        if (status == -1) {
+            return -1;
+        }
+        return status == BatteryManager.BATTERY_STATUS_CHARGING
+                || status == BatteryManager.BATTERY_STATUS_FULL ? 1 : 0;
     }
 }
