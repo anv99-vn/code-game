@@ -1,34 +1,37 @@
 extends Node
 
-var _plugin_available: bool = false
-var default_duration: int = 1
+const PLUGIN_NAME := "AndroidWelcomePlugin"
+const DEFAULT_DURATION := 1
+
+var default_duration: int = DEFAULT_DURATION
+var _plugin: Object
 
 
 func _ready() -> void:
-	if Engine.has_singleton("ToastPlugin"):
-		_plugin_available = true
+	if Engine.has_singleton(PLUGIN_NAME):
+		_plugin = Engine.get_singleton(PLUGIN_NAME)
 
 
 func show_welcome(username: String, duration: int = -1) -> void:
-	if _plugin_available:
-		if duration == -1:
-			duration = default_duration
-		var time = Time.get_time_string_from_system()
-		var msg = "Welcome %s in %s" % [username, time]
-		Engine.get_singleton("ToastPlugin").showToast(msg, duration)
+	if _plugin == null:
+		return
+	var toast_duration := default_duration if duration < 0 else duration
+	var current_time := Time.get_time_string_from_system()
+	var message := "Welcome %s in %s" % [username, current_time]
+	_plugin.showToast(message, toast_duration)
 
 
 func get_battery_percent() -> int:
-	if _plugin_available:
-		return Engine.get_singleton("ToastPlugin").getBatteryPercent()
+	if _plugin != null:
+		return _plugin.getBatteryPercent()
 	if OS.get_name() == "Windows":
 		return _get_windows_battery_percent()
 	return -1
 
 
 func is_battery_charging() -> int:
-	if _plugin_available:
-		return Engine.get_singleton("ToastPlugin").isBatteryCharging()
+	if _plugin != null:
+		return _plugin.isBatteryCharging()
 	if OS.get_name() == "Windows":
 		return _get_windows_charging_state()
 	return -1

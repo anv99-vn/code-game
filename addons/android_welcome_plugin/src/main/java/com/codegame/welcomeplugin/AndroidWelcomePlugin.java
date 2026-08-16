@@ -13,28 +13,32 @@ import org.godotengine.godot.Godot;
 import org.godotengine.godot.plugin.GodotPlugin;
 import org.godotengine.godot.plugin.UsedByGodot;
 
-public class ToastPlugin extends GodotPlugin {
+public final class AndroidWelcomePlugin extends GodotPlugin {
 
-    private Activity activity;
+    private static final String PLUGIN_NAME = "AndroidWelcomePlugin";
+    private static final int DEFAULT_TOAST_DURATION = Toast.LENGTH_LONG;
 
-    public ToastPlugin(Godot godot) {
+    private final Activity activity;
+    private final Handler mainThreadHandler = new Handler(Looper.getMainLooper());
+
+    public AndroidWelcomePlugin(Godot godot) {
         super(godot);
-        this.activity = godot.getActivity();
+        activity = godot.getActivity();
     }
 
     @Override
     public String getPluginName() {
-        return "ToastPlugin";
+        return PLUGIN_NAME;
     }
 
     @UsedByGodot
-    public void showToast(final String message) {
-        showToast(message, 1);
+    public void showToast(String message) {
+        showToast(message, DEFAULT_TOAST_DURATION);
     }
 
     @UsedByGodot
-    public void showToast(final String message, final int duration) {
-        new Handler(Looper.getMainLooper()).post(() -> {
+    public void showToast(String message, int duration) {
+        mainThreadHandler.post(() -> {
             Toast toast = Toast.makeText(activity, message, duration);
             toast.setGravity(Gravity.TOP | Gravity.CENTER_HORIZONTAL, 0, 0);
             toast.show();
@@ -58,10 +62,12 @@ public class ToastPlugin extends GodotPlugin {
         if (batteryStatus == null) {
             return -1;
         }
+
         int status = batteryStatus.getIntExtra(BatteryManager.EXTRA_STATUS, -1);
         if (status == -1) {
             return -1;
         }
+
         return status == BatteryManager.BATTERY_STATUS_CHARGING
                 || status == BatteryManager.BATTERY_STATUS_FULL ? 1 : 0;
     }
