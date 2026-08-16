@@ -50,7 +50,7 @@ func _ready() -> void:
 
 
 func _update_battery_label() -> void:
-	var percent := OS.get_power_percent_left()
+	var percent: int = WelcomeToast.get_battery_percent()
 	battery_label.visible = percent >= 0
 	if percent >= 0:
 		battery_label.text = "Battery: %d%%" % percent
